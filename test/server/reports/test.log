@@ -1,0 +1,28 @@
+Run options: --seed 13298
+
+# Running:
+
+...
+
+Finished in 0.410028s, 7.3166 runs/s, 12.1943 assertions/s.
+
+3 runs, 5 assertions, 0 failures, 0 errors, 0 skips
+Coverage report generated for MiniTest to //tmp/reports. 12454 / 24657 LOC (50.51%) covered.
+
+Slowest 3 tests are...
+0.2675 - Q3p3Je:assets_test.rb:22:|GET /assets/app.js is served                  
+0.1395 - Q3p2Je:assets_test.rb:12:|GET /assets/app.css is served                 
+0.0000 - 449AC6:example_test.rb:16:example                                       
+
+
+                 failures |       0   <=     0 | [32m true [0m
+                   errors |       0   <=     0 | [32m true [0m
+                 warnings |       0   <=     0 | [32m true [0m
+                    skips |       0   <=     0 | [32m true [0m
+        duration(test)[s] |    0.41   <=    10 | [32m true [0m
+                    tests |       3   >=     1 | [32m true [0m
+      coverage(tested)[%] |   58.37   >=   100 | [31m false [0m
+      coverage(tester)[%] |   100.0   >=   100 | [32m true [0m
+     lines(tester/tested) |    0.09   >=   0.7 | [31m false [0m
+      hits(tested/tester) |    0.60   >=   6.2 | [31m false [0m
+
