@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative 'test_base'
 
-class RouteShaTest < TestBase
+class ShaTest < TestBase
 
   def self.id58_prefix
     'de3'
