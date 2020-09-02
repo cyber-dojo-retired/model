@@ -22,10 +22,6 @@ class Probe # k8s/curl probing + identity
 
   def dependent_services
     [
-      @externals.custom_start_points,
-      @externals.exercises_start_points,
-      @externals.languages_start_points,
-      @externals.puller,
       @externals.saver
     ]
   end

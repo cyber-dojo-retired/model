@@ -36,7 +36,6 @@ services:
       context: source/server
     container_name: test-model-server
     depends_on:
-      - puller
       - saver
     environment: [ NO_PROMETHEUS ]
     ports: [ "${CYBER_DOJO_MODEL_PORT}:${CYBER_DOJO_MODEL_PORT}" ]

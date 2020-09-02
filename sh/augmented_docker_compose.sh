@@ -8,7 +8,6 @@ augmented_docker_compose()
 {
   cd "${ROOT_DIR}" && cat "./docker-compose.yml" \
     | docker run --rm --interactive cyberdojo/service-yaml \
-                         puller \
                          saver \
     | tee /tmp/augmented-docker-compose.model.peek.yml \
     | docker-compose \

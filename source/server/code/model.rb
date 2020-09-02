@@ -19,7 +19,6 @@ class Model
       group_manifest_create_cmd(id, pretty_json(manifest)),
       group_katas_create_cmd(id, '')
     ])
-    pull_image_onto_nodes(id, manifest['image_name'])
     id
   end
 
@@ -42,7 +41,6 @@ class Model
       kata_events_create_cmd(id, pretty_json(event_summary)),
       kata_event_create_cmd(id, 0, pretty_json(event0.merge(event_summary)))
     ])
-    pull_image_onto_nodes(id, manifest['image_name'])
     id
   end
 
@@ -118,23 +116,6 @@ class Model
   end
 
   #- - - - - - - - - - - - - - - - - -
-
-  def pull_image_onto_nodes(id, image_name)
-    # puller is deployed as a kubernetes daemonSet which
-    # means you cannot make http requests to individual pullers.
-    # So instead, send the request many times (it is asynchronous),
-    # and rely on one request reaching each node. If a node is missed
-    # it simply means the image will get pulled onto the node on the
-    # first run_cyber_dojo_sh() call, and at the browser, the [test]
-    # will result in an hour-glass icon.
-    16.times { puller.pull_image(id, image_name) }
-  end
-
-  #- - - - - - - - - - - - - - - - - -
-
-  def puller
-    @externals.puller
-  end
 
   def saver
     @externals.saver
