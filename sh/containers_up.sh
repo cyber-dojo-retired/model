@@ -154,6 +154,6 @@ container_up()
 containers_up()
 {
   export NO_PROMETHEUS=true
-  wait_briefly_until_ready_and_clean "${CYBER_DOJO_MODEL_PORT}"          model-server
-  wait_briefly_until_ready_and_clean "${CYBER_DOJO_MODEL_CLIENT_PORT}"   model-client
+  container_up_ready_and_clean "${CYBER_DOJO_MODEL_PORT}"          model-server
+  container_up_ready_and_clean "${CYBER_DOJO_MODEL_CLIENT_PORT}"   model-client
 }

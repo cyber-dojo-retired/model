@@ -1,9 +1,6 @@
+require_relative 'require_source'
 require 'minitest/autorun'
 require 'rack/test'
-
-def require_source(required)
-  require_relative "../app/code/#{required}"
-end
 
 class Id58TestBase < MiniTest::Test
 
