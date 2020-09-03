@@ -24,14 +24,11 @@ class AppBase < Sinatra::Base
   def self.get_probe(name)
     get "/#{name}", provides:[:json] do
       result = instance_exec {
-        probe.public_send(name)
+        probe = Probe.new(@externals)
+        probe.public_send(name, **json_args)
       }
       json({ name => result })
     end
-  end
-
-  def probe
-    Probe.new(@externals)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -41,16 +38,13 @@ class AppBase < Sinatra::Base
       respond_to do |format|
         format.json {
           result = instance_exec {
+            model = Model.new(@externals)
             model.public_send(name, **json_args)
           }
           json({ name => result })
         }
       end
     end
-  end
-
-  def model
-    Model.new(@externals)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
