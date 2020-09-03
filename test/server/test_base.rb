@@ -27,6 +27,13 @@ class TestBase < Id58TestBase
     externals.saver
   end
 
+  def default_options
+    { "line_numbers":true,
+      "syntax_highlight":false,
+      "predict_colour":false
+    }
+  end
+
   def externals
     @externals ||= Externals.new
   end
@@ -51,9 +58,9 @@ class TestBase < Id58TestBase
     block.call(json_response_body)
   end
 
-  def assert_json_post_200(path, args, &block)
+  def assert_json_post_200(path, body, &block)
     stdout,stderr = capture_stdout_stderr {
-      json_post '/'+path, args
+      json_post '/'+path, body
     }
     assert_status 200
     assert_equal '', stderr, :stderr
@@ -61,8 +68,8 @@ class TestBase < Id58TestBase
     block.call(json_response_body)
   end
 
-  def assert_json_post_500(path, args)
-    stdout,stderr = capture_stdout_stderr { json_post '/'+path, args }
+  def assert_json_post_500(path, body)
+    stdout,stderr = capture_stdout_stderr { json_post '/'+path, body }
     assert_status 500
     assert_equal '', stderr, :stderr
     assert_equal stdout, last_response.body+"\n", :stdout
@@ -73,8 +80,8 @@ class TestBase < Id58TestBase
 
   # - - - - - - - - - - - - - - -
 
-  def json_post(path, data)
-    post path, data.to_json, JSON_REQUEST_HEADERS
+  def json_post(path, body)
+    post path, body, JSON_REQUEST_HEADERS
   end
 
   JSON_REQUEST_HEADERS = {

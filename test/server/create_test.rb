@@ -28,7 +28,7 @@ class CreateTest < TestBase
       path = 'create_group', {
         manifests:[custom_manifest],
         options:default_options
-      }
+      }.to_json
     ) do |response|
       assert_equal [path], response.keys.sort, :keys
       id = response[path]
@@ -49,21 +49,12 @@ class CreateTest < TestBase
       path = 'create_kata', {
         manifest:custom_manifest,
         options:default_options
-      }
+      }.to_json
     ) do |response|
       assert_equal [path], response.keys.sort, :keys
       id = response[path]
       assert_kata_exists(id, display_name)
     end
-  end
-
-  private
-
-  def default_options
-    { "line_numbers":true,
-      "syntax_highlight":false,
-      "predict_colour":false
-    }
   end
 
 end

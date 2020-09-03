@@ -23,14 +23,27 @@ class BadRequestTest < TestBase
 
   # - - - - - - - - - - - - - - - - -
 
-  test 'Kp4', %w(
+  test 'Kp2', %w(
   |POST /create_group
-  |with non-JSON-Hash in its request.body
+  |with JSON-not-Hash in its request.body
   |is a 500 error
   ) do
     assert_json_post_500(
       path = 'create_group',
-      args = "{..."
+      args = '42'
+    )
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  test 'Kp3', %w(
+  |POST /create_group
+  |with non-JSON in its request.body
+  |is a 500 error
+  ) do
+    assert_json_post_500(
+      path = 'create_group',
+      args = 'not-json'
     )
   end
 
