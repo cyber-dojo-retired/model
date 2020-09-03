@@ -4,9 +4,7 @@ require_relative 'external_custom_start_points'
 require_relative '../id58_test_base'
 require_source 'app'
 require_source 'externals'
-require_source 'id_pather'
 require 'json'
-require 'ostruct'
 
 class TestBase < Id58TestBase
 
@@ -17,16 +15,20 @@ class TestBase < Id58TestBase
     App.new(externals)
   end
 
-  def externals
-    @externals ||= Externals.new
-  end
-
-  def saver
-    @externals.saver
+  def model
+    Model.new(externals)
   end
 
   def custom_start_points
     ExternalCustomStartPoints.new
+  end
+
+  def saver
+    externals.saver
+  end
+
+  def externals
+    @externals ||= Externals.new
   end
 
   # - - - - - - - - - - - - - - -
@@ -96,14 +98,11 @@ class TestBase < Id58TestBase
   end
 
   def group_exists?(id)
-    dirname = group_id_path(id)
-    command = saver.dir_exists_command(dirname)
-    saver.run(command)
+    model.group_exists?(id:id)
   end
 
   def group_manifest(id)
-    command = saver.file_read_command("#{group_id_path(id)}/manifest.json")
-    JSON.parse(saver.run(command))
+    model.group_manifest(id:id)
   end
 
   # - - - - - - - - - - - - - - -
@@ -121,16 +120,11 @@ class TestBase < Id58TestBase
   end
 
   def kata_exists?(id)
-    dirname = kata_id_path(id)
-    command = saver.dir_exists_command(dirname)
-    saver.run(command)
+    model.kata_exists?(id:id)
   end
 
   def kata_manifest(id)
-    command = saver.file_read_command("#{kata_id_path(id)}/manifest.json")
-    JSON::parse!(saver.run(command))
+    model.kata_manifest(id:id)
   end
-
-  include IdPather
 
 end

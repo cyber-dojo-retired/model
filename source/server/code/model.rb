@@ -44,6 +44,34 @@ class Model
     id
   end
 
+  #- - - - - - - - - - - - - - - - - -
+
+  def group_exists?(id:)
+    dirname = group_id_path(id)
+    command = saver.dir_exists_command(dirname)
+    saver.run(command)
+  end
+
+  def kata_exists?(id:)
+    dirname = kata_id_path(id)
+    command = saver.dir_exists_command(dirname)
+    saver.run(command)
+  end
+
+  #- - - - - - - - - - - - - - - - - -
+
+  def group_manifest(id:)
+    command = saver.file_read_command("#{group_id_path(id)}/manifest.json")
+    JSON.parse(saver.run(command))
+  end
+
+  def kata_manifest(id:)
+    command = saver.file_read_command("#{kata_id_path(id)}/manifest.json")
+    JSON.parse(saver.run(command))
+  end
+
+  #- - - - - - - - - - - - - - - - - -
+
   private
 
   def default_options

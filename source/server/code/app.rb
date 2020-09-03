@@ -18,4 +18,10 @@ class App < AppBase
   post_json(:create_group)
   post_json(:create_kata)
 
+  get_json(:group_exists?)
+  get_json(:kata_exists?)
+
+  get_json(:group_manifest)
+  get_json(:kata_manifest)
+
 end

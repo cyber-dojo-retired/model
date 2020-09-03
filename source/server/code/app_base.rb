@@ -47,6 +47,20 @@ class AppBase < Sinatra::Base
     end
   end
 
+  def self.get_json(name)
+    get "/#{name}", provides:[:json] do
+      respond_to do |format|
+        format.json {
+          result = instance_exec {
+            model = Model.new(@externals)
+            model.public_send(name, **json_args)
+          }
+          json({ name => result })
+        }
+      end
+    end
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def json_args
