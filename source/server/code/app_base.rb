@@ -3,8 +3,6 @@ require_relative 'silently'
 require 'sinatra/base'
 silently { require 'sinatra/contrib' } # N x "warning: method redefined"
 require_relative 'http_json_hash/service'
-require_relative 'model'
-require_relative 'probe'
 require 'json'
 require 'sprockets'
 
@@ -21,25 +19,13 @@ class AppBase < Sinatra::Base
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def self.get_probe(name)
+  def self.get_json(name, klass)
     get "/#{name}", provides:[:json] do
-      result = instance_exec {
-        probe = Probe.new(@externals)
-        probe.public_send(name, **json_args)
-      }
-      json({ name => result })
-    end
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  def self.post_json(name)
-    post "/#{name}", provides:[:json] do
       respond_to do |format|
         format.json {
           result = instance_exec {
-            model = Model.new(@externals)
-            model.public_send(name, **json_args)
+            target = klass.new(@externals)
+            target.public_send(name, **json_args)
           }
           json({ name => result })
         }
@@ -47,13 +33,15 @@ class AppBase < Sinatra::Base
     end
   end
 
-  def self.get_json(name)
-    get "/#{name}", provides:[:json] do
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def self.post_json(name, klass)
+    post "/#{name}", provides:[:json] do
       respond_to do |format|
         format.json {
           result = instance_exec {
-            model = Model.new(@externals)
-            model.public_send(name, **json_args)
+            target = klass.new(@externals)
+            target.public_send(name, **json_args)
           }
           json({ name => result })
         }

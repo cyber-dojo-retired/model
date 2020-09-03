@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 require_relative 'app_base'
+require_relative 'model'
+require_relative 'probe'
 
 class App < AppBase
 
@@ -9,19 +11,18 @@ class App < AppBase
 
   # - - - - - - - - - - - - - - - - - - - - -
 
-  get_probe(:alive?) # curl/k8s
-  get_probe(:ready?) # curl/k8s
-  get_probe(:sha)    # identity
-
+  get_json(:alive?, Probe) # curl/k8s
+  get_json(:ready?, Probe) # curl/k8s
+  get_json(:sha,    Probe) # identity
   # - - - - - - - - - - - - - - - - - - - - -
 
-  post_json(:create_group)
-  post_json(:create_kata)
+  post_json(:create_group, Model)
+  post_json(:create_kata,  Model)
 
-  get_json(:group_exists?)
-  get_json(:kata_exists?)
+  get_json(:group_exists?, Model)
+  get_json(:kata_exists?,  Model)
 
-  get_json(:group_manifest)
-  get_json(:kata_manifest)
+  get_json(:group_manifest, Model)
+  get_json(:kata_manifest,  Model)
 
 end
