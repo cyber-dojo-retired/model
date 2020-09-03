@@ -43,6 +43,14 @@ class TestBase < Id58TestBase
     block.call(json_response_body)
   end
 
+  def assert_get_500(path, &block)
+    stdout,stderr = capture_stdout_stderr { get '/'+path }
+    assert_status 500
+    assert_equal '', stderr, :stderr
+    assert_equal stdout, last_response.body+"\n", :stdout
+    block.call(json_response_body)
+  end
+
   def assert_json_post_200(path, args, &block)
     stdout,stderr = capture_stdout_stderr {
       json_post '/'+path, args
@@ -52,6 +60,18 @@ class TestBase < Id58TestBase
     assert_equal '', stdout, :stdout
     block.call(json_response_body)
   end
+
+  def assert_json_post_500(path, args)
+    stdout,stderr = capture_stdout_stderr { json_post '/'+path, args }
+    assert_status 500
+    assert_equal '', stderr, :stderr
+    assert_equal stdout, last_response.body+"\n", :stdout
+    if block_given?
+      yield json_response_body
+    end
+  end
+
+  # - - - - - - - - - - - - - - -
 
   def json_post(path, data)
     post path, data.to_json, JSON_REQUEST_HEADERS
@@ -65,16 +85,6 @@ class TestBase < Id58TestBase
   def json_response_body
     assert_equal 'application/json', last_response.headers['Content-Type']
     JSON.parse(last_response.body)
-  end
-
-  # - - - - - - - - - - - - - - -
-
-  def assert_get_500(path, &block)
-    stdout,stderr = capture_stdout_stderr { get '/'+path }
-    assert_status 500
-    assert_equal '', stderr, :stderr
-    assert_equal stdout, last_response.body+"\n", :stdout
-    block.call(json_response_body)
   end
 
   # - - - - - - - - - - - - - - -
