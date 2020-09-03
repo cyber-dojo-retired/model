@@ -27,7 +27,7 @@ class CreateTest < TestBase
     assert_json_post_200(
       path = 'create_group',
       args = {
-        manifest:custom_manifest,
+        manifests:[custom_manifest],
         options:default_options
       }
     ) do |jrb|
@@ -50,7 +50,7 @@ class CreateTest < TestBase
       path = 'create_kata',
       args = {
         manifest:custom_manifest,
-        options:default_options        
+        options:default_options
       }
     ) do |jrb|
       assert_equal [path], jrb.keys.sort, :keys

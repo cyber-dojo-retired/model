@@ -14,7 +14,8 @@ class Model
 
   #- - - - - - - - - - - - - - - - - -
 
-  def create_group(manifest:, options:)
+  def create_group(manifests:, options:)
+    manifest = manifests[0]
     ignore(options)
     set_version(manifest)
     set_time_stamp(manifest)
