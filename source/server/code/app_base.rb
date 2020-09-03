@@ -23,10 +23,8 @@ class AppBase < Sinatra::Base
     get "/#{name}", provides:[:json] do
       respond_to do |format|
         format.json {
-          result = instance_exec {
-            target = klass.new(@externals)
-            target.public_send(name, **json_args)
-          }
+          target = klass.new(@externals)
+          result = target.public_send(name, **json_args)
           json({ name => result })
         }
       end
@@ -39,10 +37,8 @@ class AppBase < Sinatra::Base
     post "/#{name}", provides:[:json] do
       respond_to do |format|
         format.json {
-          result = instance_exec {
-            target = klass.new(@externals)
-            target.public_send(name, **json_args)
-          }
+          target = klass.new(@externals)
+          result = target.public_send(name, **json_args)
           json({ name => result })
         }
       end

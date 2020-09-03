@@ -14,6 +14,7 @@ class App < AppBase
   get_json(:alive?, Probe) # curl/k8s
   get_json(:ready?, Probe) # curl/k8s
   get_json(:sha,    Probe) # identity
+
   # - - - - - - - - - - - - - - - - - - - - -
 
   post_json(:create_group, Model)
