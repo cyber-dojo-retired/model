@@ -20,9 +20,6 @@ versioner_env_vars()
   echo CYBER_DOJO_MODEL_SERVER_USER=nobody
   echo CYBER_DOJO_MODEL_CLIENT_USER=nobody
 
-  echo CYBER_DOJO_MODEL_IMAGE=cyberdojo/model
-  echo CYBER_DOJO_MODEL_PORT=4528
-
   echo CYBER_DOJO_MODEL_CLIENT_IMAGE=cyberdojo/model-client
   echo CYBER_DOJO_MODEL_CLIENT_PORT=9999
 
