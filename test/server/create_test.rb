@@ -25,14 +25,13 @@ class CreateTest < TestBase
   |whose manifest matches the display_name
   ) do
     assert_json_post_200(
-      path = 'create_group',
-      args = {
+      path = 'create_group', {
         manifests:[custom_manifest],
         options:default_options
       }
-    ) do |jrb|
-      assert_equal [path], jrb.keys.sort, :keys
-      id = jrb[path]
+    ) do |response|
+      assert_equal [path], response.keys.sort, :keys
+      id = response[path]
       assert_group_exists(id, display_name)
     end
   end
@@ -47,14 +46,13 @@ class CreateTest < TestBase
   |whose manifest matches the display_name
   ) do
     assert_json_post_200(
-      path = 'create_kata',
-      args = {
+      path = 'create_kata', {
         manifest:custom_manifest,
         options:default_options
       }
-    ) do |jrb|
-      assert_equal [path], jrb.keys.sort, :keys
-      id = jrb[path]
+    ) do |response|
+      assert_equal [path], response.keys.sort, :keys
+      id = response[path]
       assert_kata_exists(id, display_name)
     end
   end
