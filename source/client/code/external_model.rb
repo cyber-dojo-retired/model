@@ -23,15 +23,17 @@ class ExternalModel
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def create_group(manifest)
+  def create_group(manifests, options)
     @http.post(__method__, {
-      manifest:manifest
+      manifests:manifests,
+      options:options
     })
   end
 
-  def create_kata(manifest)
+  def create_kata(manifest, options)
     @http.post(__method__, {
-      manifest:manifest
+      manifest:manifest,
+      options:options
     })
   end
 

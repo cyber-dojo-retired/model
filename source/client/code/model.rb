@@ -14,22 +14,15 @@ class Model
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def create_group(manifest, options=default_options)
-    model.create_group(manifest, options)
+  def create_group(manifests, options)
+    model.create_group(manifests, options)
   end
 
-  def create_kata(manifest, options=default_options)
+  def create_kata(manifest, options)
     model.create_kata(manifest, options)
   end
 
   private
-
-  def default_options
-    { "line_numbers":true,
-      "syntax_highlight":false,
-      "predict_colour":false
-    }
-  end
 
   def model
     @externals.model
