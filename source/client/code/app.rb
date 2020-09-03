@@ -1,20 +1,17 @@
 # frozen_string_literal: true
-require_relative 'model'
 require_relative 'app_base'
+require_relative 'probe'
 
 class App < AppBase
 
   def initialize(externals)
-    super()
-    @externals = externals
+    super(externals)
   end
 
-  def target
-    Model.new(@externals)
-  end
+  get_json(:alive?, Probe) # curl/k8s
+  get_json(:ready?, Probe) # curl/k8s
+  get_json(:sha,    Probe) # identity
 
-  probe(:alive?) # curl/k8s
-  probe(:ready?) # curl/k8s
-  get_json(:sha) # identity
+  # - - - - - - - - - - - - -
 
 end

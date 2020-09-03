@@ -8,12 +8,6 @@ class Model
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def ready?
-    model.ready?
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
   def create_group(manifests, options)
     model.create_group(manifests, options)
   end
