@@ -9,9 +9,13 @@ class Model
     @externals = externals
   end
 
+  def ignore(_ignored)
+  end
+
   #- - - - - - - - - - - - - - - - - -
 
-  def create_group(manifest:, _options:default_options)
+  def create_group(manifest:, options:)
+    ignore(options)
     set_version(manifest)
     set_time_stamp(manifest)
     id = manifest['id'] = IdGenerator.new(@externals).group_id
@@ -24,7 +28,8 @@ class Model
 
   #- - - - - - - - - - - - - - - - - -
 
-  def create_kata(manifest:, _options:default_options)
+  def create_kata(manifest:, options:)
+    ignore(options)
     set_version(manifest)
     set_time_stamp(manifest)
     id = manifest['id'] = IdGenerator.new(@externals).kata_id
@@ -73,15 +78,6 @@ class Model
   #- - - - - - - - - - - - - - - - - -
 
   private
-
-  def default_options
-    { "line_numbers":true,
-      "syntax_highlight":false,
-      "predict_colour":false
-    }
-  end
-
-  #- - - - - - - - - - - - - - - - - -
 
   def group_manifest_create_cmd(id, manifest_src)
     saver.file_create_command(group_manifest_filename(id), manifest_src)
