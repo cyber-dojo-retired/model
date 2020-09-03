@@ -106,30 +106,31 @@ class TestBase < Id58TestBase
     JSON.parse(saver.run(command))
   end
 
-  include IdPather
-
   # - - - - - - - - - - - - - - -
 
-  class HttpAdapterStub
-    def initialize(body)
-      @body = body
+  def assert_kata_exists(id, display_name, exercise_name=nil)
+    refute_nil id, :id
+    assert kata_exists?(id), "!kata_exists?(#{id})"
+    manifest = kata_manifest(id)
+    assert_equal display_name, manifest['display_name'], manifest.keys.sort
+    if exercise_name.nil?
+      refute manifest.has_key?('exercise'), :exercise
+    else
+      assert_equal exercise_name, manifest['exercise'], :exercise
     end
-    def get(_uri)
-      OpenStruct.new
-    end
-    def post(_uri)
-      OpenStruct.new
-    end
-    def start(_hostname, _port, _req)
-      self
-    end
-    attr_reader :body
   end
 
-  def stub_saver_http(body)
-    externals.instance_exec {
-      @saver_http = HttpAdapterStub.new(body)
-    }
+  def kata_exists?(id)
+    dirname = kata_id_path(id)
+    command = saver.dir_exists_command(dirname)
+    saver.run(command)
   end
+
+  def kata_manifest(id)
+    command = saver.file_read_command("#{kata_id_path(id)}/manifest.json")
+    JSON::parse!(saver.run(command))
+  end
+
+  include IdPather
 
 end

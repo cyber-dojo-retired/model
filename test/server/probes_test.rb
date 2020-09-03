@@ -155,4 +155,25 @@ class ProbesTest < TestBase
     b.instance_of?(FalseClass)
   end
 
+  # - - - - - - - - - - - - - - - - - - - -
+
+  def stub_saver_http(body)
+    externals.instance_exec {
+      @saver_http = HttpAdapterStub.new(body)
+    }
+  end
+
+  class HttpAdapterStub
+    def initialize(body)
+      @body = body
+    end
+    def get(_uri)
+      OpenStruct.new
+    end
+    def start(_hostname, _port, _req)
+      self
+    end
+    attr_reader :body
+  end
+
 end
