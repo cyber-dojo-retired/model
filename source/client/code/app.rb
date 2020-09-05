@@ -8,9 +8,9 @@ class App < AppBase
     super(externals)
   end
 
-  get_json(:alive?, Probe) # curl/k8s
-  get_json(:ready?, Probe) # curl/k8s
-  get_json(:sha,    Probe) # identity
+  get_json(:alive?, Probe)
+  get_json(:ready?, Probe)
+  get_json(:sha,    Probe)
 
   # - - - - - - - - - - - - -
 
