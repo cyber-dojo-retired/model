@@ -9,7 +9,7 @@ class ProberTest < TestBase
   end
 
   # - - - - - - - - - - - - - - - - -
-  # alive?
+  # alive? ready? sha
 
   test 'C15', %w(
   |GET/alive?
@@ -22,23 +22,6 @@ class ProberTest < TestBase
       assert true?(jr[path]), "true?:#{last_response.body}:"
     end
   end
-
-  # - - - - - - - - - - - - - - - - -
-
-  test 'F16', %w(
-  |GET/alive?
-  |is used by external k8s probes
-  |so obeys Postel's Law
-  |and ignores any passed arguments
-  ) do
-    assert_get_200('alive?arg=unused') do |jr|
-      assert_equal ['alive?'], jr.keys, "keys:#{last_response.body}:"
-      assert true?(jr['alive?']), "true?:#{last_response.body}:"
-    end
-  end
-
-  # - - - - - - - - - - - - - - - - -
-  # ready?
 
   test 'D15', %w(
   |when all http-services are ready
@@ -53,9 +36,7 @@ class ProberTest < TestBase
     end
   end
 
-  # - - - - - - - - - - - - - - - - -
-
-  test 'F15', %w(
+  test 'E15', %w(
   |when saver http-service is not ready
   |GET/ready?
   |has status 200
@@ -69,7 +50,33 @@ class ProberTest < TestBase
     end
   end
 
+  test 'F15', %w(
+  |GET /sha
+  |has status 200
+  |returns the 40-char git commit sha used to create the image
+  |and nothing else
+  ) do
+    assert_get_200(key='sha') do |jr|
+      assert_equal [key], jr.keys, last_response.body
+      sha = jr[key]
+      assert git_sha?(sha), sha
+    end
+  end
+
   # - - - - - - - - - - - - - - - - -
+  # Postel's Law
+
+  test 'F16', %w(
+  |GET/alive?
+  |is used by external k8s probes
+  |so obeys Postel's Law
+  |and ignores any passed arguments
+  ) do
+    assert_get_200('alive?arg=unused') do |jr|
+      assert_equal ['alive?'], jr.keys, "keys:#{last_response.body}:"
+      assert true?(jr['alive?']), "true?:#{last_response.body}:"
+    end
+  end
 
   test 'F17', %w(
   |GET/ready?
@@ -144,6 +151,18 @@ class ProberTest < TestBase
   end
 
   private
+
+  def git_sha?(s)
+    s.instance_of?(String) &&
+      s.size === 40 &&
+        s.chars.all?{ |ch| is_lo_hex?(ch) }
+  end
+
+  def is_lo_hex?(ch)
+    '0123456789abcdef'.include?(ch)
+  end
+
+  # - - - - - - - - - - - - - - - - -
 
   STUB_READY_FALSE = OpenStruct.new(:ready? => false)
 

@@ -19,4 +19,23 @@ class ProberTest < TestBase
     assert true?(prober.ready?)
   end
 
+  # - - - - - - - - - - - - - - - - -
+
+  test '15E', %w( sha is 40-char git commit sha ) do
+    sha = prober.sha
+    assert git_sha?(sha), sha
+  end
+
+  private
+
+  def git_sha?(s)
+    s.is_a?(String) &&
+      s.size === 40 &&
+        s.each_char.all?{ |ch| is_lo_hex?(ch) }
+  end
+
+  def is_lo_hex?(ch)
+    '0123456789abcdef'.include?(ch)
+  end
+
 end
