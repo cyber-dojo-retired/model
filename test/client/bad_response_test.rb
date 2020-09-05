@@ -20,9 +20,25 @@ class BadResponseTest < TestBase
   test 'QN3', %w(
   |when an external http-proxy service
   |returns non-JSON in its response.body
-  |its a 500 error
+  |exception is raised
   ) do
-    stub_model_http(not_json='xxxx')
+    assert_raises_HttpJsonHash_ServiceError('xxxx', 'body is not JSON')
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  test 'QN4', %w(
+  |when an external http-proxy service
+  |returns JSON non-Hash in its response.body
+  |exception is raised
+  ) do
+    assert_raises_HttpJsonHash_ServiceError('[]', 'body is not JSON Hash')
+  end
+
+  private
+
+  def assert_raises_HttpJsonHash_ServiceError(body, message)
+    stub_model_http(body)
     expected = HttpJsonHash::ServiceError.new(
       'group_create',
       {
@@ -30,8 +46,8 @@ class BadResponseTest < TestBase
         options:default_options
       },
       'ExternalModel',
-      not_json,
-      'body is not JSON'
+      body,
+      message
     )
     error = assert_raises(HttpJsonHash::ServiceError) {
       externals.model.group_create([custom_manifest], default_options)
@@ -41,33 +57,11 @@ class BadResponseTest < TestBase
 
   # - - - - - - - - - - - - - - - - -
 
-  test 'QN4', %w(
-  |when an external http-proxy service
-  |returns JSON non-Hash in its response.body
-  |its a 500 error
-  ) do
-    stub_model_http(not_hash='[]')
-    expected = HttpJsonHash::ServiceError.new(
-      'group_create',
-      {
-        manifests:[custom_manifest],
-        options:default_options
-      },
-      'ExternalModel',
-      not_hash,
-      'body is not JSON Hash'
-    )
-    error = assert_raises(HttpJsonHash::ServiceError) {
-      externals.model.group_create([custom_manifest], default_options)
-    }
-    assert_equal expected, error
-  end
-
-  private
-
   def stub_model_http(body)
     externals.instance_exec { @model_http = HttpAdapterStub.new(body) }
   end
+
+  # - - - - - - - - - - - - - - - - -
 
   class HttpAdapterStub
     def initialize(body)
