@@ -8,12 +8,12 @@ class Model
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def create_group(manifests, options)
-    model.create_group(manifests, options)
+  def group_create(manifests, options)
+    model.group_create(manifests, options)
   end
 
-  def create_kata(manifest, options)
-    model.create_kata(manifest, options)
+  def kata_create(manifest, options)
+    model.kata_create(manifest, options)
   end
 
   private

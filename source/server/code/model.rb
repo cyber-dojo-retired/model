@@ -14,7 +14,13 @@ class Model
 
   #- - - - - - - - - - - - - - - - - -
 
-  def create_group(manifests:, options:)
+  def group_exists?(id:)
+    dirname = group_id_path(id)
+    command = saver.dir_exists_command(dirname)
+    saver.run(command)
+  end
+
+  def group_create(manifests:, options:)
     manifest = manifests[0]
     ignore(options)
     set_version(manifest)
@@ -27,9 +33,20 @@ class Model
     id
   end
 
+  def group_manifest(id:)
+    command = saver.file_read_command("#{group_id_path(id)}/manifest.json")
+    JSON.parse(saver.run(command))
+  end
+
   #- - - - - - - - - - - - - - - - - -
 
-  def create_kata(manifest:, options:)
+  def kata_exists?(id:)
+    dirname = kata_id_path(id)
+    command = saver.dir_exists_command(dirname)
+    saver.run(command)
+  end
+
+  def kata_create(manifest:, options:)
     ignore(options)
     set_version(manifest)
     set_time_stamp(manifest)
@@ -50,33 +67,10 @@ class Model
     id
   end
 
-  #- - - - - - - - - - - - - - - - - -
-
-  def group_exists?(id:)
-    dirname = group_id_path(id)
-    command = saver.dir_exists_command(dirname)
-    saver.run(command)
-  end
-
-  def kata_exists?(id:)
-    dirname = kata_id_path(id)
-    command = saver.dir_exists_command(dirname)
-    saver.run(command)
-  end
-
-  #- - - - - - - - - - - - - - - - - -
-
-  def group_manifest(id:)
-    command = saver.file_read_command("#{group_id_path(id)}/manifest.json")
-    JSON.parse(saver.run(command))
-  end
-
   def kata_manifest(id:)
     command = saver.file_read_command("#{kata_id_path(id)}/manifest.json")
     JSON.parse(saver.run(command))
   end
-
-  #- - - - - - - - - - - - - - - - - -
 
   private
 

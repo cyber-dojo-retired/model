@@ -21,13 +21,13 @@ class BadResponseTest < TestBase
     custom_manifest = custom_start_points.manifest(display_name)
 
     assert_json_post_500(
-      path = 'create_group', {
+      path = 'group_create', {
         manifests:[custom_manifest],
         options:default_options
       }.to_json
     ) do |response|
       ex = response['exception']
-      assert_equal '/create_group', ex['request']['path'], response
+      assert_equal '/group_create', ex['request']['path'], response
       assert_equal '', ex['request']['body'], response
       refute_nil ex['backtrace'], response
       http_service = ex['http_service']

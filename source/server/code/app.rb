@@ -17,13 +17,12 @@ class App < AppBase
 
   # - - - - - - - - - - - - - - - - - - - - -
 
-  post_json(:create_group, Model)
-  post_json(:create_kata,  Model)
+   get_json(:group_exists?,  Model)
+  post_json(:group_create,   Model)
+   get_json(:group_manifest, Model)
 
-  get_json(:group_exists?, Model)
-  get_json(:kata_exists?,  Model)
-
-  get_json(:group_manifest, Model)
-  get_json(:kata_manifest,  Model)
+   get_json(:kata_exists?,   Model)
+  post_json(:kata_create,    Model)
+   get_json(:kata_manifest,  Model)
 
 end

@@ -18,14 +18,14 @@ class CreateTest < TestBase
   # - - - - - - - - - - - - - - - - -
 
   test 'q31', %w(
-  |POST /create_group(manifest)
+  |POST /group_create(manifest)
   |has status 200
   |returns the id: of a new group
   |that exists in saver
   |whose manifest matches the display_name
   ) do
     assert_json_post_200(
-      path = 'create_group', {
+      path = 'group_create', {
         manifests:[custom_manifest],
         options:default_options
       }.to_json
@@ -39,14 +39,14 @@ class CreateTest < TestBase
   # - - - - - - - - - - - - - - - - -
 
   test 'q32', %w(
-  |POST /create_kata(manifest)
+  |POST /kata_create(manifest)
   |has status 200
   |returns the id: of a new kata
   |that exists in saver
   |whose manifest matches the display_name
   ) do
     assert_json_post_200(
-      path = 'create_kata', {
+      path = 'kata_create', {
         manifest:custom_manifest,
         options:default_options
       }.to_json
