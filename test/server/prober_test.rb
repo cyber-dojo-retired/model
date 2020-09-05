@@ -2,7 +2,7 @@
 require_relative 'test_base'
 require 'ostruct'
 
-class ProbesTest < TestBase
+class ProberTest < TestBase
 
   def self.id58_prefix
     'a86'

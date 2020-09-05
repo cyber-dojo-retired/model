@@ -1,29 +1,27 @@
 # frozen_string_literal: true
 
-class Probe # k8s/curl probing + identity
+class Prober
 
   def initialize(externals)
     @externals = externals
   end
 
   def alive?
-    true
+    model.alive?
   end
 
   def ready?
-    dependent_services.all?(&:ready?)
+    model.ready?
   end
 
   def sha
-    ENV['SHA']
+    model.sha
   end
 
   private
 
-  def dependent_services
-    [
-      @externals.saver
-    ]
+  def model
+    @externals.model
   end
 
 end

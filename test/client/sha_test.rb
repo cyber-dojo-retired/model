@@ -10,7 +10,7 @@ class ShaTest < TestBase
   # - - - - - - - - - - - - - - - - -
 
   test 'p23', %w( sha is 40-char git commit sha ) do
-    sha = probe.sha
+    sha = prober.sha
     assert git_sha?(sha), sha
   end
 

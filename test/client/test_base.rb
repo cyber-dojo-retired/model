@@ -3,7 +3,7 @@ require_relative '../id58_test_base'
 require_relative 'external_custom_start_points'
 require_source 'externals'
 require_source 'model'
-require_source 'probe'
+require_source 'prober'
 
 class TestBase < Id58TestBase
 
@@ -11,8 +11,8 @@ class TestBase < Id58TestBase
     @externals ||= Externals.new
   end
 
-  def probe
-    Probe.new(externals)
+  def prober
+    Prober.new(externals)
   end
 
   def model

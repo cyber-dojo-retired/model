@@ -1,27 +1,29 @@
 # frozen_string_literal: true
 
-class Probe
+class Prober
 
   def initialize(externals)
     @externals = externals
   end
 
   def alive?
-    model.alive?
+    true
   end
 
   def ready?
-    model.ready?
+    dependent_services.all?(&:ready?)
   end
 
   def sha
-    model.sha
+    ENV['SHA']
   end
 
   private
 
-  def model
-    @externals.model
+  def dependent_services
+    [
+      @externals.saver
+    ]
   end
 
 end

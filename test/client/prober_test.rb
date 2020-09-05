@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative 'test_base'
 
-class ProbesTest < TestBase
+class ProberTest < TestBase
 
   def self.id58_prefix
     'A86'
@@ -10,13 +10,13 @@ class ProbesTest < TestBase
   # - - - - - - - - - - - - - - - - -
 
   test '15C', 'its alive' do
-    assert true?(probe.alive?)
+    assert true?(prober.alive?)
   end
 
   # - - - - - - - - - - - - - - - - -
 
   test '15D', 'its ready' do
-    assert true?(probe.ready?)
+    assert true?(prober.ready?)
   end
 
 end
