@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require_relative '../id58_test_base'
+require_relative 'external_custom_start_points'
 require_source 'externals'
 require_source 'model'
 require_source 'probe'
@@ -16,6 +17,19 @@ class TestBase < Id58TestBase
 
   def model
     Model.new(externals)
+  end
+
+  def custom_start_points
+    ExternalCustomStartPoints.new
+  end
+
+  # - - - - - - - - - - - - -
+
+  def default_options
+    { "line_numbers":true,
+      "syntax_highlight":false,
+      "predict_colour":false
+    }
   end
 
   # - - - - - - - - - - - - -

@@ -23,16 +23,10 @@ class CreateTest < TestBase
   |that exists in saver
   |whose manifest matches the display_name
   ) do
-    assert_json_post_200(
-      path = 'group_create', {
-        manifests:[custom_manifest],
-        options:default_options
-      }.to_json
-    ) do |response|
-      assert_equal [path], response.keys.sort, :keys
-      id = response[path]
-      assert_group_exists(id, display_name)
-    end
+    manifests = [custom_manifest]
+    options = default_options
+    id = model.group_create(manifests, options)
+    assert model.group_exists?(id), :group_exists?
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -44,16 +38,10 @@ class CreateTest < TestBase
   |that exists in saver
   |whose manifest matches the display_name
   ) do
-    assert_json_post_200(
-      path = 'kata_create', {
-        manifest:custom_manifest,
-        options:default_options
-      }.to_json
-    ) do |response|
-      assert_equal [path], response.keys.sort, :keys
-      id = response[path]
-      assert_kata_exists(id, display_name)
-    end
+    manifest = custom_manifest
+    options = default_options
+    id = model.kata_create(manifest, options)
+    assert model.kata_exists?(id), :group_exists?
   end
 
 end

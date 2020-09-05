@@ -23,11 +23,21 @@ class ExternalModel
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  def group_exists?(id)
+    @http.get(__method__, { id:id })
+  end
+
   def group_create(manifests, options)
     @http.post(__method__, {
       manifests:manifests,
       options:options
     })
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def kata_exists?(id)
+    @http.get(__method__, { id:id })
   end
 
   def kata_create(manifest, options)

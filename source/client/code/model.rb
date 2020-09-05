@@ -8,8 +8,18 @@ class Model
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
+  def group_exists?(id)
+    model.group_exists?(id)
+  end
+
   def group_create(manifests, options)
     model.group_create(manifests, options)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def kata_exists?(id)
+    model.kata_exists?(id)
   end
 
   def kata_create(manifest, options)
