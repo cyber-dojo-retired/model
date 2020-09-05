@@ -40,8 +40,8 @@ class AppBase < Sinatra::Base
     info = { exception: error.message }
     if error.instance_of?(::HttpJsonHash::ServiceError)
       info[:request] = {
-        path:request.path
-        #body:request.body.read,
+        path:request.path,
+        body:request.body.read
       }
       info[:service] = {
         path:error.path,
