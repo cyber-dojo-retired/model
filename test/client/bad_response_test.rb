@@ -20,9 +20,11 @@ class BadResponseTest < TestBase
   test 'QN3', %w(
   |when an external http-proxy service
   |returns non-JSON in its response.body
-  |exception is raised
+  |an exception is raised
   ) do
-    assert_raises_HttpJsonHash_ServiceError('xxxx', 'body is not JSON')
+    body = 'xxxx'
+    message = 'body is not JSON'
+    assert_raises_HttpJsonHash_ServiceError(body, message)
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -30,9 +32,35 @@ class BadResponseTest < TestBase
   test 'QN4', %w(
   |when an external http-proxy service
   |returns JSON non-Hash in its response.body
-  |exception is raised
+  |an exception is raised
   ) do
-    assert_raises_HttpJsonHash_ServiceError('[]', 'body is not JSON Hash')
+    body = '[]'
+    message = 'body is not JSON Hash'
+    assert_raises_HttpJsonHash_ServiceError(body, message)
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  test 'QN5', %w(
+  |when an external http-proxy service
+  |returns JSON Hash with embedded exception in its response.body
+  |an exception is raised
+  ) do
+    body = '{"exception":{}}'
+    message = 'body has embedded exception'
+    assert_raises_HttpJsonHash_ServiceError(body, message)
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  test 'QN6', %w(
+  |when an external http-proxy service
+  |returns JSON Hash with no key in its response.body matching the request path
+  |an exception is raised
+  ) do
+    body = '{"not_request_path":42}'
+    message = 'body is missing :path key'
+    assert_raises_HttpJsonHash_ServiceError(body, message)
   end
 
   private
@@ -40,12 +68,12 @@ class BadResponseTest < TestBase
   def assert_raises_HttpJsonHash_ServiceError(body, message)
     stub_model_http(body)
     expected = HttpJsonHash::ServiceError.new(
-      'group_create',
-      {
+      path='group_create',
+      args={
         manifests:[custom_manifest],
         options:default_options
       },
-      'ExternalModel',
+      name='ExternalModel',
       body,
       message
     )
@@ -66,9 +94,6 @@ class BadResponseTest < TestBase
   class HttpAdapterStub
     def initialize(body)
       @body = body
-    end
-    def get(_uri)
-      OpenStruct.new
     end
     def post(_uri)
       OpenStruct.new
