@@ -16,6 +16,10 @@ class Model
     model.group_create(manifests, options)
   end
 
+  def group_manifest(id)
+    model.group_manifest(id)
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def kata_exists?(id)
@@ -24,6 +28,10 @@ class Model
 
   def kata_create(manifest, options)
     model.kata_create(manifest, options)
+  end
+
+  def kata_manifest(id)
+    model.kata_manifest(id)
   end
 
   private

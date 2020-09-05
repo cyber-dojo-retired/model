@@ -27,6 +27,8 @@ class CreateTest < TestBase
     options = default_options
     id = model.group_create(manifests, options)
     assert model.group_exists?(id), :group_exists?
+    m = model.group_manifest(id)
+    assert_equal display_name, m['display_name'], :display_name
   end
 
   # - - - - - - - - - - - - - - - - -
@@ -42,6 +44,8 @@ class CreateTest < TestBase
     options = default_options
     id = model.kata_create(manifest, options)
     assert model.kata_exists?(id), :group_exists?
+    m = model.kata_manifest(id)
+    assert_equal display_name, m['display_name'], :display_name
   end
 
 end

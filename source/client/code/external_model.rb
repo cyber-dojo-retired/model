@@ -34,6 +34,10 @@ class ExternalModel
     })
   end
 
+  def group_manifest(id)
+    @http.get(__method__, { id:id })
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def kata_exists?(id)
@@ -45,6 +49,10 @@ class ExternalModel
       manifest:manifest,
       options:options
     })
+  end
+
+  def kata_manifest(id)
+    @http.get(__method__, { id:id })
   end
 
 end
