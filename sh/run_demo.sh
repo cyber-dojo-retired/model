@@ -13,7 +13,7 @@ run_demo()
 {
   local -r TMP_HTML_FILENAME=/tmp/model-demo.html
   docker exec \
-    test-differ-client \
+    test-runner-client \
       sh -c 'ruby /app/src/html_demo.rb' \
         > ${TMP_HTML_FILENAME}
 

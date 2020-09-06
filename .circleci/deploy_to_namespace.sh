@@ -11,7 +11,7 @@ gcloud_init
 helm_init
 helm_upgrade_probe_yes_prometheus_yes \
    "${NAMESPACE}" \
-   "differ" \
+   "model" \
    "${CYBER_DOJO_MODEL_IMAGE}" \
    "${CYBER_DOJO_MODEL_TAG}" \
    "${CYBER_DOJO_MODEL_PORT}" \
