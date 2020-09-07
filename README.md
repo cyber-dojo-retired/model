@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/cyber-dojo/model.svg?style=svg)](https://circleci.com/gh/cyber-dojo/model)
 
-# cyberdojo/creator
+# cyberdojo/model
 
 - The source for the [cyberdojo/model](https://hub.docker.com/r/cyberdojo/model/tags) Docker image.
 - A docker-containerized stateless micro-service for [https://cyber-dojo.org](http://cyber-dojo.org).
