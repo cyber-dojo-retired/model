@@ -12,6 +12,8 @@ services:
     container_name: test-model-client
     depends_on:
       - model-server
+    env_file:
+      - .env      
     ports: [ "${CYBER_DOJO_MODEL_CLIENT_PORT}:${CYBER_DOJO_MODEL_CLIENT_PORT}" ]
     read_only: true
     restart: "no"
@@ -28,7 +30,8 @@ services:
     depends_on:
       - custom-start-points
       - saver
-    environment: [ NO_PROMETHEUS ]
+    env_file:
+      - .env
     ports: [ "${CYBER_DOJO_MODEL_PORT}:${CYBER_DOJO_MODEL_PORT}" ]
     read_only: true
     restart: "no"

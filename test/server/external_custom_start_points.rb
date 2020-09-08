@@ -6,7 +6,9 @@ require_source 'external_http'
 class ExternalCustomStartPoints
 
   def initialize(http = ExternalHttp.new)
-    @http = HttpJsonHash::service(self.class.name, http, 'custom-start-points', 4526)
+    service = 'custom-start-points'
+    port = ENV['CYBER_DOJO_CUSTOM_START_POINTS_PORT'].to_i
+    @http = HttpJsonHash::service(self.class.name, http, service, port)
   end
 
   def ready?
