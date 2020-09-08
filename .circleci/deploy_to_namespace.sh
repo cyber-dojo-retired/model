@@ -12,8 +12,8 @@ readonly YAML_VALUES_FILE="${MY_DIR}/k8s-general-values.yml"
 
 gcloud_init
 helm_init
-cat "${MY_DIR}/env-var-values.yml" >> "${YAML_VALUES_FILE}"
 
+cat "${MY_DIR}/env-var-values.yml" >> "${YAML_VALUES_FILE}"
 echo '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 cat "${YAML_VALUES_FILE}"
 echo '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
