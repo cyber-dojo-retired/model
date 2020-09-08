@@ -13,7 +13,7 @@ services:
     depends_on:
       - model-server
     env_file:
-      - .env      
+      - .env
     ports: [ "${CYBER_DOJO_MODEL_CLIENT_PORT}:${CYBER_DOJO_MODEL_CLIENT_PORT}" ]
     read_only: true
     restart: "no"
