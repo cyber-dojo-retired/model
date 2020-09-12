@@ -21,7 +21,8 @@ class CreateTest < TestBase
   |has status 200
   |returns the id: of a new group
   |that exists in saver
-  |whose manifest matches the display_name
+  |with version 1
+  |and a matching display_name
   ) do
     assert_json_post_200(
       path = 'group_create', {
@@ -32,6 +33,7 @@ class CreateTest < TestBase
       assert_equal [path], response.keys.sort, :keys
       id = response[path]
       assert_group_exists(id, display_name)
+      assert_equal 1, group_manifest(id)['version']
     end
   end
 
@@ -42,7 +44,8 @@ class CreateTest < TestBase
   |has status 200
   |returns the id: of a new kata
   |that exists in saver
-  |whose manifest matches the display_name
+  |with version 1
+  |and a matching display_name
   ) do
     assert_json_post_200(
       path = 'kata_create', {
@@ -53,6 +56,7 @@ class CreateTest < TestBase
       assert_equal [path], response.keys.sort, :keys
       id = response[path]
       assert_kata_exists(id, display_name)
+      assert_equal 1, kata_manifest(id)['version']      
     end
   end
 

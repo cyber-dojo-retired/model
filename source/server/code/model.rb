@@ -123,7 +123,7 @@ class Model
   #- - - - - - - - - - - - - - - - - -
 
   def set_version(manifest)
-    manifest['version'] = 1
+    manifest['version'] ||= 1
   end
 
   def set_time_stamp(manifest)
