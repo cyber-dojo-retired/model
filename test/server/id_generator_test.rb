@@ -1,4 +1,5 @@
 require_relative 'test_base'
+require_relative 'saver_fake'
 require_source 'model'
 require 'fileutils'
 require 'tmpdir'
@@ -75,15 +76,16 @@ class IdGeneratorTest < TestBase
 
   # - - - - - - - - - - - - - - - - - - -
 
-=begin Too slow without SaverFake
   test '066', %w(
   no kata-id duplicates in 5000 repeats
   ) do
+    externals.instance_exec {
+      @saver = SaverFake.new(self)
+    }
     id_generator = IdGenerator.new(externals)
     ids = {}
     repeats = 5000
     repeats.times do
-      print '.'
       ids[id_generator.kata_id] = true
     end
     assert_equal repeats, ids.keys.size
@@ -94,6 +96,9 @@ class IdGeneratorTest < TestBase
   test '067', %w(
   no group-id duplicates in 5000 repeats
   ) do
+    externals.instance_exec {
+      @saver = SaverFake.new(self)
+    }
     id_generator = IdGenerator.new(externals)
     ids = {}
     repeats = 5000
@@ -102,7 +107,6 @@ class IdGeneratorTest < TestBase
     end
     assert_equal repeats, ids.keys.size
   end
-=end
 
   # - - - - - - - - - - - - - - - - - - -
 
