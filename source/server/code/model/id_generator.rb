@@ -11,6 +11,12 @@ class IdGenerator
     a b c d e f g h   j k l m n   p q r s t u v w x y z
   }.join.freeze
 
+  def self.id?(s)
+    s.is_a?(String) &&
+      s.length === SIZE &&
+        s.chars.all?{ |ch| ALPHABET.include?(ch) }
+  end
+
   # - - - - - - - - - - - - - - - - - - -
 
   def initialize(externals)
