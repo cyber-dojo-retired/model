@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative 'model/id_generator'
 require_relative 'model/id_pather'
 require_relative 'model/group_v0'
 require_relative 'model/group_v1'

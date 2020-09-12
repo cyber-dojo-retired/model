@@ -33,6 +33,7 @@ class Kata_v1
   # - - - - - - - - - - - - - - - - - - -
 
   def exists?(id)
+    return false unless IdGenerator::id?(id)         
     dirname = kata_id_path(id)
     command = saver.dir_exists_command(dirname)
     saver.run(command)
