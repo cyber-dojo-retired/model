@@ -156,4 +156,6 @@ containers_up()
   export NO_PROMETHEUS=true
   container_up_ready_and_clean "${CYBER_DOJO_MODEL_PORT}"          model-server
   container_up_ready_and_clean "${CYBER_DOJO_MODEL_CLIENT_PORT}"   model-client
+  docker exec model_saver_1 bash -c 'rm -rf /cyber-dojo/groups/*'
+  docker exec model_saver_1 bash -c 'rm -rf /cyber-dojo/katas/*'
 }
