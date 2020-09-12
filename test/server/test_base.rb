@@ -44,7 +44,7 @@ class TestBase < Id58TestBase
     stdout,stderr = capture_stdout_stderr {
       get '/'+path
     }
-    assert_status 200
+    assert_status 200, stdout, stderr
     assert_equal '', stderr, :stderr
     assert_equal '', stdout, :sdout
     block.call(json_response_body)
@@ -52,7 +52,7 @@ class TestBase < Id58TestBase
 
   def assert_get_500(path, &block)
     stdout,stderr = capture_stdout_stderr { get '/'+path }
-    assert_status 500
+    assert_status 500, stdout, stderr
     assert_equal '', stderr, :stderr
     assert_equal stdout, last_response.body+"\n", :stdout
     block.call(json_response_body)
@@ -62,7 +62,7 @@ class TestBase < Id58TestBase
     stdout,stderr = capture_stdout_stderr {
       json_post '/'+path, body
     }
-    assert_status 200
+    assert_status 200, stdout, stderr
     assert_equal '', stderr, :stderr
     assert_equal '', stdout, :stdout
     block.call(json_response_body)
@@ -70,7 +70,7 @@ class TestBase < Id58TestBase
 
   def assert_json_post_500(path, body)
     stdout,stderr = capture_stdout_stderr { json_post '/'+path, body }
-    assert_status 500
+    assert_status 500, stdout, stderr
     assert_equal '', stderr, :stderr
     assert_equal stdout, last_response.body+"\n", :stdout
     if block_given?
@@ -96,8 +96,14 @@ class TestBase < Id58TestBase
 
   # - - - - - - - - - - - - - - -
 
-  def assert_status(expected)
-    assert_equal expected, last_response.status, :last_response_status
+  def assert_status(expected, stdout, stderr)
+    diagnostic = JSON.pretty_generate({
+      stdout:stdout,
+      stderr:stderr,
+      'last_response.status': last_response.status
+    })
+    actual = last_response.status
+    assert_equal expected, actual, diagnostic
   end
 
   # - - - - - - - - - - - - - - -

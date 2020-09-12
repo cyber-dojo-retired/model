@@ -41,6 +41,10 @@ class ExternalSaver
   # - - - - - - - - - - - - - - - - - - -
   # batches
 
+  def assert(command)
+    @http.post(__method__, { command:command })
+  end
+
   def assert_all(commands)
     @http.post(__method__, { commands:commands })
   end
