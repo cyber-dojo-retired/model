@@ -34,7 +34,7 @@ class Group_v1
     planned_feature(options)
     manifest['version'] = 1
     manifest['created'] = time.now
-    id = manifest['id'] = IdGenerator.new(@externals).group_id
+    id = manifest['id'] = IdGenerator.new(externals).group_id
     saver.assert_all([
       manifest_create_command(id, json_plain(manifest)),
       katas_create_command(id, '')
@@ -56,6 +56,8 @@ class Group_v1
 
   include IdPather
   include JsonAdapter
+
+  attr_reader :externals
 
   def planned_feature(_options)
   end
@@ -144,11 +146,11 @@ class Group_v1
   # - - - - - - - - - - - - - -
 
   def saver
-    @externals.saver
+    externals.saver
   end
 
   def time
-    @externals.time
+    externals.time
   end
 
 end

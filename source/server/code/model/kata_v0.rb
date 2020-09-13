@@ -17,7 +17,7 @@ class Kata_v0
     planned_feature(options)
     manifest['version'] = 0
     manifest['created'] = time.now
-    id = manifest['id'] = IdGenerator.new(@externals).kata_id
+    id = manifest['id'] = IdGenerator.new(externals).kata_id
     files = manifest.delete('visible_files')
     event0 = {
       'event' => 'created',
@@ -53,6 +53,8 @@ class Kata_v0
   include IdPather
   include JsonAdapter
   include Liner_v0
+
+  attr_reader :externals
 
   def planned_feature(_options)
   end
@@ -164,11 +166,11 @@ class Kata_v0
   # - - - - - - - - - - - - - -
 
   def saver
-    @externals.saver
+    externals.saver
   end
 
   def time
-    @externals.time
+    externals.time
   end
 
 end

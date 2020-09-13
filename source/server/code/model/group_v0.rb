@@ -19,7 +19,7 @@ class Group_v0
     planned_feature(options)
     manifest['version'] = 0
     manifest['created'] = time.now
-    id = manifest['id'] = IdGenerator.new(@externals).group_id
+    id = manifest['id'] = IdGenerator.new(externals).group_id
     manifest['visible_files'] = lined_files(manifest['visible_files'])
     saver.assert(manifest_create_command(id, json_plain(manifest)))
     id
@@ -42,6 +42,8 @@ class Group_v0
   include IdPather
   include Liner_v0
   include JsonAdapter
+
+  attr_reader :externals
 
   def planned_feature(_options)
   end
@@ -126,11 +128,11 @@ class Group_v0
   # - - - - - - - - - - - - - -
 
   def saver
-    @externals.saver
+    externals.saver
   end
 
   def time
-    @externals.time
+    externals.time
   end
 
 end
