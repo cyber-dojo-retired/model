@@ -1,5 +1,5 @@
 #!/bin/bash -Eeu
-set -x
+
 export ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export SH_DIR="${ROOT_DIR}/sh"
 source ${SH_DIR}/show_help_if_requested.sh
