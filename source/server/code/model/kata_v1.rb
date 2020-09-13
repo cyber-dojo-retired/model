@@ -33,7 +33,9 @@ class Kata_v1
   # - - - - - - - - - - - - - - - - - - -
 
   def exists?(id)
-    return false unless IdGenerator::id?(id)
+    unless IdGenerator::id?(id)
+      return false
+    end
     dirname = kata_id_path(id)
     command = saver.dir_exists_command(dirname)
     saver.run(command)
@@ -68,6 +70,9 @@ class Kata_v1
     manifest_src = saver.assert(manifest_file_read_command(id))
     json_parse(manifest_src)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+  # ...
 
   private
 

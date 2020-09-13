@@ -20,7 +20,9 @@ class Group_v1
   # - - - - - - - - - - - - - - - - - - -
 
   def exists?(id)
-    return false unless IdGenerator::id?(id)
+    unless IdGenerator::id?(id)
+      return false
+    end
     dirname = group_id_path(id)
     command = saver.dir_exists_command(dirname)
     saver.run(command)
@@ -46,6 +48,9 @@ class Group_v1
     manifest_src = saver.assert(manifest_read_command(id))
     json_parse(manifest_src)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+  # ...
 
   private
 

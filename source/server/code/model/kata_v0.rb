@@ -45,6 +45,9 @@ class Kata_v0
     manifest
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+  # ...
+
   private
 
   include IdPather
