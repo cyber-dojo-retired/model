@@ -15,6 +15,7 @@ class Group_v0
   # - - - - - - - - - - - - - - - - - - -
 
   def create(manifest, options)
+    manifest = manifest.clone
     planned_feature(options)
     manifest['version'] = 0
     manifest['created'] = time.now
