@@ -2,7 +2,7 @@
 require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'liner_v0'
-require_relative 'oj_adapter'
+require_relative '../lib/json_adapter'
 
 class Kata_v0
 
@@ -47,6 +47,7 @@ class Kata_v0
   private
 
   include IdPather
+  include JsonAdapter
   include Liner_v0
 
   def planned_feature(_options)
@@ -58,9 +59,9 @@ class Kata_v0
     saver.dir_make_command(dirname(id, *parts))
   end
 
-  def dir_exists_command(id, *parts)
-    saver.dir_exists_command(dirname(id, *parts))
-  end
+  #def dir_exists_command(id, *parts)
+  #  saver.dir_exists_command(dirname(id, *parts))
+  #end
 
   # - - - - - - - - - - - - - - - - - - - - - -
   # manifest
@@ -94,13 +95,13 @@ class Kata_v0
     saver.file_create_command(events_filename(id), event0_src)
   end
 
-  def events_file_append_command(id, eventN_src)
-    saver.file_append_command(events_filename(id), eventN_src)
-  end
+  #def events_file_append_command(id, eventN_src)
+  #  saver.file_append_command(events_filename(id), eventN_src)
+  #end
 
-  def events_file_read_command(id)
-    saver.file_read_command(events_filename(id))
-  end
+  #def events_file_read_command(id)
+  #  saver.file_read_command(events_filename(id))
+  #end
 
   # - - - - - - - - - - - - - - - - - - - - - -
   # event

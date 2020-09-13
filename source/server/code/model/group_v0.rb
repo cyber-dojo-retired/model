@@ -3,7 +3,7 @@ require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'kata_v0'
 require_relative 'liner_v0'
-require_relative 'oj_adapter'
+require_relative '../lib/json_adapter'
 
 class Group_v0
 
@@ -37,13 +37,14 @@ class Group_v0
 
   include IdPather
   include Liner_v0
-  include OjAdapter
+  include JsonAdapter
 
   def planned_feature(_options)
   end
 
   # - - - - - - - - - - - - - - - - - - -
 
+=begin
   def katas_ids(katas_indexes)
     katas_indexes.map{ |kata_id,_| kata_id }
   end
@@ -81,6 +82,7 @@ class Group_v0
   def dir_make_command(id, *parts)
     saver.dir_make_command(group_id_path(id, *parts))
   end
+=end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
@@ -101,6 +103,7 @@ class Group_v0
     # eg content ==> {"display_name":"Ruby, MiniTest",...}
   end
 
+=begin
   def kata_id_filename(id, index)
     group_id_path(id, index, 'kata.id')
     # eg id == 'chy6BJ', index == 11 ==> '/cyber-dojo/groups/ch/y6/BJ/11/kata.id'
@@ -114,6 +117,7 @@ class Group_v0
     # Alternative implementation, which tests show is slower.
     # s.lines.map { |line| json_parse(line) }
   end
+=end
 
   # - - - - - - - - - - - - - -
 

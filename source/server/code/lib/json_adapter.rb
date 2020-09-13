@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module OjAdapter # mix-in
+module JsonAdapter # mix-in
 
   def json_plain(obj)
     #Oj.dump(obj, { :mode => :strict })

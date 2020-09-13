@@ -150,4 +150,24 @@ class TestBase < Id58TestBase
     model.kata_manifest(id:id)
   end
 
+  # - - - - - - - - - - - - - - -
+  
+  def self.v_tests(versions, id58_suffix, *lines, &test_block)
+    versions.each do |version|
+      v_lines = ["<version=#{version}>"] + lines
+      test(id58_suffix + version.to_s, *v_lines, &test_block)
+    end
+  end
+
+  def version
+    return 0 if v_test?(0)
+    return 1 if v_test?(1)
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def v_test?(n)
+    name58.start_with?("<version=#{n}>")
+  end
+
 end

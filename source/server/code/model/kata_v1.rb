@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative 'id_generator'
 require_relative 'id_pather'
-require_relative 'oj_adapter'
+require_relative '../lib/json_adapter'
 
 # 1. Manifest now has explicit version (1)
 # 2. Manifest is retrieved in single read call.
@@ -33,7 +33,7 @@ class Kata_v1
   # - - - - - - - - - - - - - - - - - - -
 
   def exists?(id)
-    return false unless IdGenerator::id?(id)         
+    return false unless IdGenerator::id?(id)
     dirname = kata_id_path(id)
     command = saver.dir_exists_command(dirname)
     saver.run(command)
@@ -71,8 +71,8 @@ class Kata_v1
 
   private
 
-  include IdPather # kata_id_path
-  include OjAdapter
+  include IdPather
+  include JsonAdapter
 
   def planned_feature(_options)
   end
@@ -100,13 +100,13 @@ class Kata_v1
     saver.file_create_command(events_filename(id), event0_src)
   end
 
-  def events_file_append_command(id, eventN_src)
-    saver.file_append_command(events_filename(id), eventN_src)
-  end
+  #def events_file_append_command(id, eventN_src)
+  #  saver.file_append_command(events_filename(id), eventN_src)
+  #end
 
-  def events_file_read_command(id)
-    saver.file_read_command(events_filename(id))
-  end
+  #def events_file_read_command(id)
+  #  saver.file_read_command(events_filename(id))
+  #end
 
   # - - - - - - - - - - - - - - - - - - - - - -
   # event
@@ -115,9 +115,9 @@ class Kata_v1
     saver.file_create_command(event_filename(id,index), event_src)
   end
 
-  def event_file_read_command(id, index)
-    saver.file_read_command(event_filename(id,index))
-  end
+  #def event_file_read_command(id, index)
+  #  saver.file_read_command(event_filename(id,index))
+  #end
 
   # - - - - - - - - - - - - - -
   # names of dirs/files

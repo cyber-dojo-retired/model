@@ -2,7 +2,7 @@
 require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'kata_v1'
-require_relative 'oj_adapter'
+require_relative '../lib/json_adapter'
 
 # 1. Manifest now has explicit version (1)
 # 2. joined() now does 1 read, not 64 reads.
@@ -50,13 +50,14 @@ class Group_v1
   private
 
   include IdPather
-  include OjAdapter
+  include JsonAdapter
 
   def planned_feature(_options)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   def katas_ids(katas_indexes)
     katas_indexes.map{ |kata_id,_| kata_id }
   end
@@ -85,6 +86,7 @@ class Group_v1
   def dir_make_command(id, *parts)
     saver.dir_make_command(dirname(id, *parts))
   end
+=end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
@@ -102,6 +104,7 @@ class Group_v1
     saver.file_create_command(katas_filename(id), src)
   end
 
+=begin
   def katas_append_command(id, src)
     saver.file_append_command(katas_filename(id), src)
   end
@@ -117,6 +120,7 @@ class Group_v1
     group_id_path(id, *parts)
     # eg id == 'wAtCfj' ==> '/cyber-dojo/groups/wA/tC/fj'
   end
+=end
 
   def manifest_filename(id)
     group_id_path(id, 'manifest.json')

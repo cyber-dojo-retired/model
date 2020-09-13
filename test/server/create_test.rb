@@ -9,14 +9,16 @@ class CreateTest < TestBase
 
   def id58_setup
     @display_name = custom_start_points.display_names.sample
-    @custom_manifest = custom_start_points.manifest(display_name)
+    manifest = custom_start_points.manifest(display_name)
+    manifest['version'] = version
+    @custom_manifest = manifest
   end
 
   attr_reader :display_name, :custom_manifest
 
   # - - - - - - - - - - - - - - - - -
 
-  test 'q31', %w(
+  v_tests [0,1], 'q31', %w(
   |POST /group_create(manifest)
   |has status 200
   |returns the id: of a new group
@@ -33,13 +35,13 @@ class CreateTest < TestBase
       assert_equal [path], response.keys.sort, :keys
       id = response[path]
       assert_group_exists(id, display_name)
-      assert_equal 1, group_manifest(id)['version']
+      assert_equal version, group_manifest(id)['version']
     end
   end
 
   # - - - - - - - - - - - - - - - - -
 
-  test 'q32', %w(
+  v_tests [0,1], 'q32', %w(
   |POST /kata_create(manifest)
   |has status 200
   |returns the id: of a new kata
@@ -56,7 +58,7 @@ class CreateTest < TestBase
       assert_equal [path], response.keys.sort, :keys
       id = response[path]
       assert_kata_exists(id, display_name)
-      assert_equal 1, kata_manifest(id)['version']      
+      assert_equal version, kata_manifest(id)['version']
     end
   end
 

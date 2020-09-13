@@ -3,6 +3,7 @@ require_relative 'silently'
 require 'sinatra/base'
 silently { require 'sinatra/contrib' } # N x "warning: method redefined"
 require_relative 'http_json_hash/service'
+require_relative 'lib/json_adapter'
 require 'json'
 require 'sprockets'
 
@@ -53,6 +54,8 @@ class AppBase < Sinatra::Base
 
   private
 
+  include JsonAdapter
+
   def symbolized(h)
     # named-args require symbolization
     Hash[h.map{ |key,value| [key.to_sym, value] }]
@@ -101,7 +104,7 @@ class AppBase < Sinatra::Base
     else
       exception[:message] = error.message
     end
-    diagnostic = JSON.pretty_generate(info)
+    diagnostic = json_pretty(info)
     puts diagnostic
     body diagnostic
   end

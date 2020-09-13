@@ -1,10 +1,10 @@
 # frozen_string_literal: true
+require_relative 'lib/json_adapter'
 require_relative 'model/id_pather'
 require_relative 'model/group_v0'
 require_relative 'model/group_v1'
 require_relative 'model/kata_v0'
 require_relative 'model/kata_v1'
-require 'json'
 
 class Model
 
@@ -48,6 +48,7 @@ class Model
   attr_reader :externals
 
   include IdPather
+  include JsonAdapter
 
   def group(version)
     GROUPS[version].new(externals)
@@ -67,7 +68,7 @@ class Model
 
   def version_path(path)
     manifest_src = saver.assert(saver.file_read_command(path))
-    manifest = JSON.parse!(manifest_src)
+    manifest = json_parse(manifest_src)
     # if manifest['version'].nil?
     # then nil.to_i ==> 0 which is what we want
     manifest['version'].to_i
