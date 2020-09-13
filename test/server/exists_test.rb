@@ -32,7 +32,9 @@ class ExistsTest < TestBase
   |for a well-formed id that exists
   ) do
     id = model.group_create(manifests:[custom_manifest], options:default_options)
-    assert group_exists?(id)
+    assert group_exists?(id), :created_in_test
+    assert group_exists?('chy6BJ'), :original_no_explicit_version
+    assert group_exists?('FxWwrr'), :original_no_explicit_version
   end
 
   v_tests [0,1], '862', %w(
@@ -81,7 +83,9 @@ class ExistsTest < TestBase
   |for a well-formed id that exists
   ) do
     id = model.kata_create(manifest:custom_manifest, options:default_options)
-    assert kata_exists?(id)
+    assert kata_exists?(id), :created_in_test
+    assert kata_exists?('5rTJv5'), :original_no_explicit_version
+    assert kata_exists?('k5ZTk0'), :original_no_explicit_version
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

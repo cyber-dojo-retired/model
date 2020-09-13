@@ -150,12 +150,31 @@ container_up()
     "${service_name}"
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - -
+saver_cid()
+{
+  docker ps --filter status=running --format '{{.Names}}' | grep "^model_saver"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - -
+copy_in_saver_test_data()
+{
+  local -r SAVER_CID="${1}"
+  local -r SRC_PATH=${ROOT_DIR}/test/data/cyber-dojo
+  local -r DEST_PATH=/cyber-dojo
+  # You cannot docker cp to a tmpfs, so tar-piping instead...
+  cd ${SRC_PATH} \
+    && tar -c . \
+    | docker exec -i ${SAVER_CID} tar x -C ${DEST_PATH}
+}
+
 # - - - - - - - - - - - - - - - - - - -
 containers_up()
 {
-  export NO_PROMETHEUS=true
   container_up_ready_and_clean "${CYBER_DOJO_MODEL_PORT}"          model-server
   container_up_ready_and_clean "${CYBER_DOJO_MODEL_CLIENT_PORT}"   model-client
-  docker exec model_saver_1 bash -c 'rm -rf /cyber-dojo/groups/*'
-  docker exec model_saver_1 bash -c 'rm -rf /cyber-dojo/katas/*'
+  local -r SAVER_CID="$(saver_cid)"
+  docker exec "${SAVER_CID}" bash -c 'rm -rf /cyber-dojo/groups/*'
+  docker exec "${SAVER_CID}" bash -c 'rm -rf /cyber-dojo/katas/*'
+  copy_in_saver_test_data "${SAVER_CID}"
 }
