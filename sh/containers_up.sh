@@ -153,7 +153,9 @@ container_up()
 # - - - - - - - - - - - - - - - - - - - - - - - - - -
 saver_cid()
 {
-  docker ps --filter status=running --format '{{.Names}}' | grep "^model_saver"
+  # locally, the container name is model_saver_1
+  # on CI the contains name is, eg, project_saver_1_1bebf84ac62f
+  docker ps --filter status=running --format '{{.Names}}' | grep "saver"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -173,13 +175,6 @@ containers_up()
 {
   container_up_ready_and_clean "${CYBER_DOJO_MODEL_PORT}"          model-server
   container_up_ready_and_clean "${CYBER_DOJO_MODEL_CLIENT_PORT}"   model-client
-
-  echo '=================='
-  docker ps --filter status=running --format '{{.Names}}'
-  echo '=================='
-  docker ps --format '{{.Names}}'
-  echo '=================='
-
   local -r SAVER_CID="$(saver_cid)"
   docker exec "${SAVER_CID}" bash -c 'rm -rf /cyber-dojo/groups/*'
   docker exec "${SAVER_CID}" bash -c 'rm -rf /cyber-dojo/katas/*'
