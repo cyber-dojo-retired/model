@@ -13,7 +13,7 @@ Creates a new group exercise from `manifests[0]`, and returns its id.
   * the `id` of the created group.
 
 - - - -
-## GET group_exists?(id)
+## GET group_exists?(id:)
 Determines if a group exercise with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
@@ -32,7 +32,7 @@ Determines if a group exercise with the given `id`.
   ```
 
 - - - -
-## GET group_manifest(id)
+## GET group_manifest(id:)
 Gets the manifest used to create the group exercise with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
@@ -51,7 +51,7 @@ Gets the manifest used to create the group exercise with the given `id`.
   ```
 
 - - - -
-## POST kata_create(manifest,options)
+## POST kata_create(manifest:,options:)
 Creates a new kata exercise from `manifest`, and returns its id.
 - parameters [(JSON-in)](#json-in)
   * **manifest:Hash**.
@@ -62,7 +62,7 @@ Creates a new kata exercise from `manifest`, and returns its id.
   * the `id` of the created kata.
 
 - - - -
-## GET kata_exists?(id)
+## GET kata_exists?(id:)
 Determines if a kata exercise with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
@@ -81,7 +81,7 @@ Determines if a kata exercise with the given `id`.
   ```
 
 - - - -
-## GET kata_manifest(id)
+## GET kata_manifest(id:)
 Gets the manifest used to create the kata exercise with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
@@ -110,7 +110,7 @@ Used as a [Kubernetes](https://kubernetes.io/) readiness probe.
   * **false** if the service is not ready
 - example
   ```bash     
-  $ curl --silent -X GET http://${IP_ADDRESS}:${PORT}/ready?
+  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/ready?
 
   {"ready?":false}
   ```
@@ -125,7 +125,7 @@ Used as a [Kubernetes](https://kubernetes.io/) liveness probe.
   * **true**
 - example
   ```bash     
-  $ curl --silent -X GET http://${IP_ADDRESS}:${PORT}/alive?
+  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/alive?
 
   {"alive?":true}
   ```
@@ -139,7 +139,7 @@ The git commit sha used to create the Docker image.
   * the 40 character commit sha string.
 - example
   ```bash     
-  $ curl --silent -X GET http://${IP_ADDRESS}:${PORT}/sha
+  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/sha
 
   {"sha":"41d7e6068ab75716e4c7b9262a3a44323b4d1448"}
   ```
@@ -155,14 +155,14 @@ The git commit sha used to create the Docker image.
 - All methods return a json hash in the http response body.
   * If the method completes, a string key equals the method's name. eg
     ```bash
-    $ curl --silent -X GET http://${IP_ADDRESS}:${PORT}/ready?
+    $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/ready?
 
     {"ready?":true}
     ```
   * If the method raises an exception, a string key equals `"exception"`, with
     a json-hash as its value. eg
     ```bash
-    $ curl --silent -X POST http://${IP_ADDRESS}:${PORT}/group_create | jq      
+    $ curl --silent --request POST http://${IP_ADDRESS}:${PORT}/group_create | jq      
 
     {
       "exception": {
