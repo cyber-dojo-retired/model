@@ -1,15 +1,16 @@
 # API
 - - - -
-## POST group_create(manifests,options)
+## POST group_create(manifests:,options:)
 Creates a new group exercise from `manifests[0]`, and returns its id.
 - parameters [(JSON-in)](#json-in)
-  * **manifests:[manifest...]**.
-  At present only `manifests[0]` is used. The array is for a planned feature.
+  * **manifests:[Hash,...]**.
+  At present only `manifests[0]` is used.
   For example, a [custom-start-points](https://github.com/cyber-dojo/custom-start-points) manifest.  
+  The array is for a planned feature.
   * **options:Hash[String=>Boolean]**.
   Currently unused (and defaulted). For a planned feature.
 - returns [(JSON-out)](#json-out)
-  * the new exercise's id.
+  * the `id` of the created group.
 
 - - - -
 ## GET group_exists?(id)
@@ -17,7 +18,7 @@ Determines if a group exercise with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
-  * `true` if a group exercises exists, otherwise `false`.
+  * `true` if a group with the given `id` exists, otherwise `false`.
 - example
   ```bash
   $ curl \
@@ -36,7 +37,7 @@ Gets the manifest used to create the group exercise with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
-  * the exercise's manifest.
+  * the manifest of the group with the given `id`.
 - example
   ```bash
   $ curl \
@@ -53,12 +54,12 @@ Gets the manifest used to create the group exercise with the given `id`.
 ## POST kata_create(manifest,options)
 Creates a new kata exercise from `manifest`, and returns its id.
 - parameters [(JSON-in)](#json-in)
-  * **manifest:{...}**.
+  * **manifest:Hash**.
   For example, a [custom-start-points](https://github.com/cyber-dojo/custom-start-points) manifest.  
   * **options:Hash[String=>Boolean]**.
   Currently unused (and defaulted). For a planned feature.
 - returns [(JSON-out)](#json-out)
-  * the new exercise's id.
+  * the `id` of the created kata.
 
 - - - -
 ## GET kata_exists?(id)
@@ -66,7 +67,7 @@ Determines if a kata exercise with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
-  * `true` if a group exercises exists, otherwise `false`.
+  * `true` if a kata with the given `id` exists, otherwise `false`.
 - example
   ```bash
   $ curl \
@@ -85,7 +86,7 @@ Gets the manifest used to create the kata exercise with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
-  * the exercise's manifest.
+  * the manifest of the kata with the given `id`.
 - example
   ```bash
   $ curl \
