@@ -10,12 +10,10 @@ class IdGeneratorTest < TestBase
     'A6D'
   end
 
-  def alphabet
-    IdGenerator::ALPHABET
-  end
-
-  def saver_offline_id
-    IdGenerator::SAVER_OFFLINE_ID
+  def id58_setup
+    externals.instance_exec {
+      @saver = SaverFake.new(self)
+    }
   end
 
   # - - - - - - - - - - - - - - - - - - -
@@ -79,9 +77,6 @@ class IdGeneratorTest < TestBase
   test '066', %w(
   no kata-id duplicates in 5000 repeats
   ) do
-    externals.instance_exec {
-      @saver = SaverFake.new(self)
-    }
     id_generator = IdGenerator.new(externals)
     ids = {}
     repeats = 5000
@@ -96,9 +91,6 @@ class IdGeneratorTest < TestBase
   test '067', %w(
   no group-id duplicates in 5000 repeats
   ) do
-    externals.instance_exec {
-      @saver = SaverFake.new(self)
-    }
     id_generator = IdGenerator.new(externals)
     ids = {}
     repeats = 5000
@@ -198,6 +190,14 @@ class IdGeneratorTest < TestBase
 
   def id?(s)
     IdGenerator::id?(s)
+  end
+
+  def alphabet
+    IdGenerator::ALPHABET
+  end
+
+  def saver_offline_id
+    IdGenerator::SAVER_OFFLINE_ID
   end
 
   def stubbed_id_generator(stub)

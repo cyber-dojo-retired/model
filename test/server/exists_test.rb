@@ -29,13 +29,13 @@ class ExistsTest < TestBase
 
   v_tests [0,1], '861', %w(
   |group_exists? is true,
-  |for a well-formed id that exists
+  |for a well-formed id from previous group_create
   ) do
     id = model.group_create(manifests:[custom_manifest], options:default_options)
     assert group_exists?(id), :created_in_test
-    assert group_exists?('chy6BJ'), :original_no_explicit_version
-    assert group_exists?('FxWwrr'), :original_no_explicit_version
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0,1], '862', %w(
   |group_exists? is false,
@@ -67,6 +67,17 @@ class ExistsTest < TestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '864', %w(
+  |group_exists? is true
+  |for id from original group
+  |when there was no explicit version in the manifest
+  ) do
+    assert group_exists?('chy6BJ'), :original_no_explicit_version
+    assert group_exists?('FxWwrr'), :original_no_explicit_version
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '760', %w(
@@ -84,8 +95,6 @@ class ExistsTest < TestBase
   ) do
     id = model.kata_create(manifest:custom_manifest, options:default_options)
     assert kata_exists?(id), :created_in_test
-    assert kata_exists?('5rTJv5'), :original_no_explicit_version
-    assert kata_exists?('k5ZTk0'), :original_no_explicit_version
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -117,6 +126,17 @@ class ExistsTest < TestBase
     assert_raises {
       kata_exists?('123AbZ')
     }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '764', %w(
+  |kata_exists? is true
+  |for id from original kata
+  |when there was no explicit version in the manifest
+  ) do
+    assert kata_exists?('5rTJv5'), :original_no_explicit_version
+    assert kata_exists?('k5ZTk0'), :original_no_explicit_version
   end
 
   private

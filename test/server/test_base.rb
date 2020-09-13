@@ -151,7 +151,7 @@ class TestBase < Id58TestBase
   end
 
   # - - - - - - - - - - - - - - -
-  
+
   def self.v_tests(versions, id58_suffix, *lines, &test_block)
     versions.each do |version|
       v_lines = ["<version=#{version}>"] + lines
