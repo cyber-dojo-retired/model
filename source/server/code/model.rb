@@ -14,6 +14,12 @@ class Model
 
   #- - - - - - - - - - - - - - - - - -
 
+  def group_create(manifests:, options:)
+    manifest = manifests[0]
+    version = (manifest['version'] || CURRENT_VERSION).to_i
+    group(version).create(manifest, options)
+  end
+
   def group_exists?(id:)
     group(CURRENT_VERSION).exists?(id)
   end
@@ -22,13 +28,20 @@ class Model
     group(version_group(id)).manifest(id)
   end
 
-  def group_create(manifests:, options:)
-    manifest = manifests[0]
-    version = (manifest['version'] || CURRENT_VERSION).to_i
-    group(version).create(manifest, options)
+  def group_join(id:, indexes:AVATAR_INDEXES.shuffle)
+    group(version_group(id)).join(id, indexes)
+  end
+
+  def group_avatars(id:)
+    group(version_group(id)).avatars(id)
   end
 
   #- - - - - - - - - - - - - - - - - -
+
+  def kata_create(manifest:, options:)
+    version = (manifest['version'] || CURRENT_VERSION).to_i
+    kata(version).create(manifest, options)
+  end
 
   def kata_exists?(id:)
     kata(CURRENT_VERSION).exists?(id)
@@ -38,24 +51,19 @@ class Model
     kata(version_kata(id)).manifest(id)
   end
 
-  def kata_create(manifest:, options:)
-    version = (manifest['version'] || CURRENT_VERSION).to_i
-    kata(version).create(manifest, options)
-  end
-
   private
 
-  attr_reader :externals
+  AVATAR_INDEXES = (0..63).to_a
 
   include IdPather
   include JsonAdapter
 
   def group(version)
-    GROUPS[version].new(externals)
+    GROUPS[version].new(@externals)
   end
 
   def kata(version)
-    KATAS[version].new(externals)
+    KATAS[version].new(@externals)
   end
 
   def version_group(id)
@@ -75,7 +83,7 @@ class Model
   end
 
   def saver
-    externals.saver
+    @externals.saver
   end
 
   CURRENT_VERSION = 1

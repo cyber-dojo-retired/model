@@ -13,12 +13,13 @@ class App < AppBase
    get_json(:ready?, Prober)
    get_json(:sha,    Prober)
 
-   get_json(:group_exists?,  Model)
   post_json(:group_create,   Model)
+   get_json(:group_exists?,  Model)
    get_json(:group_manifest, Model)
+  post_json(:group_join,     Model)
 
-   get_json(:kata_exists?,   Model)
   post_json(:kata_create,    Model)
+   get_json(:kata_exists?,   Model)
    get_json(:kata_manifest,  Model)
 
 end

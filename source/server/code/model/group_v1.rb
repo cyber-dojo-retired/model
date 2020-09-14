@@ -5,16 +5,29 @@ require_relative 'kata_v1'
 require_relative '../lib/json_adapter'
 
 # 1. Manifest now has explicit version (1)
-# 2. joined() now does 1 read, not 64 reads.
+# 2. avatars() now does 1 read, not 64 reads.
 # 3. No longer stores JSON in pretty format.
 # 4. No longer stores file contents in lined format.
-# 5. Uses Oj as its JSON gem.
 
 class Group_v1
 
   def initialize(externals)
     @kata = Kata_v1.new(externals)
     @externals = externals
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def create(manifest, options)
+    planned_feature(options)
+    manifest['version'] = 1
+    manifest['created'] = time.now
+    id = manifest['id'] = IdGenerator.new(@externals).group_id
+    saver.assert_all([
+      manifest_create_command(id, json_plain(manifest)),
+      katas_create_command(id, '')
+    ])
+    id
   end
 
   # - - - - - - - - - - - - - - - - - - -
@@ -30,23 +43,48 @@ class Group_v1
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def create(manifest, options)
-    planned_feature(options)
-    manifest['version'] = 1
-    manifest['created'] = time.now
-    id = manifest['id'] = IdGenerator.new(externals).group_id
-    saver.assert_all([
-      manifest_create_command(id, json_plain(manifest)),
-      katas_create_command(id, '')
-    ])
-    id
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
   def manifest(id)
     manifest_src = saver.assert(manifest_read_command(id))
     json_parse(manifest_src)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def join(id, indexes)
+    manifest = self.manifest(id)
+    manifest.delete('id')
+    manifest['group_id'] = id
+    commands = indexes.map{ |index| dir_make_command(id, index) }
+    results = saver.run_until_true(commands)
+    result_index = results.find_index(true)
+    if result_index.nil?
+      nil # full
+    else
+      index = indexes[result_index]
+      manifest['group_index'] = index
+      kata_id = @kata.create(manifest)
+      saver.assert(katas_append_command(id, "#{kata_id} #{index}\n"))
+      kata_id
+    end
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def avatars(id)
+    katas_src = saver.assert(katas_read_command(id))
+    # G2ws77 15
+    # w34rd5 2
+    # ...
+    katas_src
+      .split
+      .each_slice(2)
+      .map{|kid,kindex| [kindex.to_i,kid] }
+      .sort
+    # [
+    #   [ 2, 'w34rd5'], #  2 == bat
+    #   [15, 'G2ws77'], # 15 == fox
+    #   ...
+    # ]
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -57,35 +95,7 @@ class Group_v1
   include IdPather
   include JsonAdapter
 
-  attr_reader :externals
-
   def planned_feature(_options)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-=begin
-  def katas_ids(katas_indexes)
-    katas_indexes.map{ |kata_id,_| kata_id }
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
-  def katas_indexes(id)
-    katas_src = saver.assert(katas_read_command(id))
-    # G2ws77 15
-    # w34rd5 2
-    # ...
-    katas_src
-      .split
-      .each_slice(2)
-      .map{|kid,kindex| [kid,kindex.to_i] }
-      .sort{|lhs,rhs| lhs[1] <=> rhs[1] }
-    # [
-    #   ['w34rd5', 2], #  2 == bat
-    #   ['G2ws77',15], # 15 == fox
-    #   ...
-    # ]
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -93,7 +103,6 @@ class Group_v1
   def dir_make_command(id, *parts)
     saver.dir_make_command(dirname(id, *parts))
   end
-=end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
@@ -111,7 +120,6 @@ class Group_v1
     saver.file_create_command(katas_filename(id), src)
   end
 
-=begin
   def katas_append_command(id, src)
     saver.file_append_command(katas_filename(id), src)
   end
@@ -127,7 +135,6 @@ class Group_v1
     group_id_path(id, *parts)
     # eg id == 'wAtCfj' ==> '/cyber-dojo/groups/wA/tC/fj'
   end
-=end
 
   def manifest_filename(id)
     group_id_path(id, 'manifest.json')
@@ -146,11 +153,11 @@ class Group_v1
   # - - - - - - - - - - - - - -
 
   def saver
-    externals.saver
+    @externals.saver
   end
 
   def time
-    externals.time
+    @externals.time
   end
 
 end
