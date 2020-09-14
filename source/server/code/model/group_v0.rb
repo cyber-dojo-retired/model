@@ -15,6 +15,8 @@ class Group_v0
   # - - - - - - - - - - - - - - - - - - -
 
   def create(manifest, options)
+    # Groups created in cyber-dojo are now always version 1.
+    # The ability to create version 0 groups is retained for testing.
     manifest = manifest.clone
     planned_feature(options)
     manifest['version'] = 0

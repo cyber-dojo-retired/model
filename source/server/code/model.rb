@@ -89,4 +89,5 @@ class Model
   CURRENT_VERSION = 1
   GROUPS = [ Group_v0, Group_v1 ]
   KATAS = [ Kata_v0, Kata_v1 ]
+
 end
