@@ -160,8 +160,12 @@ class TestBase < Id58TestBase
   end
 
   def version
-    return 0 if v_test?(0)
-    return 1 if v_test?(1)
+    if v_test?(0)
+      return 0
+    end
+    if v_test?(1)
+      return 1
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - -

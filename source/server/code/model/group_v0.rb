@@ -48,9 +48,9 @@ class Group_v0
     else
       index = indexes[result_index]
       manifest['group_index'] = index
-      kata_id = @kata.create(manifest)
+      kata_id = @kata.create(manifest, default_options)
       saver.assert(saver.file_create_command(kata_id_filename(id, index), kata_id))
-      kata_id
+      [index, kata_id]
     end
   end
 
@@ -95,6 +95,13 @@ class Group_v0
   include JsonAdapter
 
   def planned_feature(_options)
+  end
+
+  def default_options
+    { "line_numbers":true,
+      "syntax_highlight":false,
+      "predict_colour":false
+    }
   end
 
   # - - - - - - - - - - - - - - - - - - -

@@ -27,6 +27,10 @@ class ExternalSaver
     ['file_create',filename,content]
   end
 
+  def file_append_command(filename, content)
+    ['file_append',filename,content]
+  end
+
   def file_read_command(filename)
     ['file_read',filename]
   end
@@ -36,6 +40,14 @@ class ExternalSaver
 
   def run(command)
     @http.post(__method__, { command:command })
+  end
+
+  def run_all(commands)
+    @http.post(__method__, { commands:commands })
+  end
+
+  def run_until_true(commands)
+    @http.post(__method__, { commands:commands })
   end
 
   # - - - - - - - - - - - - - - - - - - -
