@@ -52,7 +52,7 @@ class Group_v0
       manifest['group_index'] = index
       kata_id = @kata.create(manifest, default_options)
       saver.assert(saver.file_create_command(kata_id_filename(id, index), kata_id))
-      [index, kata_id]
+      kata_id
     end
   end
 

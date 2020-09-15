@@ -10,6 +10,8 @@
 * [ GET group_exists?(id)](docs/api.md#get-group_existsid)
 * [POST group_create(manifests,options)](docs/api.md#post-group_createmanifestsoptions)
 * [ GET group_manifest(id)](docs/api.md#get-group_manifestid)
+* [POST group_join(id,indexes)](docs/api.md#get-group_joinidindexes)
+* [ GET group_avatars(id)](docs/api.md#get-group_avatarsid)
 - - - -
 * [ GET kata_exists?(id)](docs/api.md#get-kata_existsid)
 * [POST kata_create(manifest,options)](docs/api.md#post-kata_createmanifestoptions)

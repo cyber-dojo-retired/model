@@ -34,28 +34,29 @@ class JoinTest < TestBase
   and are a member of the group
   ) do
     manifest = custom_manifest
-    gid = model.group_create(manifests:[manifest], options:default_options)
+    group_id = model.group_create(manifests:[manifest], options:default_options)
 
     indexes = [15,4] + ((0..63).to_a - [15,4]).shuffle
-    avatar_index_1,kata_1 = *model.group_join(id:gid, indexes:indexes)
-    assert_equal 15, avatar_index_1
-    assert model.kata_exists?(id:kata_1), kata_1
-    kata_1_manifest = model.kata_manifest(id:kata_1)
+    kata_1_id = model.group_join(id:group_id, indexes:indexes)
+
+    assert model.kata_exists?(id:kata_1_id), kata_1_id
+    kata_1_manifest = model.kata_manifest(id:kata_1_id)
+    assert_equal kata_1_id, kata_1_manifest['id']
     assert_equal 15, kata_1_manifest['group_index']
-    assert_equal gid, kata_1_manifest['group_id']
+    assert_equal group_id, kata_1_manifest['group_id']
 
-    avatars_1 = model.group_avatars(id:gid)
-    assert_equal [[15,kata_1]], avatars_1
+    avatars_1 = model.group_avatars(id:group_id)
+    assert_equal [[15,kata_1_id]], avatars_1
 
-    avatar_index_2,kata_2 = *model.group_join(id:gid, indexes:indexes)
-    assert_equal 4, avatar_index_2
-    assert model.kata_exists?(id:kata_2), kata_2
-    kata_2_manifest = model.kata_manifest(id:kata_2)
+    kata_2_id = model.group_join(id:group_id, indexes:indexes)
+    assert model.kata_exists?(id:kata_2_id), kata_2_id
+    kata_2_manifest = model.kata_manifest(id:kata_2_id)
+    assert_equal kata_2_id, kata_2_manifest['id']
     assert_equal 4, kata_2_manifest['group_index']
-    assert_equal gid, kata_2_manifest['group_id']
+    assert_equal group_id, kata_2_manifest['group_id']
 
-    avatars_2 = model.group_avatars(id:gid)
-    assert_equal [[4,kata_2],[15,kata_1]], avatars_2
+    avatars_2 = model.group_avatars(id:group_id)
+    assert_equal [[4,kata_2_id],[15,kata_1_id]], avatars_2
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -67,17 +68,22 @@ class JoinTest < TestBase
       @saver = SaverFake.new(self)
     }
     manifest = custom_manifest
-    gid = model.group_create(manifests:[manifest], options:default_options)
+    group_id = model.group_create(manifests:[manifest], options:default_options)
     indexes = (0..63).to_a.shuffle
-    avatars = []
+    expected_ids = []
     64.times do
-      result = model.group_join(id:gid, indexes:indexes)
-      refute_nil result
-      avatars << result[0]
+      kata_id = model.group_join(id:group_id, indexes:indexes)
+      refute_nil kata_id
+      expected_ids << kata_id
     end
-    assert_equal (0..63).to_a, avatars.sort
-    result = model.group_join(id:gid, indexes:indexes)
-    assert_nil result
+    kata_id = model.group_join(id:group_id, indexes:indexes)
+    assert_nil kata_id
+
+    expected_indexes = (0..63).to_a
+    avatars = model.group_avatars(id:group_id)
+    actual_indexes,actual_ids = *avatars.transpose
+    assert_equal expected_indexes, actual_indexes.sort
+    assert_equal expected_ids.sort, actual_ids.sort
   end
 
 end

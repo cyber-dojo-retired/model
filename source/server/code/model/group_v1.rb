@@ -64,7 +64,7 @@ class Group_v1
       manifest['group_index'] = index
       kata_id = @kata.create(manifest, default_options)
       saver.assert(katas_append_command(id, "#{kata_id} #{index}\n"))
-      [index, kata_id]
+      kata_id
     end
   end
 

@@ -14,7 +14,7 @@ Creates a new group exercise from `manifests[0]`, and returns its id.
 
 - - - -
 ## GET group_exists?(id:)
-Determines if a group exercise with the given `id`.
+Determines if a group exercise with the given `id` exists.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
@@ -51,6 +51,45 @@ Gets the manifest used to create the group exercise with the given `id`.
   ```
 
 - - - -
+## POST group_join(id:)
+Creates a new kata in the group with the given `id` and returns the kata's id.
+- parameters [(JSON-in)](#json-in)
+  * **id:String**.
+- returns [(JSON-out)](#json-out)
+  * the `id` of the created kata, or `nil` if the group is already full.
+- example
+```bash
+$ curl \
+  --data '{"id:"dFg8Us"}' \
+  --header 'Content-type: application/json' \
+  --silent \
+  --request GET \
+    http://${IP_ADDRESS}:${PORT}/group_join
+
+{"group_join":"a8gVRN"}
+```
+
+- - - -
+## GET group_avatars(id:)
+Returns an array of avatar indexes and kata-ids of the katas that have joined the
+group with the give `id`.
+- parameters [(JSON-in)](#json-in)
+  * **id:String**.
+- returns [(JSON-out)](#json-out)
+  * an array of `[index,id]` elements.
+- example
+```bash
+$ curl \
+  --data '{"id:"dFg8Us"}' \
+  --header 'Content-type: application/json' \
+  --silent \
+  --request GET \
+    http://${IP_ADDRESS}:${PORT}/group_avatars
+
+{"group_avatars":[[7,"a8gVRN"],[29,"gUNjUV"]]}
+```
+
+- - - -
 ## POST kata_create(manifest:,options:)
 Creates a new kata exercise from `manifest`, and returns its id.
 - parameters [(JSON-in)](#json-in)
@@ -63,7 +102,7 @@ Creates a new kata exercise from `manifest`, and returns its id.
 
 - - - -
 ## GET kata_exists?(id:)
-Determines if a kata exercise with the given `id`.
+Determines if a kata exercise with the given `id` exists.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
