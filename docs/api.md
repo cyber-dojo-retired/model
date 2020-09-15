@@ -5,9 +5,9 @@ Creates a new group exercise from `manifests[0]`, and returns its id.
 - parameters [(JSON-in)](#json-in)
   * **manifests:[Hash,...]**.
   At present only `manifests[0]` is used.
-  For example, a [custom-start-points](https://github.com/cyber-dojo/custom-start-points) manifest.  
   The array is for a planned feature.
-  * **options:Hash[String=>Boolean]**.
+  For example, a [custom-start-points](https://github.com/cyber-dojo/custom-start-points) manifest.  
+  * **options:Hash[**.
   Currently unused (and defaulted). For a planned feature.
 - returns [(JSON-out)](#json-out)
   * the `id` of the created group.
@@ -51,10 +51,12 @@ Gets the manifest used to create the group exercise with the given `id`.
   ```
 
 - - - -
-## POST group_join(id:)
+## POST group_join(id:,indexes:)
 Creates a new kata in the group with the given `id` and returns the kata's id.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
+  * **indexes:Array[int]**
+  Currently unused (and defaulted). For a planned feature.  
 - returns [(JSON-out)](#json-out)
   * the `id` of the created kata, or `nil` if the group is already full.
 - example
@@ -95,7 +97,7 @@ Creates a new kata exercise from `manifest`, and returns its id.
 - parameters [(JSON-in)](#json-in)
   * **manifest:Hash**.
   For example, a [custom-start-points](https://github.com/cyber-dojo/custom-start-points) manifest.  
-  * **options:Hash[String=>Boolean]**.
+  * **options:Hash**.
   Currently unused (and defaulted). For a planned feature.
 - returns [(JSON-out)](#json-out)
   * the `id` of the created kata.
