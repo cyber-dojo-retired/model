@@ -5,9 +5,9 @@ source ${SH_DIR}/augmented_docker_compose.sh
 # - - - - - - - - - - - - - - - - - - - - - -
 build_tagged_images()
 {
-  local -r dil=$(docker_image_ls)
-  remove_current_docker_image "${dil}" "${CYBER_DOJO_MODEL_IMAGE}"
-  remove_current_docker_image "${dil}" "${CYBER_DOJO_MODEL_CLIENT_IMAGE}"
+  local -r dil=$(docker image ls --format "{{.Repository}}:{{.Tag}}")
+  remove_all_but_latest "${dil}" "${CYBER_DOJO_MODEL_IMAGE}"
+  remove_all_but_latest "${dil}" "${CYBER_DOJO_MODEL_CLIENT_IMAGE}"
 
   augmented_docker_compose \
     build \
@@ -20,12 +20,22 @@ build_tagged_images()
   echo
   echo "CYBER_DOJO_MODEL_TAG=${CYBER_DOJO_MODEL_TAG}"
   echo "CYBER_DOJO_MODEL_SHA=${CYBER_DOJO_MODEL_SHA}"
+  echo
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
-docker_image_ls()
+remove_all_but_latest()
 {
-  docker image ls --format "{{.Repository}}:{{.Tag}}"
+  local -r docker_image_ls="${1}"
+  local -r name="${2}"
+  for image_name in `echo "${docker_image_ls}" | grep "${name}:"`
+  do
+    if [ "${image_name}" != "${name}:latest" ]; then
+      if [ "${image_name}" != "${name}:<none>" ]; then
+        docker image rm "${image_name}"
+      fi
+    fi
+  done
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
