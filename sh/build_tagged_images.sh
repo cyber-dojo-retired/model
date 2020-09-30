@@ -39,21 +39,6 @@ remove_all_but_latest()
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
-remove_current_docker_image()
-{
-  local -r docker_image_ls="${1}"
-  local -r name="${2}"
-  if image_exists "${docker_image_ls}" "${name}" 'latest' ; then
-    local -r sha="$(docker run --rm -it ${name}:latest sh -c 'echo -n ${SHA}')"
-    local -r tag="${sha:0:7}"
-    if image_exists "{docker_image_ls}" "${name}" "${tag}" ; then
-      echo "Deleting current image ${name}:${tag}"
-      docker image rm "${name}:${tag}"
-    fi
-  fi
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
 image_exists()
 {
   local -r docker_image_ls="${1}"
