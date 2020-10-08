@@ -1,10 +1,4 @@
-#!/bin/bash -Ee
-
-# - - - - - - - - - - - - - - - - - - - - - - - -
-on_ci()
-{
-  [ -n "${CIRCLECI:-}" ]
-}
+#!/bin/bash -Eeu
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
 on_ci_publish_images()
@@ -15,10 +9,13 @@ on_ci_publish_images()
     echo 'on CI so publishing tagged images'
     local -r image_name="${CYBER_DOJO_MODEL_IMAGE}"
     local -r image_tag="${CYBER_DOJO_MODEL_TAG}"
-    # DOCKER_USER, DOCKER_PASS are in ci context
-    echo "${DOCKER_PASS}" | docker login --username "${DOCKER_USER}" --password-stdin
     docker push ${image_name}:${image_tag}
     docker push ${image_name}:latest
-    docker logout
   fi
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - -
+on_ci()
+{
+  [ -n "${CIRCLECI:-}" ]
 }
