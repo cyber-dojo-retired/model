@@ -201,15 +201,14 @@ class IdGeneratorTest < TestBase
   test '069', %w(
   id?(s) false examples
   ) do
-    refute id?(42)
-    refute id?(nil)
-    refute id?({})
-    refute id?([])
-    refute id?(25)
-    refute id?('I'), :India
-    refute id?('i'), :india
-    refute id?('O'), :Oscar
-    refute id?('o'), :oscar
+    refute id?(42),  :integer_not_string
+    refute id?(nil), :nil_not_string
+    refute id?({}),  :hash_not_string
+    refute id?([]),  :array_not_string
+    refute id?('I'), :India_not_in_alphabet
+    refute id?('i'), :india_not_in_alphabet
+    refute id?('O'), :Oscar_not_in_alphabet
+    refute id?('o'), :oscar_not_in_alphabet
     refute id?('12345'), :not_length_6
     refute id?('1234567'), :not_length_6
   end
