@@ -24,11 +24,11 @@ class IdGenerator
   end
 
   def group_id
-    generate_id(:group_id_path)
+    generate_id(:group_id_path, :kata_id_path)
   end
 
   def kata_id
-    generate_id(:kata_id_path)
+    generate_id(:kata_id_path, :group_id_path)
   end
 
   private
@@ -37,15 +37,14 @@ class IdGenerator
 
   include IdPather
 
-  def generate_id(pather)
-    pather = method(pather)
+  def generate_id(pather, _not_pather)
     42.times.find do
       id = SIZE.times.map{ ALPHABET[random_index] }.join
       if reserved?(id)
         next
       end
-      command = saver.dir_make_command(pather.call(id))
-      if saver.run(command)
+      dir_make = saver.dir_make_command(method(pather).call(id))
+      if saver.run(dir_make)
         break id
       end
     end
