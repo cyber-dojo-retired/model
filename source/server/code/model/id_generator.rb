@@ -37,10 +37,14 @@ class IdGenerator
 
   include IdPather
 
-  def generate_id(pather, _not_pather)
+  def generate_id(pather, not_pather)
     42.times.find do
       id = SIZE.times.map{ ALPHABET[random_index] }.join
       if reserved?(id)
+        next
+      end
+      dir_exists = saver.dir_exists_command(method(not_pather).call(id))
+      if saver.run(dir_exists)
         next
       end
       dir_make = saver.dir_make_command(method(pather).call(id))

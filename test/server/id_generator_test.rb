@@ -158,6 +158,34 @@ class IdGeneratorTest < TestBase
 
   # - - - - - - - - - - - - - - - - - - -
 
+  test '14a', %w(
+  kata-id generator will skip id that already exists as a group
+  ) do
+    externals.instance_exec {
+      @saver = ExternalSaver.new(ExternalHttp.new)
+    }
+    group_id = 'chy6BJ' # copied in test-data
+    id = 'x67WpA'
+    id_generator = stubbed_id_generator(group_id + id)
+    assert_equal id, id_generator.kata_id
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  test '14b', %w(
+  group-id generator will skip id that already exists as a kata
+  ) do
+    externals.instance_exec {
+      @saver = ExternalSaver.new(ExternalHttp.new)
+    }
+    kata_id = '5rTJv5' # copied in test-data
+    id = 'hY86s3'
+    id_generator = stubbed_id_generator(kata_id + id)
+    assert_equal id, id_generator.group_id
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
   test '068', %w(
   id?(s) true examples
   ) do
