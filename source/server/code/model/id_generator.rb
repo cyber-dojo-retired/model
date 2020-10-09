@@ -41,15 +41,18 @@ class IdGenerator
     pather = method(pather)
     42.times.find do
       id = SIZE.times.map{ ALPHABET[random_index] }.join
+      if reserved?(id)
+        next
+      end
       command = saver.dir_make_command(pather.call(id))
-      if unreserved?(id) && saver.run(command)
+      if saver.run(command)
         break id
       end
     end
   end
 
-  def unreserved?(id)
-    id != SAVER_OFFLINE_ID
+  def reserved?(id)
+    id === SAVER_OFFLINE_ID
   end
 
   def random_index
