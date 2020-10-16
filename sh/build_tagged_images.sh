@@ -39,16 +39,6 @@ remove_all_but_latest()
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
-image_exists()
-{
-  local -r docker_image_ls="${1}"
-  local -r name="${2}"
-  local -r tag="${3}"
-  local -r latest=$(echo "${docker_image_ls}" | grep "${name}:${tag}")
-  [ "${latest}" != '' ]
-}
-
-# - - - - - - - - - - - - - - - - - - - - - -
 check_embedded_env_var()
 {
   if [ "$(git_commit_sha)" != "$(sha_in_image)" ]; then
