@@ -10,9 +10,12 @@ class EventsTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0], 'f5S', %w(
-  retrieve already existing kata_events() summary {test-data copied into saver}
+  already existing kata_events() summary {test-data copied into saver}
+  is "polyfilled" to make it look like version=1
   ) do
-    actual = model.kata_events(id:'5rTJv5')
+    id = '5rTJv5'
+    refute model.kata_manifest(id:id).has_key?('version')
+    actual = model.kata_events(id:id)
     expected = [
       { "index" => 0, "event" => "created", "time" => [2019,1,16,12,44,55,800239] },
       { "index" => 1, "colour" => "red",    "time" => [2019,1,16,12,45,40,544806], "duration" => 1.46448,  "predicted" => "none" },
@@ -23,9 +26,11 @@ class EventsTest < TestBase
   end
 
   v_tests [1], 'rp8', %w(
-  retrieve already existing kata_events() summary {test-data copied into saver}
+  already existing kata_events() summary {test-data copied into saver}
   ) do
-    actual = model.kata_events(id:'5U2J18')
+    id = '5U2J18'
+    assert_equal 1, model.kata_manifest(id:id)['version']
+    actual = model.kata_events(id:id)
     expected = [
       { "index" => 0, "event"  => "created", "time" => [2020,10,19,12,52,46,396907]},
       { "index" => 1, "colour" => "red",     "time" => [2020,10,19,12,52,54,772809], "duration" => 0.491393, "predicted" => "none" },
