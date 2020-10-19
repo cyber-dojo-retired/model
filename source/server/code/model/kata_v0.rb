@@ -52,6 +52,9 @@ class Kata_v0
     json = json_parse('[' + result.lines.join(',') + ']')
     json.map.with_index(0) do |h,index|
       h["index"] = index
+      if h.has_key?('colour')
+        h["predicted"] = "none"
+      end
     end
     json
   end
