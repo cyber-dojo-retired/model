@@ -74,7 +74,7 @@ $ curl \
 - - - -
 ## GET group_avatars(id:)
 Returns an array of avatar indexes and kata-ids of the katas that have joined the
-group with the give `id`.
+group with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)

@@ -18,9 +18,9 @@ require_relative '../lib/json_adapter'
 #    now    { ..., "index" => 0 }
 #           { ..., "index" => 1 }
 #           { ..., "index" => 24 }
-# 7. No longer uses separate dir for each event file.
+# 7. No longer uses separate dir/ for each event file.
 #    This makes ran_tests() faster as it no longer needs
-#    a create_command() in its saver.assert_all() call.
+#    a dir_make_command() in its saver.assert_all() call.
 #    was     /cyber-dojo/katas/e3/T6/K2/0/event.json
 #    now     /cyber-dojo/katas/e3/T6/K2/0.event.json
 
@@ -88,7 +88,7 @@ class Kata_v1
   # In theory the manifest could store only the display_name
   # and exercise_name and be recreated, on-demand, from the relevant
   # start-point services. In practice it creates coupling, and it
-  # doesn't work anyway, since start-point services change over time.
+  # doesn't work anyway, since start-points change over time.
 
   def manifest_file_create_command(id, manifest_src)
     saver.file_create_command(manifest_filename(id), manifest_src)
