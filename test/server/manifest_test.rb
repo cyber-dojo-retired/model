@@ -19,7 +19,7 @@ class ManifestTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0], '472', %w(
-  retrieve already existing group_manifest {test-data copied into saver}
+  already existing group_manifest {test-data copied into saver}
   ) do
     manifest = model.group_manifest(id:'chy6BJ')
     refute manifest.has_key?('version')
@@ -42,7 +42,8 @@ class ManifestTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0], '473', %w(
-  retrieve already existing kata_manifest {test-data copied into saver}
+  already existing kata_manifest {test-data copied into saver}
+  is "polyfilled" to make it look like version=1
   ) do
     manifest = model.kata_manifest(id:'5rTJv5')
     refute manifest.has_key?('version')
@@ -55,6 +56,15 @@ class ManifestTest < TestBase
     assert_equal 'FxWwrr', manifest['group_id']
     assert_equal 32, manifest['group_index']
     assert_equal '5rTJv5', manifest['id']
+    assert manifest.has_key?('visible_files'), :polyfilled_visible_files
+    expected_filenames = [
+      "test_hiker.rb",
+      "hiker.rb",
+      "cyber-dojo.sh",
+      "coverage.rb",
+      "readme.txt"
+    ]
+    assert_equal expected_filenames.sort, manifest['visible_files'].keys.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

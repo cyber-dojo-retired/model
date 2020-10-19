@@ -40,6 +40,7 @@ class Kata_v0
       event_file_read_command(id, 0)
     ])
     manifest = json_parse(manifest_src)
+    # polyfill to version==1    
     event0 = unlined(json_parse(event0_src))
     manifest['visible_files'] = event0['files']
     manifest
@@ -75,7 +76,8 @@ class Kata_v0
     end
     if index === 0
       json['event'] = 'created'
-    else
+    end
+    if events[index].has_key?('colour')
       json['colour'] = events[index]['colour']
       json['duration'] = events[index]['duration']
       json['predicted'] = 'none'

@@ -54,20 +54,20 @@ class EventsTest < TestBase
 
     assert actual.is_a?(Hash)
     assert_equal ['files','index','time','event'].sort, actual.keys.sort
-    assert_equal 0, actual['index']
-    assert_equal [2019,1,16,12,44,55,800239], actual['time']
-    assert_equal 'created', actual['event']
+    assert_equal 0, actual['index'], :polyfilled_index
+    assert_equal [2019,1,16,12,44,55,800239], actual['time'], :polyfilled_time
+    assert_equal 'created', actual['event'], :polyfilled_created
 
     actual = model.kata_event(id:'5rTJv5', index:1)
 
     assert actual.is_a?(Hash)
     assert_equal ['files','stdout','stderr','status','index','time','colour','duration','predicted'].sort, actual.keys.sort
-    assert_equal '1', actual['status']
-    assert_equal [2019,1,16,12,45,40,544806], actual['time']
-    assert_equal 1.46448, actual['duration']
-    assert_equal 'red', actual['colour']
-    assert_equal 'none', actual['predicted']
-    assert_equal 1, actual['index']
+    assert_equal '1', actual['status'], :polyfilled
+    assert_equal [2019,1,16,12,45,40,544806], actual['time'], :polyfilled_time
+    assert_equal 1.46448, actual['duration'], :polyfilled_duration
+    assert_equal 'red', actual['colour'], :polyfilled_colour
+    assert_equal 'none', actual['predicted'], :polyfilled_predicted
+    assert_equal 1, actual['index'], :polyfilled_index
   end
 
   # . . . . . . . . . . . .
