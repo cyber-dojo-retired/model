@@ -41,6 +41,8 @@ class EventsTest < TestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0], 'f5T', %w(
   retrieve already existing individual kata_event {test-data copied into saver}
@@ -64,7 +66,7 @@ class EventsTest < TestBase
     actual = model.kata_event(id:'H8NAvN', index:1)
     assert actual.is_a?(Hash)
     assert_equal ['files','stdout','stderr','status','index','time','colour','duration','predicted'].sort, actual.keys.sort
-    assert_equal "1", actual['status']
+    assert_equal '1', actual['status']
     assert_equal [2020,10,19,12,15,47,353545], actual['time']
     assert_equal 0.918826, actual['duration']
     assert_equal 'red', actual['colour']
