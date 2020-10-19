@@ -72,11 +72,11 @@ class JoinTest < TestBase
     expected_ids = []
     64.times do
       kata_id = group_join(group_id, indexes)
-      refute_nil kata_id
+      refute_nil kata_id, :not_full
       expected_ids << kata_id
     end
     kata_id = group_join(group_id, indexes)
-    assert_nil kata_id
+    assert_nil kata_id, :full
 
     expected_indexes = (0..63).to_a
     avatars = group_avatars(group_id)
