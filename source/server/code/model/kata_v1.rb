@@ -11,12 +11,12 @@ require_relative '../lib/json_adapter'
 # 6. Stores explicit index in events.json summary file.
 #    This improves robustness when there are Saver outages.
 #    For example index==-1.
-#    was    { ... } # 0
-#           { ... } # 1
+#    was    { ... } #  0
+#           { ... } #  1
 #    then 2-23 outage
 #           { ... } # 24
-#    now    { ..., "index" => 0 }
-#           { ..., "index" => 1 }
+#    now    { ..., "index" =>  0 }
+#           { ..., "index" =>  1 }
 #           { ..., "index" => 24 }
 # 7. No longer uses separate dir/ for each event file.
 #    This makes ran_tests() faster as it no longer needs
@@ -36,8 +36,8 @@ class Kata_v1
     unless IdGenerator::id?(id)
       return false
     end
-    dirname = kata_id_path(id)
-    command = saver.dir_exists_command(dirname)
+    dir_name = kata_id_path(id)
+    command = saver.dir_exists_command(dir_name)
     saver.run(command)
   end
 

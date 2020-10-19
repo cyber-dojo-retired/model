@@ -121,11 +121,11 @@ class Kata_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def dir_make_command(id, *parts)
-    saver.dir_make_command(dirname(id, *parts))
+    saver.dir_make_command(dir_name(id, *parts))
   end
 
   def dir_exists_command(id, *parts)
-    saver.dir_exists_command(dirname(id, *parts))
+    saver.dir_exists_command(dir_name(id, *parts))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -185,9 +185,9 @@ class Kata_v0
   # - - - - - - - - - - - - - -
   # names of dirs/files
 
-  def dirname(id, *parts)
+  def dir_name(id, *parts)
     kata_id_path(id, *parts)
-    # eg id == 'k5ZTk0', parts = [] ==> '/cyber-dojo/katas/k5/ZT/k0'
+    # eg id == 'k5ZTk0', parts = [  ] ==> '/cyber-dojo/katas/k5/ZT/k0'
     # eg id == 'k5ZTk0', parts = [31] ==> '/cyber-dojo/katas/k5/ZT/k0/31'
   end
 
@@ -201,10 +201,10 @@ class Kata_v0
     kata_id_path(id, 'events.json')
     # eg id == 'k5ZTk0' ==> '/cyber-dojo/katas/k5/ZT/events.json'
     # eg content ==>
-    # {"event":"created","time":[2019,1,19,12,41,0,406370]}
-    # {"colour":"red","time":[2019,1,19,12,45,19,994317],"duration":1.224763}
-    # {"colour":"amber","time":[2019,1,19,12,45,26,76791],"duration":1.1275}
-    # {"colour":"green","time":[2019,1,19,12,45,30,656924],"duration":1.072198}
+    # {"event":"created","time":[2019,1,19,12,41, 0,406370]}
+    # {"colour":"red",   "time":[2019,1,19,12,45,19,994317],"duration":1.224763}
+    # {"colour":"amber", "time":[2019,1,19,12,45,26,76791 ],"duration":1.1275  }
+    # {"colour":"green", "time":[2019,1,19,12,45,30,656924],"duration":1.072198}
   end
 
   def event_filename(id, index)

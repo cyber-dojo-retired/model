@@ -36,8 +36,8 @@ class Group_v1
     unless IdGenerator::id?(id)
       return false
     end
-    dirname = group_id_path(id)
-    command = saver.dir_exists_command(dirname)
+    dir_name = group_id_path(id)
+    command = saver.dir_exists_command(dir_name)
     saver.run(command)
   end
 
@@ -123,7 +123,7 @@ class Group_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def dir_make_command(id, *parts)
-    saver.dir_make_command(dirname(id, *parts))
+    saver.dir_make_command(dir_name(id, *parts))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -153,7 +153,7 @@ class Group_v1
   # - - - - - - - - - - - - - -
   # names of dirs/files
 
-  def dirname(id, *parts)
+  def dir_name(id, *parts)
     group_id_path(id, *parts)
     # eg id == 'wAtCfj' ==> '/cyber-dojo/groups/wA/tC/fj'
   end

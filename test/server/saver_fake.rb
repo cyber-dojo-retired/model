@@ -16,12 +16,12 @@ class SaverFake
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def dir_make_command(dirname)
-    saver.dir_make_command(dirname)
+  def dir_make_command(dir_name)
+    saver.dir_make_command(dir_name)
   end
 
-  def dir_exists_command(dirname)
-    saver.dir_exists_command(dirname)
+  def dir_exists_command(dir_name)
+    saver.dir_exists_command(dir_name)
   end
 
   def file_create_command(filename, content)
