@@ -72,6 +72,37 @@ class Kata_v1
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
+
+  def events(id)
+    result = saver.assert(events_file_read_command(id))
+    json_parse('[' + result + ']')
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def event(id, index)
+    result = saver.assert(event_file_read_command(id, index))
+    json_parse(result)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def ran_tests(id, index, files, stdout, stderr, status, summary)
+    summary['index'] = index # See point 6 at top of file
+    event_n = {
+       'files' => files,
+      'stdout' => stdout,
+      'stderr' => stderr,
+      'status' => status
+    }
+    saver.assert_all([
+      # A failing create_command() ensures the append_command() is not run.
+      event_file_create_command(id, index, json_plain(event_n.merge(summary))),
+      events_file_append_command(id, ",\n" + json_plain(summary))
+    ])
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
   # ...
 
   private
@@ -105,13 +136,13 @@ class Kata_v1
     saver.file_create_command(events_filename(id), event0_src)
   end
 
-  #def events_file_append_command(id, eventN_src)
-  #  saver.file_append_command(events_filename(id), eventN_src)
-  #end
+  def events_file_append_command(id, eventN_src)
+    saver.file_append_command(events_filename(id), eventN_src)
+  end
 
-  #def events_file_read_command(id)
-  #  saver.file_read_command(events_filename(id))
-  #end
+  def events_file_read_command(id)
+    saver.file_read_command(events_filename(id))
+  end
 
   # - - - - - - - - - - - - - - - - - - - - - -
   # event
@@ -120,9 +151,9 @@ class Kata_v1
     saver.file_create_command(event_filename(id,index), event_src)
   end
 
-  #def event_file_read_command(id, index)
-  #  saver.file_read_command(event_filename(id,index))
-  #end
+  def event_file_read_command(id, index)
+    saver.file_read_command(event_filename(id,index))
+  end
 
   # - - - - - - - - - - - - - -
   # names of dirs/files

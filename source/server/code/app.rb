@@ -22,5 +22,8 @@ class App < AppBase
   post_json(:kata_create,    Model)
    get_json(:kata_exists?,   Model)
    get_json(:kata_manifest,  Model)
-
+   get_json(:kata_events,    Model)
+   get_json(:kata_event,     Model)
+  post_json(:kata_ran_tests, Model)
+  
 end

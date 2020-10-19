@@ -51,6 +51,18 @@ class Model
     kata(version_kata(id)).manifest(id)
   end
 
+  def kata_events(id:)
+    kata(version_kata(id)).events(id)
+  end
+
+  def kata_event(id:, index:)
+    kata(version_kata(id)).event(id, index)
+  end
+
+  def kata_ran_tests(id:, index:, files:, stdout:, stderr:, status:, summary:)
+    kata(version_kata(id)).ran_tests(id, index, files, stdout, stderr, status, summary)
+  end
+
   private
 
   AVATAR_INDEXES = (0..63).to_a

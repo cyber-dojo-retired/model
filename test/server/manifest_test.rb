@@ -19,7 +19,7 @@ class ManifestTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0], '472', %w(
-  retrieved already existing group_manifest {test-data copied into saver}
+  retrieve already existing group_manifest {test-data copied into saver}
   ) do
     manifest = model.group_manifest(id:'chy6BJ')
     assert_equal 'Ruby, MiniTest', manifest['display_name']
@@ -41,7 +41,7 @@ class ManifestTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0], '473', %w(
-  retrieved already existing kata_manifest {test-data copied into saver}
+  retrieve already existing kata_manifest {test-data copied into saver}
   ) do
     manifest = model.kata_manifest(id:'5rTJv5')
     assert_equal 'Ruby, MiniTest', manifest['display_name']

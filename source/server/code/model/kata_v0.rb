@@ -46,6 +46,38 @@ class Kata_v0
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
+
+  def events(id)
+    result = saver.assert(events_file_read_command(id))
+    json_parse('[' + result.lines.join(',') + ']')
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def event(id, index)
+    result = saver.assert(event_file_read_command(id, index))
+    unlined(json_parse(result))
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def ran_tests(id, index, files, stdout, stderr, status, summary)
+    event_n = {
+      'files' => files,
+      'stdout' => stdout,
+      'stderr' => stderr,
+      'status' => status
+    }
+    saver.assert_all([
+      # A failing make_command() ensures the append_command() is not run.
+      dir_exists_command(id),
+      dir_make_command(id, index),
+      event_file_create_command(id, index, json_plain(lined(event_n))),
+      events_file_append_command(id, json_plain(summary) + "\n")
+    ])
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
   # ...
 
   private
@@ -63,9 +95,9 @@ class Kata_v0
     saver.dir_make_command(dirname(id, *parts))
   end
 
-  #def dir_exists_command(id, *parts)
-  #  saver.dir_exists_command(dirname(id, *parts))
-  #end
+  def dir_exists_command(id, *parts)
+    saver.dir_exists_command(dirname(id, *parts))
+  end
 
   # - - - - - - - - - - - - - - - - - - - - - -
   # manifest
@@ -99,13 +131,13 @@ class Kata_v0
     saver.file_create_command(events_filename(id), event0_src)
   end
 
-  #def events_file_append_command(id, eventN_src)
-  #  saver.file_append_command(events_filename(id), eventN_src)
-  #end
+  def events_file_append_command(id, eventN_src)
+    saver.file_append_command(events_filename(id), eventN_src)
+  end
 
-  #def events_file_read_command(id)
-  #  saver.file_read_command(events_filename(id))
-  #end
+  def events_file_read_command(id)
+    saver.file_read_command(events_filename(id))
+  end
 
   # - - - - - - - - - - - - - - - - - - - - - -
   # event
