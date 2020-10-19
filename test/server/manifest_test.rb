@@ -18,6 +18,45 @@ class ManifestTest < TestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  v_tests [0], '472', %w(
+  retrieved already existing group_manifest {test-data copied into saver}
+  ) do
+    manifest = model.group_manifest(id:'chy6BJ')
+    assert_equal 'Ruby, MiniTest', manifest['display_name']
+    assert_equal 'cyberdojofoundation/ruby_mini_test', manifest['image_name'], :pre_tagging
+    assert_equal ['.rb'], manifest['filename_extension']
+    assert_equal 2, manifest['tab_size']
+    assert_equal [
+      "test_hiker.rb",
+      "hiker.rb",
+      "cyber-dojo.sh",
+      "coverage.rb",
+      "readme.txt"
+    ].sort, manifest['visible_files'].keys.sort
+    assert_equal 'Count_Coins', manifest['exercise']
+    assert_equal [2019,1,19,12,41,0,406370], manifest['created']
+    assert_equal 'chy6BJ', manifest['id']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  v_tests [0], '473', %w(
+  retrieved already existing kata_manifest {test-data copied into saver}
+  ) do
+    manifest = model.kata_manifest(id:'5rTJv5')
+    assert_equal 'Ruby, MiniTest', manifest['display_name']
+    assert_equal 'cyberdojofoundation/ruby_mini_test', manifest['image_name'], :pre_tagging
+    assert_equal ['.rb'], manifest['filename_extension']
+    assert_equal 2, manifest['tab_size']
+    assert_equal 'ISBN', manifest['exercise']
+    assert_equal [2019,1,16,12,44,55,800239], manifest['created']
+    assert_equal 'FxWwrr', manifest['group_id']
+    assert_equal 32, manifest['group_index']
+    assert_equal '5rTJv5', manifest['id']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   v_tests [0,1], '861', %w(
   retrieved group_manifest matches saved group_manifest
   ) do

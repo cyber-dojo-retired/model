@@ -10,3 +10,6 @@ saver
 /cyber-dojo/groups/ch/y6/BJ
 /cyber-dojo/groups/ch/y6/BJ/11/kata.id ==> k5ZTk0  (11==dolphin)
 /cyber-dojo/katas/k5/ZT/k0
+
+
+These are all version 0 
