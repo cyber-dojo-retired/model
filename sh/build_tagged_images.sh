@@ -9,6 +9,7 @@ build_tagged_images()
   remove_all_but_latest "${dil}" "${CYBER_DOJO_MODEL_IMAGE}"
   remove_all_but_latest "${dil}" "${CYBER_DOJO_MODEL_CLIENT_IMAGE}"
 
+  echo
   augmented_docker_compose \
     build \
     --build-arg COMMIT_SHA=$(git_commit_sha)
@@ -20,7 +21,6 @@ build_tagged_images()
   echo
   echo "CYBER_DOJO_MODEL_TAG=${CYBER_DOJO_MODEL_TAG}"
   echo "CYBER_DOJO_MODEL_SHA=${CYBER_DOJO_MODEL_SHA}"
-  echo
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
