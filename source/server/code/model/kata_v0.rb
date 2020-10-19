@@ -50,6 +50,7 @@ class Kata_v0
   def events(id)
     result = saver.assert(events_file_read_command(id))
     json = json_parse('[' + result.lines.join(',') + ']')
+    # polyfill to version==1
     json.map.with_index(0) do |h,index|
       h["index"] = index
       if h.has_key?('colour')
@@ -62,8 +63,26 @@ class Kata_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def event(id, index)
-    result = saver.assert(event_file_read_command(id, index))
-    unlined(json_parse(result))
+    results = saver.assert_all([
+      events_file_read_command(id),
+      event_file_read_command(id, index)
+    ])
+    events = json_parse('[' + results[0].lines.join(',') + ']')
+    json = unlined(json_parse(results[1]))
+    # polyfill to version==1
+    if json.has_key?('status')
+      json['status'] = json['status'].to_s
+    end
+    if index === 0
+      json['event'] = 'created'
+    else
+      json['colour'] = events[index]['colour']
+      json['duration'] = events[index]['duration']
+      json['predicted'] = 'none'
+    end
+    json['index'] = index
+    json['time'] = events[index]['time']
+    json
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

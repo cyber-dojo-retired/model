@@ -25,6 +25,8 @@ class EventsTest < TestBase
     assert_equal expected, actual
   end
 
+  # . . . . . . . . . . . .
+
   v_tests [1], 'rp8', %w(
   already existing kata_events() summary {test-data copied into saver}
   ) do
@@ -46,24 +48,43 @@ class EventsTest < TestBase
 
   v_tests [0], 'f5T', %w(
   retrieve already existing individual kata_event {test-data copied into saver}
+  is "polyfilled" to make it look like version=1
   ) do
     actual = model.kata_event(id:'5rTJv5', index:0)
+
     assert actual.is_a?(Hash)
-    assert_equal ['files'], actual.keys
+    assert_equal ['files','index','time','event'].sort, actual.keys.sort
+    assert_equal 0, actual['index']
+    assert_equal [2019,1,16,12,44,55,800239], actual['time']
+    assert_equal 'created', actual['event']
 
     actual = model.kata_event(id:'5rTJv5', index:1)
+
     assert actual.is_a?(Hash)
-    assert_equal ['files','stdout','stderr','status'].sort, actual.keys.sort
+    assert_equal ['files','stdout','stderr','status','index','time','colour','duration','predicted'].sort, actual.keys.sort
+    assert_equal '1', actual['status']
+    assert_equal [2019,1,16,12,45,40,544806], actual['time']
+    assert_equal 1.46448, actual['duration']
+    assert_equal 'red', actual['colour']
+    assert_equal 'none', actual['predicted']
+    assert_equal 1, actual['index']
   end
+
+  # . . . . . . . . . . . .
 
   v_tests [1], 'rp9', %w(
   retrieve already existing individual kata_event {test-data copied into saver}
   ) do
     actual = model.kata_event(id:'H8NAvN', index:0)
+
     assert actual.is_a?(Hash)
     assert_equal ['files','index','time','event'].sort, actual.keys.sort
+    assert_equal 0, actual['index']
+    assert_equal [2020,10,19,12,15,38,644198], actual['time']
+    assert_equal 'created', actual['event']
 
     actual = model.kata_event(id:'H8NAvN', index:1)
+
     assert actual.is_a?(Hash)
     assert_equal ['files','stdout','stderr','status','index','time','colour','duration','predicted'].sort, actual.keys.sort
     assert_equal '1', actual['status']
