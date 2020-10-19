@@ -14,8 +14,9 @@ class EventsTest < TestBase
   is "polyfilled" to make it look like version=1
   ) do
     id = '5rTJv5'
-    refute model.kata_manifest(id:id).has_key?('version')
-    actual = model.kata_events(id:id)
+    manifest = kata_manifest(id)
+    refute manifest.has_key?('version')
+    actual = kata_events(id)
     expected = [
       { "index" => 0, "event" => "created", "time" => [2019,1,16,12,44,55,800239] },
       { "index" => 1, "colour" => "red",    "time" => [2019,1,16,12,45,40,544806], "duration" => 1.46448,  "predicted" => "none" },
@@ -31,8 +32,8 @@ class EventsTest < TestBase
   already existing kata_events() summary {test-data copied into saver}
   ) do
     id = '5U2J18'
-    assert_equal 1, model.kata_manifest(id:id)['version']
-    actual = model.kata_events(id:id)
+    assert_equal 1, kata_manifest(id)['version']
+    actual = kata_events(id)
     expected = [
       { "index" => 0, "event"  => "created", "time" => [2020,10,19,12,52,46,396907]},
       { "index" => 1, "colour" => "red",     "time" => [2020,10,19,12,52,54,772809], "duration" => 0.491393, "predicted" => "none" },
@@ -50,7 +51,7 @@ class EventsTest < TestBase
   retrieve already existing individual kata_event {test-data copied into saver}
   is "polyfilled" to make it look like version=1
   ) do
-    actual = model.kata_event(id:'5rTJv5', index:0)
+    actual = kata_event(id='5rTJv5', index=0)
 
     assert actual.is_a?(Hash)
     assert_equal ['files','index','time','event'].sort, actual.keys.sort
@@ -58,7 +59,7 @@ class EventsTest < TestBase
     assert_equal [2019,1,16,12,44,55,800239], actual['time'], :polyfilled_time
     assert_equal 'created', actual['event'], :polyfilled_created
 
-    actual = model.kata_event(id:'5rTJv5', index:1)
+    actual = kata_event(id='5rTJv5', index=1)
 
     assert actual.is_a?(Hash)
     assert_equal ['files','stdout','stderr','status','index','time','colour','duration','predicted'].sort, actual.keys.sort
@@ -75,7 +76,7 @@ class EventsTest < TestBase
   v_tests [1], 'rp9', %w(
   retrieve already existing individual kata_event {test-data copied into saver}
   ) do
-    actual = model.kata_event(id:'H8NAvN', index:0)
+    actual = kata_event(id='H8NAvN', index=0)
 
     assert actual.is_a?(Hash)
     assert_equal ['files','index','time','event'].sort, actual.keys.sort
@@ -83,7 +84,7 @@ class EventsTest < TestBase
     assert_equal [2020,10,19,12,15,38,644198], actual['time']
     assert_equal 'created', actual['event']
 
-    actual = model.kata_event(id:'H8NAvN', index:1)
+    actual = kata_event(id='H8NAvN', index=1)
 
     assert actual.is_a?(Hash)
     assert_equal ['files','stdout','stderr','status','index','time','colour','duration','predicted'].sort, actual.keys.sort

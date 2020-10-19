@@ -40,6 +40,55 @@ class TestBase < Id58TestBase
 
   # - - - - - - - - - - - - - - -
 
+  def group_create(manifest, options)
+    id = model.group_create(manifests:[manifest], options:options)
+    unquoted(id)
+  end
+
+  def group_exists?(id)
+    model.group_exists?(id:id) # true|false
+  end
+
+  def group_manifest(id)
+    JSON.parse(model.group_manifest(id:id))
+  end
+
+  AVATAR_INDEXES = (0..63).to_a
+
+  def group_join(id, indexes=AVATAR_INDEXES.shuffle)
+    id = model.group_join(id:id, indexes:indexes)
+    id === 'null' ? nil : unquoted(id)
+  end
+
+  def group_avatars(id)
+    JSON.parse(model.group_avatars(id:id))
+  end
+
+  # - - - - - - - - - - - - - - -
+
+  def kata_create(manifest, options)
+    id = model.kata_create(manifest:manifest, options:options)
+    unquoted(id)
+  end
+
+  def kata_exists?(id)
+    model.kata_exists?(id:id) # true|false
+  end
+
+  def kata_manifest(id)
+    JSON.parse(model.kata_manifest(id:id))
+  end
+
+  def kata_events(id)
+    JSON.parse(model.kata_events(id:id))
+  end
+
+  def kata_event(id, index)
+    JSON.parse(model.kata_event(id:id, index:index))
+  end
+
+  # - - - - - - - - - - - - - - -
+
   def assert_get_200(path, &block)
     stdout,stderr = capture_stdout_stderr {
       get '/'+path
@@ -120,14 +169,6 @@ class TestBase < Id58TestBase
     end
   end
 
-  def group_exists?(id)
-    model.group_exists?(id:id)
-  end
-
-  def group_manifest(id)
-    model.group_manifest(id:id)
-  end
-
   # - - - - - - - - - - - - - - -
 
   def assert_kata_exists(id, display_name, exercise_name=nil)
@@ -140,14 +181,6 @@ class TestBase < Id58TestBase
     else
       assert_equal exercise_name, manifest['exercise'], :exercise
     end
-  end
-
-  def kata_exists?(id)
-    model.kata_exists?(id:id)
-  end
-
-  def kata_manifest(id)
-    model.kata_manifest(id:id)
   end
 
   # - - - - - - - - - - - - - - -
@@ -172,6 +205,12 @@ class TestBase < Id58TestBase
 
   def v_test?(n)
     name58.start_with?("<version=#{n}>")
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def unquoted(id)
+    id[1..-2]
   end
 
 end

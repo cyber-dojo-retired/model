@@ -26,7 +26,8 @@ class AppBase < Sinatra::Base
         format.json {
           target = klass.new(@externals)
           result = target.public_send(name, **json_args)
-          json({ name => result })
+          content_type :json
+          "{\"#{name}\":#{result}}"
         }
       end
     end
@@ -40,7 +41,8 @@ class AppBase < Sinatra::Base
         format.json {
           target = klass.new(@externals)
           result = target.public_send(name, **json_args)
-          json({ name => result })
+          content_type :json
+          "{\"#{name}\":#{result}}"
         }
       end
     end

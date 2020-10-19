@@ -27,7 +27,7 @@ class Group_v1
       manifest_create_command(id, json_plain(manifest)),
       katas_create_command(id, '')
     ])
-    id
+    quoted(id)
   end
 
   # - - - - - - - - - - - - - - - - - - -
@@ -44,27 +44,30 @@ class Group_v1
   # - - - - - - - - - - - - - - - - - - -
 
   def manifest(id)
-    manifest_src = saver.assert(manifest_read_command(id))
-    json_parse(manifest_src)
+    saver.assert(manifest_read_command(id))
+  end
+
+  def json_manifest(id)
+    JSON.parse(manifest(id))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def join(id, indexes)
-    manifest = self.manifest(id)
+    manifest = self.json_manifest(id)
     manifest.delete('id')
     manifest['group_id'] = id
     commands = indexes.map{ |index| dir_make_command(id, index) }
     results = saver.run_until_true(commands)
     result_index = results.find_index(true)
     if result_index.nil?
-      nil # full
+      'null' # full
     else
       index = indexes[result_index]
       manifest['group_index'] = index
       kata_id = @kata.create(manifest, default_options)
-      saver.assert(katas_append_command(id, "#{kata_id} #{index}\n"))
-      kata_id
+      saver.assert(katas_append_command(id, "#{unquoted(kata_id)} #{index}\n"))
+      kata_id # already quoted
     end
   end
 
@@ -75,11 +78,11 @@ class Group_v1
     # G2ws77 15
     # w34rd5 2
     # ...
-    katas_src
+    json_plain(katas_src
       .split
       .each_slice(2)
       .map{|kid,kindex| [kindex.to_i,kid] }
-      .sort
+      .sort)
     # [
     #   [ 2, 'w34rd5'], #  2 == bat
     #   [15, 'G2ws77'], # 15 == fox
@@ -98,11 +101,23 @@ class Group_v1
   def planned_feature(_options)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def default_options
     { "line_numbers":true,
       "syntax_highlight":false,
       "predict_colour":false
     }
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def quoted(s)
+    '"' + s + '"'
+  end
+
+  def unquoted(s)
+    s[1..-2]
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

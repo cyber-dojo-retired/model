@@ -15,7 +15,7 @@ class Prober
   end
 
   def sha
-    ENV['SHA']
+    '"' + ENV['SHA'] + '"'
   end
 
   private

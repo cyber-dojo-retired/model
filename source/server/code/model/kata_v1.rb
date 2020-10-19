@@ -61,28 +61,25 @@ class Kata_v1
       events_file_create_command(id, json_plain(event_summary)),
       event_file_create_command(id, 0, json_plain(event0.merge(event_summary)))
     ])
-    id
+    '"' + id.to_s + '"'
   end
 
   # - - - - - - - - - - - - - - - - - - -
 
   def manifest(id)
-    manifest_src = saver.assert(manifest_file_read_command(id))
-    json_parse(manifest_src)
+    saver.assert(manifest_file_read_command(id))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def events(id)
-    result = saver.assert(events_file_read_command(id))
-    json_parse('[' + result + ']')
+    '[' + saver.assert(events_file_read_command(id)) + ']'
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def event(id, index)
-    result = saver.assert(event_file_read_command(id, index))
-    json_parse(result)
+    saver.assert(event_file_read_command(id, index))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -95,11 +92,12 @@ class Kata_v1
       'stderr' => stderr,
       'status' => status
     }
-    saver.assert_all([
+    result = saver.assert_all([
       # A failing create_command() ensures the append_command() is not run.
       event_file_create_command(id, index, json_plain(event_n.merge(summary))),
       events_file_append_command(id, ",\n" + json_plain(summary))
     ])
+    json_plain(result)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

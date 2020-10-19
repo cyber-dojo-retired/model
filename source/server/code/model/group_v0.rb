@@ -24,12 +24,16 @@ class Group_v0
     id = manifest['id'] = IdGenerator.new(@externals).group_id
     manifest['visible_files'] = lined_files(manifest['visible_files'])
     saver.assert(manifest_create_command(id, json_plain(manifest)))
-    id
+    quoted(id)
   end
 
   # - - - - - - - - - - - - - - - - - - -
 
   def manifest(id)
+    json_plain(json_manifest(id))
+  end
+
+  def json_manifest(id)
     manifest_src = saver.assert(manifest_read_command(id))
     manifest = json_parse(manifest_src)
     manifest['visible_files'] = unlined_files(manifest['visible_files'])
@@ -39,20 +43,20 @@ class Group_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def join(id, indexes)
-    manifest = self.manifest(id)
+    manifest = self.json_manifest(id)
     manifest.delete('id')
     manifest['group_id'] = id
     commands = indexes.map{ |index| dir_make_command(id, index) }
     results = saver.run_until_true(commands)
     result_index = results.find_index(true)
     if result_index.nil?
-      nil # full
+      'null' # full
     else
       index = indexes[result_index]
       manifest['group_index'] = index
       kata_id = @kata.create(manifest, default_options)
-      saver.assert(saver.file_create_command(kata_id_filename(id, index), kata_id))
-      kata_id
+      saver.assert(saver.file_create_command(kata_id_filename(id, index), unquoted(kata_id)))
+      kata_id # already quoted
     end
   end
 
@@ -77,7 +81,7 @@ class Group_v0
     # 2 (bat) id == w34rd5
     # 4 (bee) id == G2ws77
     # etc
-    AVATAR_INDEXES.zip(katas_src).select{ |_index,kid| kid }
+    json_plain(AVATAR_INDEXES.zip(katas_src).select{ |_index,kid| kid })
     # [
     #   [ 2,'w34rd5'], #  2 == bat
     #   [15,'G2ws77'], # 15 == fox
@@ -99,11 +103,23 @@ class Group_v0
   def planned_feature(_options)
   end
 
+  # - - - - - - - - - - - - - - - - - - -
+
   def default_options
     { "line_numbers":true,
       "syntax_highlight":false,
       "predict_colour":false
     }
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def quoted(s)
+    '"' + s + '"'
+  end
+
+  def unquoted(s)
+    s[1..-2]
   end
 
   # - - - - - - - - - - - - - - - - - - -

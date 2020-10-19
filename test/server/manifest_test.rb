@@ -21,7 +21,7 @@ class ManifestTest < TestBase
   v_tests [0], '472', %w(
   already existing group_manifest {test-data copied into saver}
   ) do
-    manifest = model.group_manifest(id:'chy6BJ')
+    manifest = group_manifest(id='chy6BJ')
     refute manifest.has_key?('version')
     assert_equal 'Ruby, MiniTest', manifest['display_name']
     assert_equal 'cyberdojofoundation/ruby_mini_test', manifest['image_name'], :pre_tagging
@@ -45,7 +45,7 @@ class ManifestTest < TestBase
   already existing kata_manifest {test-data copied into saver}
   is "polyfilled" to make it look like version=1
   ) do
-    manifest = model.kata_manifest(id:'5rTJv5')
+    manifest = kata_manifest(id='5rTJv5')
     refute manifest.has_key?('version')
     assert_equal 'Ruby, MiniTest', manifest['display_name']
     assert_equal 'cyberdojofoundation/ruby_mini_test', manifest['image_name'], :pre_tagging
@@ -71,7 +71,7 @@ class ManifestTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  v_tests [0,1], '861', %w(
+  v_tests [0,1], 'Q61', %w(
   retrieved group_manifest matches saved group_manifest
   ) do
     now = [2019,3,17, 7,13,36,3428]
@@ -79,8 +79,8 @@ class ManifestTest < TestBase
       @time = TimeStub.new(now)
     }
     manifest = custom_manifest
-    id = model.group_create(manifests:[manifest], options:default_options)
-    saved = model.group_manifest(id:id)
+    id = group_create(manifest, default_options)
+    saved = group_manifest(id)
     manifest.keys.each do |key|
       assert_equal manifest[key], saved[key],  key
     end
@@ -92,7 +92,7 @@ class ManifestTest < TestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  v_tests [0,1], '862', %w(
+  v_tests [0,1], 'Q62', %w(
   retrieved kata_manifest matches saved kata_manifest
   ) do
     now = [2018,11,30, 9,34,56,6453]
@@ -100,8 +100,8 @@ class ManifestTest < TestBase
       @time = TimeStub.new(now)
     }
     manifest = custom_manifest
-    id = model.kata_create(manifest:manifest, options:default_options)
-    saved = model.kata_manifest(id:id)
+    id = kata_create(manifest, default_options)
+    saved = kata_manifest(id)
     manifest.keys.each do |key|
       assert_equal manifest[key], saved[key],  key
     end

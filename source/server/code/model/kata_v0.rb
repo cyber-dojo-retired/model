@@ -29,7 +29,7 @@ class Kata_v0
       event_file_create_command(id, 0, json_plain(lined({ 'files' => files }))),
       events_file_create_command(id, json_plain(event0) + "\n")
     ])
-    id
+    '"' + id + '"'
   end
 
   # - - - - - - - - - - - - - - - - - - -
@@ -40,10 +40,10 @@ class Kata_v0
       event_file_read_command(id, 0)
     ])
     manifest = json_parse(manifest_src)
-    # polyfill to version==1    
+    # polyfill to version==1
     event0 = unlined(json_parse(event0_src))
     manifest['visible_files'] = event0['files']
-    manifest
+    json_plain(manifest)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -53,12 +53,12 @@ class Kata_v0
     json = json_parse('[' + result.lines.join(',') + ']')
     # polyfill to version==1
     json.map.with_index(0) do |h,index|
-      h["index"] = index
+      h['index'] = index
       if h.has_key?('colour')
-        h["predicted"] = "none"
+        h['predicted'] = 'none'
       end
     end
-    json
+    json_plain(json)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -84,7 +84,7 @@ class Kata_v0
     end
     json['index'] = index
     json['time'] = events[index]['time']
-    json
+    json_plain(json)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -96,13 +96,14 @@ class Kata_v0
       'stderr' => stderr,
       'status' => status
     }
-    saver.assert_all([
+    result = saver.assert_all([
       # A failing make_command() ensures the append_command() is not run.
       dir_exists_command(id),
       dir_make_command(id, index),
       event_file_create_command(id, index, json_plain(lined(event_n))),
       events_file_append_command(id, json_plain(summary) + "\n")
     ])
+    json_plain(result)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

@@ -31,7 +31,7 @@ class ExistsTest < TestBase
   |group_exists? is true,
   |for a well-formed id from previous group_create
   ) do
-    id = model.group_create(manifests:[custom_manifest], options:default_options)
+    id = group_create(custom_manifest, default_options)
     assert group_exists?(id), :created_in_test
   end
 
@@ -93,7 +93,7 @@ class ExistsTest < TestBase
   |kata_exists? is true,
   |for a well-formed id that exists
   ) do
-    id = model.kata_create(manifest:custom_manifest, options:default_options)
+    id = kata_create(custom_manifest, default_options)
     assert kata_exists?(id), :created_in_test
   end
 
@@ -140,14 +140,6 @@ class ExistsTest < TestBase
   end
 
   private
-
-  def group_exists?(id)
-    model.group_exists?(id:id)
-  end
-
-  def kata_exists?(id)
-    model.kata_exists?(id:id)
-  end
 
   class SaverExceptionRaiser
     def method_missing(_m, *_args, &_block)
