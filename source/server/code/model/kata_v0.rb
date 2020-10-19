@@ -49,7 +49,11 @@ class Kata_v0
 
   def events(id)
     result = saver.assert(events_file_read_command(id))
-    json_parse('[' + result.lines.join(',') + ']')
+    json = json_parse('[' + result.lines.join(',') + ']')
+    json.map.with_index(0) do |h,index|
+      h["index"] = index
+    end
+    json
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

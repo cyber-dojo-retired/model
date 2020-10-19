@@ -14,10 +14,10 @@ class EventsTest < TestBase
   ) do
     actual = model.kata_events(id:'5rTJv5')
     expected = [
-      { "event" => "created", "time" => [2019,1,16,12,44,55,800239] },
-      { "colour" => "red",    "time" => [2019,1,16,12,45,40,544806], "duration" => 1.46448 },
-      { "colour" => "amber",  "time" => [2019,1,16,12,45,46,82887],  "duration" => 1.031421 },
-      { "colour" => "green",  "time" => [2019,1,16,12,45,52,220587], "duration" => 1.042027 },
+      { "index" => 0, "event" => "created", "time" => [2019,1,16,12,44,55,800239] },
+      { "index" => 1, "colour" => "red",    "time" => [2019,1,16,12,45,40,544806], "duration" => 1.46448 },
+      { "index" => 2, "colour" => "amber",  "time" => [2019,1,16,12,45,46,82887],  "duration" => 1.031421 },
+      { "index" => 3, "colour" => "green",  "time" => [2019,1,16,12,45,52,220587], "duration" => 1.042027 },
     ]
     assert_equal expected, actual
   end
