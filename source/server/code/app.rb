@@ -25,5 +25,5 @@ class App < AppBase
    get_json(:kata_events,    Model)
    get_json(:kata_event,     Model)
   post_json(:kata_ran_tests, Model)
-  
+
 end

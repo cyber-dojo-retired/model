@@ -48,7 +48,7 @@ class EventsTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0], 'f5T', %w(
-  retrieve already existing individual kata_event {test-data copied into saver}
+  retrieve already existing individual kata_event() {test-data copied into saver}
   is "polyfilled" to make it look like version=1
   ) do
     actual = kata_event(id='5rTJv5', index=0)
@@ -74,28 +74,83 @@ class EventsTest < TestBase
   # . . . . . . . . . . . .
 
   v_tests [1], 'rp9', %w(
-  retrieve already existing individual kata_event {test-data copied into saver}
+  retrieve already existing individual kata_event() {test-data copied into saver}
   ) do
     actual = kata_event(id='H8NAvN', index=0)
 
     assert actual.is_a?(Hash)
-    assert_equal ['files','index','time','event'].sort, actual.keys.sort
-    assert_equal 0, actual['index']
-    assert_equal [2020,10,19,12,15,38,644198], actual['time']
-    assert_equal 'created', actual['event']
+    assert_equal ['files','index','time','event'].sort, actual.keys.sort, :keys
+    assert_equal 0, actual['index'], :index
+    assert_equal [2020,10,19,12,15,38,644198], actual['time'], :time
+    assert_equal 'created', actual['event'], :event
 
     actual = kata_event(id='H8NAvN', index=1)
 
     assert actual.is_a?(Hash)
-    assert_equal ['files','stdout','stderr','status','index','time','colour','duration','predicted'].sort, actual.keys.sort
-    assert_equal '1', actual['status']
-    assert_equal [2020,10,19,12,15,47,353545], actual['time']
-    assert_equal 0.918826, actual['duration']
-    assert_equal 'red', actual['colour']
-    assert_equal 'none', actual['predicted']
-    assert_equal 1, actual['index']
+    assert_equal ['files','stdout','stderr','status','index','time','colour','duration','predicted'].sort, actual.keys.sort, :keys
+    assert_equal '1', actual['status'], :status
+    assert_equal [2020,10,19,12,15,47,353545], actual['time'], :time
+    assert_equal 0.918826, actual['duration'], :duration
+    assert_equal 'red', actual['colour'], :colour
+    assert_equal 'none', actual['predicted'], :predicted
+    assert_equal 1, actual['index'], :index
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # kata_event(id, index=-1)
+
+  v_tests [0], '3dJ', %w(
+  kata_event(id, index=-1) retrieves the most recent event
+  ) do
+    id = '5rTJv5'
+    actual = kata_event(id, -1)
+    last = kata_event(id, 3)
+    assert_equal last, actual
+  end
+
+  v_tests [0], '4dJ', %w(
+  |kata_event(id, index=-1) retrieves the most recent event
+  |even when only the creation event exists
+  ) do
+    display_name = custom_start_points.display_names.sample
+    manifest = custom_start_points.manifest(display_name)
+    manifest['version'] = version
+    json_post '/kata_create', {
+      manifest:manifest,
+      options:default_options
+    }.to_json
+    id = json_response_body['kata_create']
+    last = kata_event(id, 0)
+    actual = kata_event(id, -1)
+    assert_equal last, actual
+  end
+
+  # . . . . . . . . . . . .
+
+  v_tests [1], 'Hx8', %w(
+  kata_event(id, index=-1) retrieves the most recent event
+  ) do
+    id = '5U2J18'
+    actual = kata_event(id, -1)
+    last = kata_event(id, 3)
+    assert_equal last, actual
+  end
+
+  v_tests [1], 'Hx9', %w(
+  |kata_event(id, index=-1) retrieves the most recent event
+  |even when only the creation event exists
+  ) do
+    display_name = custom_start_points.display_names.sample
+    manifest = custom_start_points.manifest(display_name)
+    manifest['version'] = version
+    json_post '/kata_create', {
+      manifest:manifest,
+      options:default_options
+    }.to_json
+    id = json_response_body['kata_create']
+    last = kata_event(id, 0)
+    actual = kata_event(id, -1)
+    assert_equal last, actual
+  end
 
 end

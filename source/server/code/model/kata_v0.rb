@@ -64,6 +64,10 @@ class Kata_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def event(id, index)
+    if index === -1
+      all = json_parse(events(id))
+      index = all[-1]['index']
+    end
     results = saver.assert_all([
       events_file_read_command(id),
       event_file_read_command(id, index)
