@@ -84,8 +84,6 @@ class Group_v0
 
   private
 
-  AVATAR_INDEXES = (0..63).to_a
-
   include IdPather
   include Liner_v0
   include JsonAdapter
@@ -130,7 +128,7 @@ class Group_v0
       saver.file_read_command(kata_id_filename(id, index))
     end
     kata_ids = saver.run_all(read_commands)
-    # kata_ids is an array of 64 entries, eg
+    # kata_ids is an array of entries, eg
     # [
     #    nil,      # 0
     #    nil,      # 1
@@ -140,13 +138,16 @@ class Group_v0
     #    nil,      # 5
     #    ...
     # ]
-    # indicating there are joined animals at indexes
-    # 2 (bat) id == w34rd5
-    # 4 (bee) id == G2ws77
+    # indicating there are joined animals at group-indexes
+    # 2 (bat) kata_id == w34rd5
+    # 4 (bee) kata_id == G2ws77
     # etc
-    json_plain(AVATAR_INDEXES.zip(kata_ids).select{
-      |_group_index,kata_id| kata_id
-    })
+    json_plain(
+      kata_ids.filter_map
+              .with_index(0) { |kata_id,group_index|
+                [group_index,kata_id] if kata_id
+              }
+    )
     # [
     #   [ 2,'w34rd5'], #  2 == bat
     #   [15,'G2ws77'], # 15 == fox
