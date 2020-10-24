@@ -33,13 +33,6 @@ class Group_v0
     json_plain(json_manifest(id))
   end
 
-  def json_manifest(id)
-    manifest_src = saver.assert(manifest_read_command(id))
-    manifest = json_parse(manifest_src)
-    manifest['visible_files'] = unlined_files(manifest['visible_files'])
-    manifest
-  end
-
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def join(id, indexes)
@@ -120,6 +113,13 @@ class Group_v0
   end
 
   # - - - - - - - - - - - - - - - - - - -
+
+  def json_manifest(id)
+    manifest_src = saver.assert(manifest_read_command(id))
+    manifest = json_parse(manifest_src)
+    manifest['visible_files'] = unlined_files(manifest['visible_files'])
+    manifest
+  end
 
   def katas_ids(katas_indexes)
     katas_indexes.map{ |_,kata_id| kata_id }

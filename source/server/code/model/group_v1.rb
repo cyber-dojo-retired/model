@@ -47,10 +47,6 @@ class Group_v1
     saver.assert(manifest_read_command(id))
   end
 
-  def json_manifest(id)
-    JSON.parse(manifest(id))
-  end
-
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def join(id, indexes)
@@ -128,6 +124,10 @@ class Group_v1
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
+
+  def json_manifest(id)
+    json_parse(manifest(id))
+  end
 
   def katas_ids(katas_indexes)
     katas_indexes.map{ |_,kata_id| kata_id }
