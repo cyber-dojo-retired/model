@@ -74,21 +74,28 @@ class Group_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def avatars(id)
-    katas_src = saver.assert(katas_read_command(id))
-    # G2ws77 15
-    # w34rd5 2
-    # ...
-    json_plain(katas_src
-      .split
-      .each_slice(2)
-      .map{|kid,kindex| [kindex.to_i,kid] }
-      .sort)
-    # [
-    #   [ 2, 'w34rd5'], #  2 == bat
-    #   [15, 'G2ws77'], # 15 == fox
-    #   ...
-    # ]
+    katas_indexes(id)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+=begin
+  def events(id)
+    result = {}
+    kindexes = katas_indexes(id)
+    read_events_files_commands = katas_ids(kindexes).map do |kata_id|
+      @kata.send(:events_file_read_command, kata_id)
+    end
+    katas_events = saver.assert_all(read_events_files_commands)
+    kindexes.each.with_index(0) do |(kata_id,group_index),index|
+      result[kata_id] = {
+        'index' => group_index,
+        'events' => json_parse('[' + katas_events[index] + ']')
+      }
+    end
+    json_plain(result) # TODO: build json directly
+  end
+=end
 
   # - - - - - - - - - - - - - - - - - - - - - -
   # ...
@@ -118,6 +125,29 @@ class Group_v1
 
   def unquoted(s)
     s[1..-2]
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def katas_ids(katas_indexes)
+    katas_indexes.map{ |_,kata_id| kata_id }
+  end
+
+  def katas_indexes(id)
+    katas_src = saver.assert(katas_read_command(id))
+    # G2ws77 15
+    # w34rd5 2
+    # ...
+    json_plain(katas_src
+      .split
+      .each_slice(2)
+      .map{|kata_id,group_index| [group_index.to_i,kata_id] }
+      .sort)
+    # [
+    #   [ 2, 'w34rd5'], #  2 == bat
+    #   [15, 'G2ws77'], # 15 == fox
+    #   ...
+    # ]
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

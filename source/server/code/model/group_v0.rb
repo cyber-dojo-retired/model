@@ -63,31 +63,28 @@ class Group_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def avatars(id)
-    read_commands = (0..63).map do |index|
-      saver.file_read_command(kata_id_filename(id, index))
-    end
-    katas_src = saver.run_all(read_commands)
-    # katas_src is an array of 64 entries, eg
-    # [
-    #    nil,      # 0
-    #    nil,      # 1
-    #    'w34rd5', # 2
-    #    nil,      # 3
-    #    'G2ws77', # 4
-    #    nil,      # 5
-    #    ...
-    # ]
-    # indicating there are joined animals at indexes
-    # 2 (bat) id == w34rd5
-    # 4 (bee) id == G2ws77
-    # etc
-    json_plain(AVATAR_INDEXES.zip(katas_src).select{ |_index,kid| kid })
-    # [
-    #   [ 2,'w34rd5'], #  2 == bat
-    #   [15,'G2ws77'], # 15 == fox
-    #   ...
-    # ]
+    kata_indexes(id)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+=begin
+  def events(id)
+    results = {}
+    kindexes = katas_indexes(id)
+    read_events_files_commands = katas_ids(kindexes).map do |kata_id|
+      @kata.send(:events_file_read_command, kata_id)
+    end
+    katas_events = saver.assert_all(read_events_files_commands)
+    kindexes.each.with_index(0) do |(kata_id,group_index),index|
+      results[kata_id] = {
+        'index' => group_index,
+        'events' => events_parse(katas_events[index])
+      }
+    end
+    json_plain(results) # TODO: build json directly
+  end
+=end
 
   # - - - - - - - - - - - - - - - - - - - - - -
   # ...
@@ -120,6 +117,41 @@ class Group_v0
 
   def unquoted(s)
     s[1..-2]
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def katas_ids(katas_indexes)
+    katas_indexes.map{ |_,kata_id| kata_id }
+  end
+
+  def kata_indexes(id)
+    read_commands = (0..63).map do |index|
+      saver.file_read_command(kata_id_filename(id, index))
+    end
+    kata_ids = saver.run_all(read_commands)
+    # kata_ids is an array of 64 entries, eg
+    # [
+    #    nil,      # 0
+    #    nil,      # 1
+    #    'w34rd5', # 2
+    #    nil,      # 3
+    #    'G2ws77', # 4
+    #    nil,      # 5
+    #    ...
+    # ]
+    # indicating there are joined animals at indexes
+    # 2 (bat) id == w34rd5
+    # 4 (bee) id == G2ws77
+    # etc
+    json_plain(AVATAR_INDEXES.zip(kata_ids).select{
+      |_group_index,kata_id| kata_id
+    })
+    # [
+    #   [ 2,'w34rd5'], #  2 == bat
+    #   [15,'G2ws77'], # 15 == fox
+    #   ...
+    # ]
   end
 
   # - - - - - - - - - - - - - - - - - - -

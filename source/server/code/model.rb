@@ -36,6 +36,10 @@ class Model
     group(version_group(id)).avatars(id)
   end
 
+  def group_events(id:)
+    group(version_group(id)).events(id)
+  end
+
   #- - - - - - - - - - - - - - - - - -
 
   def kata_create(manifest:, options:)
