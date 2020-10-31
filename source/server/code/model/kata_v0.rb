@@ -98,7 +98,7 @@ class Kata_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def ran_tests(id, index, files, stdout, stderr, status, summary)
-    summary['time'] = time.now    
+    summary['time'] = time.now
     event_n = {
       'files' => files,
       'stdout' => stdout,

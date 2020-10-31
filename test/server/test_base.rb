@@ -87,6 +87,18 @@ class TestBase < Id58TestBase
     JSON.parse(model.kata_event(id:id, index:index))
   end
 
+  def kata_ran_tests(id, index, files, stdout, stderr, status, summary)
+    model.kata_ran_tests(
+      id:id,
+      index:index,
+      files:files,
+      stdout:stdout,
+      stderr:stderr,
+      status:status,
+      summary:summary
+    )
+  end
+
   # - - - - - - - - - - - - - - -
 
   def assert_get_200(path, &block)

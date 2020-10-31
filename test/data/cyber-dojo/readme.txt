@@ -11,6 +11,13 @@ saver data, version 0
 /cyber-dojo/groups/ch/y6/BJ
 /cyber-dojo/groups/ch/y6/BJ/11/kata.id ==> k5ZTk0  (11==dolphin)
 /cyber-dojo/katas/k5/ZT/k0
+/cyber-dojo/katas/k5/ZT/k0/0/event.json
+/cyber-dojo/katas/k5/ZT/k0/1/event.json
+/cyber-dojo/katas/k5/ZT/k0/2/event.json
+/cyber-dojo/katas/k5/ZT/k0/3/event.json
+/cyber-dojo/katas/k5/ZT/k0/manifest.json
+/cyber-dojo/katas/k5/ZT/k0/events.json
+
 
 
 saver data, version 1
@@ -24,11 +31,11 @@ saver data, version 1
 /cyber-dojo/katas/5U/2J/18/1.event.json
 /cyber-dojo/katas/5U/2J/18/2.event.json
 /cyber-dojo/katas/5U/2J/18/3.event.json
-/cyber-dojo/katas/5U/2J/18/events.json
 /cyber-dojo/katas/5U/2J/18/manifest.json
+/cyber-dojo/katas/5U/2J/18/events.json
 
 
 /cyber-dojo/katas/H8/NA/vN/0.event.json             (single kata)
 /cyber-dojo/katas/H8/NA/vN/1.event.json
-/cyber-dojo/katas/H8/NA/vN/events.json
 /cyber-dojo/katas/H8/NA/vN/manifest.json
+/cyber-dojo/katas/H8/NA/vN/events.json
