@@ -19,8 +19,9 @@ build_tagged_images()
 
   check_embedded_env_var
   echo
-  echo "CYBER_DOJO_MODEL_TAG=${CYBER_DOJO_MODEL_TAG}"
-  echo "CYBER_DOJO_MODEL_SHA=${CYBER_DOJO_MODEL_SHA}"
+  echo "echo CYBER_DOJO_MODEL_SHA=${CYBER_DOJO_MODEL_SHA}"
+  echo "echo CYBER_DOJO_MODEL_TAG=${CYBER_DOJO_MODEL_TAG}"
+  echo
 }
 
 # - - - - - - - - - - - - - - - - - - - - - -
