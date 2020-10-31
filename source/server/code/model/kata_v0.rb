@@ -12,6 +12,10 @@ class Kata_v0
 
   # - - - - - - - - - - - - - - - - - - -
 
+  #...
+
+  # - - - - - - - - - - - - - - - - - - -
+
   def create(manifest, options)
     manifest = manifest.clone
     planned_feature(options)
@@ -94,6 +98,7 @@ class Kata_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def ran_tests(id, index, files, stdout, stderr, status, summary)
+    summary['time'] = time.now    
     event_n = {
       'files' => files,
       'stdout' => stdout,
@@ -109,9 +114,6 @@ class Kata_v0
     ])
     json_plain(result)
   end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-  # ...
 
   private
 

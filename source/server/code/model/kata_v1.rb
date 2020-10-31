@@ -32,6 +32,10 @@ class Kata_v1
 
   # - - - - - - - - - - - - - - - - - - -
 
+  #...
+
+  # - - - - - - - - - - - - - - - - - - -
+
   def exists?(id)
     unless IdGenerator::id?(id)
       return false
@@ -90,6 +94,7 @@ class Kata_v1
 
   def ran_tests(id, index, files, stdout, stderr, status, summary)
     summary['index'] = index # See point 6 at top of file
+    summary['time'] = time.now
     event_n = {
        'files' => files,
       'stdout' => stdout,
@@ -103,9 +108,6 @@ class Kata_v1
     ])
     json_plain(result)
   end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-  # ...
 
   private
 

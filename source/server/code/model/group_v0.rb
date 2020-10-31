@@ -12,6 +12,10 @@ class Group_v0
     @externals = externals
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  # ...
+
   # - - - - - - - - - - - - - - - - - - -
 
   def create(manifest, options)
@@ -64,12 +68,12 @@ class Group_v0
 =begin
   def events(id)
     results = {}
-    kindexes = katas_indexes(id)
-    read_events_files_commands = katas_ids(kindexes).map do |kata_id|
+    indexes = katas_indexes(id)
+    read_events_files_commands = katas_ids(indexes).map do |kata_id|
       @kata.send(:events_file_read_command, kata_id)
     end
     katas_events = saver.assert_all(read_events_files_commands)
-    kindexes.each.with_index(0) do |(kata_id,group_index),index|
+    indexes.each.with_index(0) do |(kata_id,group_index),index|
       results[kata_id] = {
         'index' => group_index,
         'events' => events_parse(katas_events[index])
@@ -78,9 +82,6 @@ class Group_v0
     json_plain(results) # TODO: build json directly
   end
 =end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-  # ...
 
   private
 
@@ -124,6 +125,7 @@ class Group_v0
   end
 
   def kata_indexes(id)
+    # In version-1 this is a single command
     read_commands = (0..63).map do |index|
       saver.file_read_command(kata_id_filename(id, index))
     end
