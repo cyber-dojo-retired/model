@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require_relative 'test_base'
+require_relative 'time_stub'
 
 class RanTestsTest < TestBase
 
@@ -21,6 +22,9 @@ class RanTestsTest < TestBase
   v_tests [0,1], 'Dk8', %w(
   |kata_ran_tests gives same results in both versions
   ) do
+    t0 = [2020,11,1, 5,6,18,654318]
+    t1 = [2020,11,1, 5,7,23,883467]
+    externals.instance_exec { @time = TimeStub.new(t0,t1) }
     manifest = custom_manifest
     manifest['version'] = version
     id = kata_create(manifest, default_options)
@@ -52,9 +56,9 @@ class RanTestsTest < TestBase
     }
     status = "1"
     summary = {
-      "colour" => "red",
-      "duration" => 1.46448,
-      "predicted" => "none"
+      "colour" => (colour = "red"),
+      "duration" => (duration = 1.46448),
+      "predicted" => (predicted = "none")
     }
     kata_ran_tests(id, index, files, stdout, stderr, status, summary)
     actual = kata_event(id, index)
@@ -62,11 +66,11 @@ class RanTestsTest < TestBase
     assert_equal stdout, actual["stdout"]
     assert_equal stderr, actual["stderr"]
     assert_equal status, actual["status"]
-    assert_equal "red", actual['colour']
-    assert_equal 1.46448, actual['duration']
-    assert_equal 'none', actual['predicted']
-    assert_equal 1, actual['index']
-    #p actual['time']
+    assert_equal colour, actual['colour']
+    assert_equal duration, actual['duration']
+    assert_equal predicted, actual['predicted']
+    assert_equal index, actual['index']
+    assert_equal t1, actual['time']
   end
 
 
