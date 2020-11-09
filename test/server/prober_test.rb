@@ -64,33 +64,6 @@ class ProberTest < TestBase
   end
 
   # - - - - - - - - - - - - - - - - -
-  # Postel's Law
-
-  test 'F16', %w(
-  |GET/alive?
-  |is used by external k8s probes
-  |so obeys Postel's Law
-  |and ignores any passed arguments
-  ) do
-    assert_get_200('alive?arg=unused') do |jr|
-      assert_equal ['alive?'], jr.keys, "keys:#{last_response.body}:"
-      assert true?(jr['alive?']), "true?:#{last_response.body}:"
-    end
-  end
-
-  test 'F17', %w(
-  |GET/ready?
-  |is used by external k8s probes
-  |so obeys Postel's Law
-  |and ignores any passed arguments
-  ) do
-    assert_get_200('ready?arg=unused') do |jr|
-      assert_equal ['ready?'], jr.keys, "keys:#{last_response.body}:"
-      assert true?(jr['ready?']), "true?:#{last_response.body}:"
-    end
-  end
-
-  # - - - - - - - - - - - - - - - - -
   # 500
   # - - - - - - - - - - - - - - - - -
 

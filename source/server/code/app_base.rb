@@ -25,7 +25,7 @@ class AppBase < Sinatra::Base
       respond_to do |format|
         format.json {
           target = klass.new(@externals)
-          result = target.public_send(name, **json_args)
+          result = target.public_send(name, **args)
           content_type :json
           "{\"#{name}\":#{result}}"
         }
@@ -40,7 +40,7 @@ class AppBase < Sinatra::Base
       respond_to do |format|
         format.json {
           target = klass.new(@externals)
-          result = target.public_send(name, **json_args)
+          result = target.public_send(name, **args)
           content_type :json
           "{\"#{name}\":#{result}}"
         }
@@ -50,8 +50,10 @@ class AppBase < Sinatra::Base
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def json_args
-    symbolized(json_payload)
+  def args
+    body = request.body.read
+    from = (body === '') ? request.params : json_hash_parse(body)
+    symbolized(from)
   end
 
   private
@@ -63,12 +65,8 @@ class AppBase < Sinatra::Base
     Hash[h.map{ |key,value| [key.to_sym, value] }]
   end
 
-  def json_payload
-    json_hash_parse(request.body.read)
-  end
-
   def json_hash_parse(body)
-    json = (body === '') ? {} : JSON.parse!(body)
+    json = JSON.parse!(body)
     unless json.instance_of?(Hash)
       fail 'body is not JSON Hash'
     end
@@ -89,7 +87,8 @@ class AppBase < Sinatra::Base
       exception: {
         request: {
           path:request.path,
-          body:request.body.read
+          body:request.body.read,
+          params:request.params
         },
         backtrace: error.backtrace
       }
