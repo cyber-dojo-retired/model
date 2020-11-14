@@ -2,7 +2,7 @@
 require_relative 'silently'
 require 'sinatra/base'
 silently { require 'sinatra/contrib' } # N x "warning: method redefined"
-require_relative 'http_json_hash/service'
+require_relative 'http_json_hash/service_error'
 require_relative 'lib/json_adapter'
 require 'json'
 require 'sprockets'
@@ -56,23 +56,19 @@ class AppBase < Sinatra::Base
     else
       args = params
     end
-    symbolized(args)
+    # named-args require symbolization
+    Hash[args.map{ |key,value| [key.to_sym, value] }]
   end
 
   private
 
-  include JsonAdapter # TODO: DROP
-
-  def symbolized(h)
-    # named-args require symbolization
-    Hash[h.map{ |key,value| [key.to_sym, value] }]
-  end
+  include JsonAdapter
 
   def json_hash_parse(body)
     if body === ''
       body = '{}'
     end
-    json = JSON.parse!(body)
+    json = json_parse(body)
     unless json.instance_of?(Hash)
       fail 'body is not JSON Hash'
     end
