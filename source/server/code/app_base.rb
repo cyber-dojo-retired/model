@@ -5,18 +5,16 @@ silently { require 'sinatra/contrib' } # N x "warning: method redefined"
 require_relative 'http_json_hash/service_error'
 require_relative 'lib/json_adapter'
 require 'json'
-require 'sprockets'
 
 class AppBase < Sinatra::Base
+
+  silently { register Sinatra::Contrib }
+  set :port, ENV['PORT']
 
   def initialize(externals)
     @externals = externals
     super(nil)
   end
-
-  silently { register Sinatra::Contrib }
-  set :port, ENV['PORT']
-  set :environment, Sprockets::Environment.new
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
@@ -48,7 +46,9 @@ class AppBase < Sinatra::Base
     end
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - -
+  private
+
+  include JsonAdapter
 
   def named_args
     if params.empty?
@@ -56,13 +56,8 @@ class AppBase < Sinatra::Base
     else
       args = params
     end
-    # named-args require symbolization
     Hash[args.map{ |key,value| [key.to_sym, value] }]
   end
-
-  private
-
-  include JsonAdapter
 
   def json_hash_parse(body)
     if body === ''
@@ -88,6 +83,7 @@ class AppBase < Sinatra::Base
     info = {
       exception: {
         request: {
+          time:Time.now,
           path:request.path,
           body:request.body.read,
           params:request.params
