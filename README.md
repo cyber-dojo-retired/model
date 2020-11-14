@@ -17,8 +17,9 @@
 * [POST kata_create(manifest,options)](docs/api.md#post-kata_createmanifestoptions)
 * [ GET kata_manifest(id)](docs/api.md#get-kata_manifestid)
 - - - -
-* [GET ready?](docs/api.md#get-ready)
-* [GET alive?](docs/api.md#get-alive)  
 * [GET sha](docs/api.md#get-sha)
+* [GET alive?](docs/api.md#get-alive)  
+* [GET healthy?](docs/api.md#get-healthy)  
+* [GET ready?](docs/api.md#get-ready)
 - - - -
 ![cyber-dojo.org home page](https://github.com/cyber-dojo/cyber-dojo/blob/master/shared/home_page_snapshot.png)

@@ -141,19 +141,17 @@ Gets the manifest used to create the kata exercise with the given `id`.
   ```
 
 - - - -
-## GET ready?
-Tests if the service is ready to handle requests.
-Used as a [Kubernetes](https://kubernetes.io/) readiness probe.
+## GET sha
+The git commit sha used to create the Docker image.
 - parameters
   * none
 - returns [(JSON-out)](#json-out)
-  * **true** if the service is ready
-  * **false** if the service is not ready
+  * the 40 character commit sha string.
 - example
   ```bash     
-  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/ready?
+  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/sha
 
-  {"ready?":false}
+  {"sha":"41d7e6068ab75716e4c7b9262a3a44323b4d1448"}
   ```
 
 - - - -
@@ -172,17 +170,35 @@ Used as a [Kubernetes](https://kubernetes.io/) liveness probe.
   ```
 
 - - - -
-## GET sha
-The git commit sha used to create the Docker image.
+## GET healthy?
+Tests if the service is ready to handle requests.
+Used as a Docker HEALTHCHECK probe.
 - parameters
   * none
 - returns [(JSON-out)](#json-out)
-  * the 40 character commit sha string.
+  * **true** if the service is healthy
+  * **false** if the service is not healthy
 - example
   ```bash     
-  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/sha
+  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/healthy?
 
-  {"sha":"41d7e6068ab75716e4c7b9262a3a44323b4d1448"}
+  {"healthy?":false}
+  ```
+
+- - - -
+## GET ready?
+Tests if the service is ready to handle requests.
+Used as a [Kubernetes](https://kubernetes.io/) readiness probe.
+- parameters
+  * none
+- returns [(JSON-out)](#json-out)
+  * **true** if the service is ready
+  * **false** if the service is not ready
+- example
+  ```bash     
+  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/ready?
+
+  {"ready?":false}
   ```
 
 - - - -
