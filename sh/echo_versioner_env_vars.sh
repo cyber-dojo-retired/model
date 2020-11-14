@@ -13,8 +13,8 @@ echo_versioner_env_vars()
   echo CYBER_DOJO_MODEL_SERVER_USER=nobody
   echo CYBER_DOJO_MODEL_CLIENT_USER=nobody
   #
-  echo CYBER_DOJO_MODEL_CLIENT_CONTAINER_NAME=test-model-client
-  echo CYBER_DOJO_MODEL_SERVER_CONTAINER_NAME=test-model-server
+  echo CYBER_DOJO_MODEL_CLIENT_CONTAINER_NAME=test_model_client
+  echo CYBER_DOJO_MODEL_SERVER_CONTAINER_NAME=test_model_server
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - -
