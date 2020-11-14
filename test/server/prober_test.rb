@@ -9,15 +9,26 @@ class ProberTest < TestBase
   end
 
   # - - - - - - - - - - - - - - - - -
-  # alive? ready? sha
 
-  test 'C15', %w(
+  test 'B15', %w(
   |GET/alive?
   |has status 200
   |returns true
   |and nothing else
   ) do
     assert_get_200(path='alive?') do |jr|
+      assert_equal [path], jr.keys, "keys:#{last_response.body}:"
+      assert true?(jr[path]), "true?:#{last_response.body}:"
+    end
+  end
+
+  test 'C15', %w(
+  |GET/healthy?
+  |has status 200
+  |returns true
+  |and nothing else
+  ) do
+    assert_get_200(path='healthy?') do |jr|
       assert_equal [path], jr.keys, "keys:#{last_response.body}:"
       assert true?(jr[path]), "true?:#{last_response.body}:"
     end

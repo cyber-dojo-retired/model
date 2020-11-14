@@ -6,16 +6,20 @@ class Prober
     @externals = externals
   end
 
+  def sha
+    model.sha
+  end
+
+  def healthy?
+    ready?
+  end
+
   def alive?
     model.alive?
   end
 
   def ready?
     model.ready?
-  end
-
-  def sha
-    model.sha
   end
 
   private

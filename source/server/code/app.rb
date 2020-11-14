@@ -9,9 +9,10 @@ class App < AppBase
     super(externals)
   end
 
-   get_json(:alive?, Prober)
-   get_json(:ready?, Prober)
-   get_json(:sha,    Prober)
+   get_json(:sha,      Prober)
+   get_json(:healthy?, Prober)
+   get_json(:alive?,   Prober)
+   get_json(:ready?,   Prober)
 
   post_json(:group_create,   Model)
    get_json(:group_exists?,  Model)

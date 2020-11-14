@@ -9,8 +9,14 @@ class ProberTest < TestBase
 
   # - - - - - - - - - - - - - - - - -
 
-  test '15C', 'its alive' do
+  test '15B', 'its alive' do
     assert true?(prober.alive?)
+  end
+
+  # - - - - - - - - - - - - - - - - -
+
+  test '15C', 'its healthy' do
+    assert true?(prober.healthy?)
   end
 
   # - - - - - - - - - - - - - - - - -

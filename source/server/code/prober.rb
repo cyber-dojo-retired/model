@@ -6,24 +6,20 @@ class Prober
     @externals = externals
   end
 
+  def sha
+    '"' + ENV['SHA'] + '"'
+  end
+
+  def healthy?
+    ready?
+  end
+
   def alive?
     true
   end
 
   def ready?
-    dependent_services.all?(&:ready?)
-  end
-
-  def sha
-    '"' + ENV['SHA'] + '"'
-  end
-
-  private
-
-  def dependent_services
-    [
-      @externals.saver
-    ]
+    @externals.saver.ready?
   end
 
 end

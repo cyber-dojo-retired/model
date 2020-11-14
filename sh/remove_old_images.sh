@@ -3,6 +3,7 @@
 # - - - - - - - - - - - - - - - - - - - - - -
 remove_old_images()
 {
+  echo Removing old images
   local -r dil=$(docker image ls --format "{{.Repository}}:{{.Tag}}")
   remove_all_but_latest "${dil}" "${CYBER_DOJO_MODEL_IMAGE}"
   remove_all_but_latest "${dil}" "${CYBER_DOJO_MODEL_CLIENT_IMAGE}"

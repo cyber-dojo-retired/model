@@ -25,7 +25,7 @@ class AppBase < Sinatra::Base
       respond_to do |format|
         format.json {
           target = klass.new(@externals)
-          result = target.public_send(name, **args)
+          result = target.public_send(name, **named_args)
           content_type :json
           "{\"#{name}\":#{result}}"
         }
@@ -40,7 +40,7 @@ class AppBase < Sinatra::Base
       respond_to do |format|
         format.json {
           target = klass.new(@externals)
-          result = target.public_send(name, **args)
+          result = target.public_send(name, **named_args)
           content_type :json
           "{\"#{name}\":#{result}}"
         }
@@ -50,15 +50,18 @@ class AppBase < Sinatra::Base
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def args
-    body = request.body.read
-    from = (body === '') ? request.params : json_hash_parse(body)
-    symbolized(from)
+  def named_args
+    if params.empty?
+      args = json_hash_parse(request.body.read)
+    else
+      args = params
+    end
+    symbolized(args)
   end
 
   private
 
-  include JsonAdapter
+  include JsonAdapter # TODO: DROP
 
   def symbolized(h)
     # named-args require symbolization
@@ -66,6 +69,9 @@ class AppBase < Sinatra::Base
   end
 
   def json_hash_parse(body)
+    if body === ''
+      body = '{}'
+    end
     json = JSON.parse!(body)
     unless json.instance_of?(Hash)
       fail 'body is not JSON Hash'

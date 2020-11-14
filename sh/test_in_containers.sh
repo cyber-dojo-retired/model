@@ -14,6 +14,7 @@ test_in_containers()
     run_server_tests "${@:-}"
   else
     run_server_tests "${@:-}"
+    echo
     run_client_tests "${@:-}"
   fi
   echo All passed
@@ -48,7 +49,6 @@ run_tests()
   local -r coverage_code_tab_name=tested
   local -r coverage_test_tab_name=tester
 
-  echo
   echo '=================================='
   echo "Running ${type} tests"
   echo '=================================='
