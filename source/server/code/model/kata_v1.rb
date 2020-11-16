@@ -83,6 +83,7 @@ class Kata_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def event(id, index)
+    index = index.to_i
     if index === -1
       all = json_parse(events(id))
       index = all[-1]['index']
