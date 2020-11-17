@@ -16,6 +16,9 @@
 * [ GET kata_exists?(id)](docs/api.md#get-kata_existsid)
 * [POST kata_create(manifest,options)](docs/api.md#post-kata_createmanifestoptions)
 * [ GET kata_manifest(id)](docs/api.md#get-kata_manifestid)
+* [ GET kata_events(id)](docs/api.md#get-kata_eventsid)
+* [ GET kata_event(id,index)](docs/api.md#get-kata_eventidindex)
+* [POST kata_ran_tests(id,index,files,stdout,stderr,status,summary)](docs/api.md#post-kata_ran_testsidindexfilesstdoutstderrstatussummary)
 - - - -
 * [GET sha](docs/api.md#get-sha)
 * [GET alive?](docs/api.md#get-alive)  
