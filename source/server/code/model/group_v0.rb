@@ -64,7 +64,9 @@ class Group_v0
   def events(id)
     results = {}
     indexes = katas_indexes(id)
+    # read the events summary file for each avatar
     read_events_files_commands = katas_ids(indexes).map do |kata_id|
+      # eg reads file /cyber-dojo/katas/k5/ZT/k0/events.json
       @kata.send(:events_file_read_command, kata_id)
     end
     katas_events = saver.assert_all(read_events_files_commands)

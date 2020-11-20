@@ -22,12 +22,12 @@ module PolyFiller
     if event_summary.has_key?('colour')
       event['colour'] = event_summary['colour']
       event['duration'] = event_summary['duration']
-      event['predicted'] = 'none'
+      event['predicted'] ||= 'none'
     end
     event['index'] = index
     event['time'] = event_summary['time']
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def polyfill_events(json)
