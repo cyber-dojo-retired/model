@@ -30,13 +30,13 @@ module PolyFiller
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def polyfill_events(json)
-    json.map.with_index(0) do |h,index|
-      h['index'] = index
-      if h.has_key?('colour')
-        h['predicted'] ||= 'none'
+  def polyfill_events(events)
+    events.map.with_index(0) do |event,index|
+      event['index'] = index
+      if event.has_key?('colour')
+        event['predicted'] ||= 'none'
       end
-      h
+      event
     end
   end
 
