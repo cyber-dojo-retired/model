@@ -6,6 +6,8 @@ module PolyFiller
     json['visible_files'] = event0['files']
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def polyfill_events(json)
     json.map.with_index(0) do |h,index|
       h['index'] = index
@@ -14,6 +16,8 @@ module PolyFiller
       end
     end
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def polyfill_event(json, events, index)
     if json.has_key?('status')

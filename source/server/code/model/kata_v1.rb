@@ -30,7 +30,7 @@ class Kata_v1
     @externals = externals
   end
 
-  # - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def exists?(id)
     unless IdGenerator::id?(id)
@@ -41,7 +41,7 @@ class Kata_v1
     saver.run(command)
   end
 
-  # - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def create(manifest, options)
     planned_feature(options)
@@ -64,7 +64,7 @@ class Kata_v1
     '"' + id.to_s + '"'
   end
 
-  # - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def manifest(id)
     saver.assert(manifest_file_read_command(id))
@@ -156,22 +156,22 @@ class Kata_v1
     saver.file_read_command(event_filename(id,index))
   end
 
-  # - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
   # names of dirs/files
 
   def manifest_filename(id)
     kata_id_path(id, 'manifest.json')
     # eg id == 'SyG9sT' ==> '/cyber-dojo/katas/Sy/G9/sT/manifest.json'
-    # eg content ==> {"display_name":"Ruby, MiniTest",...}
+    # eg content ==> { "display_name": "Ruby, MiniTest",...}
   end
 
   def events_filename(id)
     kata_id_path(id, 'events.json')
     # eg id == 'SyG9sT' ==> '/cyber-dojo/katas/Sy/G9/sT/events.json'
     # eg content ==>
-    # {"index":0,...,"event":"created"},
-    # {"index":1,...,"colour":"red"},
-    # {"index":2,...,"colour":"amber"},
+    # { "index": 0, ..., "event": "created" },
+    # { "index": 1, ..., "colour": "red"    },
+    # { "index": 2, ..., "colour": "amber"  },
   end
 
   def event_filename(id, index)
@@ -179,21 +179,21 @@ class Kata_v1
     # eg id == 'SyG9sT', index == 2 ==> '/cyber-dojo/katas/Sy/G9/sT/2.event.json'
     # eg content ==>
     # {
-    #   "files":{
-    #     "hiker.rb":{"content":"......","truncated":false},
+    #   "files": {
+    #     "hiker.rb": { "content": "......", "truncated": false },
     #     ...
     #   },
-    #   "stdout":{"content":"...","truncated":false},
-    #   "stderr":{"content":"...","truncated":false},
-    #   "status":1,
-    #   "index":2,
-    #   "time":[2020,3,27,11,56,7,719235],
-    #   "duration":1.064011,
-    #   "colour":"amber"
+    #   "stdout": { "content": "...", "truncated": false },
+    #   "stderr": { "content": "...", "truncated": false },
+    #   "status": 1,
+    #   "index": 2,
+    #   "time": [2020,3,27,11,56,7,719235],
+    #   "duration": 1.064011,
+    #   "colour": "amber"
     # }
   end
 
-  # - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def saver
     @externals.saver

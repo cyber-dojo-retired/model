@@ -11,7 +11,7 @@ class Kata_v0
     @externals = externals
   end
 
-  # - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def create(manifest, options)
     manifest = manifest.clone
@@ -33,7 +33,7 @@ class Kata_v0
     '"' + id + '"'
   end
 
-  # - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def manifest(id)
      manifest_src,event0_src = saver.assert_all([
@@ -167,7 +167,7 @@ class Kata_v0
     saver.file_read_command(event_filename(id, index))
   end
 
-  # - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
   # names of dirs/files
 
   def dir_name(id, *parts)
@@ -207,7 +207,7 @@ class Kata_v0
     # }
   end
 
-  # - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def saver
     @externals.saver
