@@ -74,7 +74,7 @@ class Group_v0
         'events' => events_parse(katas_events[index])
       }
     end
-    json_plain(results) # TODO: build json directly
+    json_plain(results) # TODO: build json directly?
   end
 
   private

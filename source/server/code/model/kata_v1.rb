@@ -187,7 +187,7 @@ class Kata_v1
     #   "stderr": { "content": "...", "truncated": false },
     #   "status": 1,
     #   "index": 2,
-    #   "time": [2020,3,27,11,56,7,719235],
+    #   "time": [ 2020,3,27,11,56,7,719235 ],
     #   "duration": 1.064011,
     #   "colour": "amber"
     # }

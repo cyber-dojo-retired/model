@@ -186,10 +186,10 @@ class Kata_v0
     kata_id_path(id, 'events.json')
     # eg id == 'k5ZTk0' ==> '/cyber-dojo/katas/k5/ZT/k0/events.json'
     # eg content ==>
-    # { "event": "created", "time": [2019,1,19,12,41, 0,406370]}
-    # { "colour": "red",    "time": [2019,1,19,12,45,19,994317], "duration": 1.224763 }
-    # { "colour": "amber",  "time": [2019,1,19,12,45,26,76791 ], "duration": 1.1275   }
-    # { "colour": "green",  "time": [2019,1,19,12,45,30,656924], "duration": 1.072198 }
+    # { "event": "created", "time": [ 2019,1,19,12,41, 0,406370 ] }
+    # { "colour": "red",    "time": [ 2019,1,19,12,45,19,994317 ], "duration": 1.224763 }
+    # { "colour": "amber",  "time": [ 2019,1,19,12,45,26,76791  ], "duration": 1.1275   }
+    # { "colour": "green",  "time": [ 2019,1,19,12,45,30,656924 ], "duration": 1.072198 }
   end
 
   def event_filename(id, index)

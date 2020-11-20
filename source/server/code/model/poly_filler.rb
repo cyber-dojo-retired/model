@@ -8,6 +8,28 @@ module PolyFiller
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
+  def polyfill_event(event, events, index)
+    event_summary = events[index]
+    # event - read from /..ID../INDEX/event.json
+    # events_summary - read from /..ID../events.json
+    # Polyfill the former from the latter.
+    if event.has_key?('status')
+      event['status'] = event['status'].to_s
+    end
+    if index === 0
+      event['event'] = 'created'
+    end
+    if event_summary.has_key?('colour')
+      event['colour'] = event_summary['colour']
+      event['duration'] = event_summary['duration']
+      event['predicted'] = 'none'
+    end
+    event['index'] = index
+    event['time'] = event_summary['time']
+  end
+  
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def polyfill_events(json)
     json.map.with_index(0) do |h,index|
       h['index'] = index
@@ -15,24 +37,6 @@ module PolyFiller
         h['predicted'] ||= 'none'
       end
     end
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  def polyfill_event(json, events, index)
-    if json.has_key?('status')
-      json['status'] = json['status'].to_s
-    end
-    if index === 0
-      json['event'] = 'created'
-    end
-    if events[index].has_key?('colour')
-      json['colour'] = events[index]['colour']
-      json['duration'] = events[index]['duration']
-      json['predicted'] = 'none'
-    end
-    json['index'] = index
-    json['time'] = events[index]['time']
   end
 
 end
