@@ -9,7 +9,6 @@ class GroupEventsTest < TestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #=begin
     v_tests [0], 'JJ0', %w(
     already existing group_events(id) {test-data copied into saver}
     with id == group-id
@@ -29,7 +28,6 @@ class GroupEventsTest < TestBase
       }
       assert_equal expected, actual
     end
-  #=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

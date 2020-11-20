@@ -36,6 +36,7 @@ module PolyFiller
       if h.has_key?('colour')
         h['predicted'] ||= 'none'
       end
+      h
     end
   end
 

@@ -3,6 +3,7 @@ require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'kata_v0'
 require_relative 'liner_v0'
+require_relative 'poly_filler'
 require_relative '../lib/json_adapter'
 
 class Group_v0
@@ -73,7 +74,7 @@ class Group_v0
     indexes.each.with_index(0) do |(group_index,kata_id),index|
       results[group_index] = {
         'id' => kata_id,
-        'events' => events_parse(katas_events[index])
+        'events' => polyfill_events(events_parse(katas_events[index]))
       }
     end
     json_plain(results) # TODO: build json directly?
@@ -82,8 +83,9 @@ class Group_v0
   private
 
   include IdPather
-  include Liner_v0
   include JsonAdapter
+  include Liner_v0
+  include PolyFiller
 
   def planned_feature(_options)
   end
