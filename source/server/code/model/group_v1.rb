@@ -74,12 +74,11 @@ class Group_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def avatars(id)
-    katas_indexes(id)
+    json_plain(katas_indexes(id))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   def events(id)
     result = {}
     indexes = katas_indexes(id)
@@ -87,7 +86,7 @@ class Group_v1
       @kata.send(:events_file_read_command, kata_id)
     end
     katas_events = saver.assert_all(read_events_files_commands)
-    indexes.each.with_index(0) do |(kata_id,group_index),index|
+    indexes.each.with_index(0) do |(group_index,kata_id),index|
       result[group_index] = {
         'id' => kata_id,
         'events' => json_parse('[' + katas_events[index] + ']')
@@ -95,7 +94,6 @@ class Group_v1
     end
     json_plain(result) # TODO: build json directly
   end
-=end
 
   private
 
@@ -139,11 +137,11 @@ class Group_v1
     # G2ws77 15
     # w34rd5 2
     # ...
-    json_plain(katas_src
+    katas_src
       .split
       .each_slice(2)
       .map{|kata_id,group_index| [group_index.to_i,kata_id] }
-      .sort)
+      .sort
     # [
     #   [ 2, 'w34rd5'], #  2 == bat
     #   [15, 'G2ws77'], # 15 == fox

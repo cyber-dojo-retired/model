@@ -64,6 +64,10 @@ class TestBase < Id58TestBase
     JSON.parse(model.group_avatars(id:id))
   end
 
+  def group_events(id)
+    JSON.parse(model.group_events(id:id))
+  end
+
   # - - - - - - - - - - - - - - -
 
   def kata_create(manifest, options)
