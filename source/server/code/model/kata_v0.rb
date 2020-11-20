@@ -2,6 +2,7 @@
 require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'liner_v0'
+require_relative 'poly_filler'
 require_relative '../lib/json_adapter'
 
 class Kata_v0
@@ -40,9 +41,8 @@ class Kata_v0
       event_file_read_command(id, 0)
     ])
     manifest = json_parse(manifest_src)
-    # polyfill to version==1
     event0 = unlined(json_parse(event0_src))
-    manifest['visible_files'] = event0['files']
+    polyfill_manifest(manifest, event0)
     json_plain(manifest)
   end
 
@@ -51,13 +51,7 @@ class Kata_v0
   def events(id)
     result = saver.assert(events_file_read_command(id))
     json = json_parse('[' + result.lines.join(',') + ']')
-    # polyfill to version==1
-    json.map.with_index(0) do |h,index|
-      h['index'] = index
-      if h.has_key?('colour')
-        h['predicted'] ||= 'none'
-      end
-    end
+    polyfill_events(json)
     json_plain(json)
   end
 
@@ -75,20 +69,7 @@ class Kata_v0
     ])
     events = json_parse('[' + results[0].lines.join(',') + ']')
     json = unlined(json_parse(results[1]))
-    # polyfill to version==1
-    if json.has_key?('status')
-      json['status'] = json['status'].to_s
-    end
-    if index === 0
-      json['event'] = 'created'
-    end
-    if events[index].has_key?('colour')
-      json['colour'] = events[index]['colour']
-      json['duration'] = events[index]['duration']
-      json['predicted'] = 'none'
-    end
-    json['index'] = index
-    json['time'] = events[index]['time']
+    polyfill_event(json, events, index)
     json_plain(json)
   end
 
@@ -117,6 +98,7 @@ class Kata_v0
   include IdPather
   include JsonAdapter
   include Liner_v0
+  include PolyFiller
 
   def planned_feature(_options)
   end
