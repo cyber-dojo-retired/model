@@ -32,10 +32,6 @@ class Kata_v1
 
   # - - - - - - - - - - - - - - - - - - -
 
-  #...
-
-  # - - - - - - - - - - - - - - - - - - -
-
   def exists?(id)
     unless IdGenerator::id?(id)
       return false

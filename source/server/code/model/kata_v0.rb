@@ -12,10 +12,6 @@ class Kata_v0
 
   # - - - - - - - - - - - - - - - - - - -
 
-  #...
-
-  # - - - - - - - - - - - - - - - - - - -
-
   def create(manifest, options)
     manifest = manifest.clone
     planned_feature(options)
