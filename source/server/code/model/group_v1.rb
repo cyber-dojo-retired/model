@@ -18,10 +18,6 @@ class Group_v1
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  # ...
-
-  # - - - - - - - - - - - - - - - - - - -
-
   def create(manifest, options)
     planned_feature(options)
     manifest['version'] = 1

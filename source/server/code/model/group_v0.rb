@@ -14,10 +14,6 @@ class Group_v0
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  # ...
-
-  # - - - - - - - - - - - - - - - - - - -
-
   def create(manifest, options)
     # Groups created in cyber-dojo are now always version 1.
     # The ability to create version 0 groups is retained for testing.
@@ -60,12 +56,11 @@ class Group_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def avatars(id)
-    kata_indexes(id)
+    json_plain(katas_indexes(id))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   def events(id)
     results = {}
     indexes = katas_indexes(id)
@@ -81,7 +76,6 @@ class Group_v0
     end
     json_plain(results) # TODO: build json directly
   end
-=end
 
   private
 
@@ -124,7 +118,7 @@ class Group_v0
     katas_indexes.map{ |_,kata_id| kata_id }
   end
 
-  def kata_indexes(id)
+  def katas_indexes(id)
     # In version-1 this is a single command
     read_commands = (0..63).map do |index|
       saver.file_read_command(kata_id_filename(id, index))
@@ -144,12 +138,10 @@ class Group_v0
     # 2 (bat) kata_id == w34rd5
     # 4 (bee) kata_id == G2ws77
     # etc
-    json_plain(
-      kata_ids.filter_map
-              .with_index(0) { |kata_id,group_index|
-                [group_index,kata_id] if kata_id
-              }
-    )
+    kata_ids.filter_map
+            .with_index(0) { |kata_id,group_index|
+              [group_index,kata_id] if kata_id
+            }
     # [
     #   [ 2,'w34rd5'], #  2 == bat
     #   [15,'G2ws77'], # 15 == fox
@@ -190,11 +182,11 @@ class Group_v0
 
   # - - - - - - - - - - - - - -
 
-  #def events_parse(s)
-  #  json_parse('[' + s.lines.join(',') + ']')
-  #  # Alternative implementation, which tests show is slower.
-  #  # s.lines.map { |line| json_parse(line) }
-  #end
+  def events_parse(s)
+    json_parse('[' + s.lines.join(',') + ']')
+    # Alternative implementation, which tests show is slower.
+    # s.lines.map { |line| json_parse(line) }
+  end
 
   # - - - - - - - - - - - - - -
 
