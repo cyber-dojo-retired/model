@@ -88,8 +88,8 @@ class Group_v1
     end
     katas_events = saver.assert_all(read_events_files_commands)
     indexes.each.with_index(0) do |(kata_id,group_index),index|
-      result[kata_id] = {
-        'index' => group_index,
+      result[group_index] = {
+        'id' => kata_id,
         'events' => json_parse('[' + katas_events[index] + ']')
       }
     end
