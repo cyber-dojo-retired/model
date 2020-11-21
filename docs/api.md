@@ -73,9 +73,8 @@ $ curl \
 
 - - - -
 ## GET group_events(id:)
-Returns the kata-id and kata-events keyed against the kata's
-group-index for the kata that have joined the
-group with the given `id`.
+Returns the kata-id and kata-events keyed against the kata's group-index
+for the katas that have joined the group with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
@@ -89,14 +88,18 @@ $ curl \
   --request GET \
     http://${IP_ADDRESS}:${PORT}/group_events | jq
 
-{"group_events":{
+{"group_events": {
   "7": {
     "id": "a8gVRN",
-    "events": [...]
+    "events": [
+      ...
+    ]
   },
   "29": {
     "id": "gUNjUV",
-    "events": [...]
+    "events": [
+      ...
+    ]
   },
   ...
  }
