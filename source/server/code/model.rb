@@ -36,7 +36,11 @@ class Model
     if kata_exists?(id:id)
       manifest = json_parse(kata_manifest(id:id))
       group_id = manifest["group_id"]
-      id = group_id
+      if group_id.nil?
+        return '{}'
+      else
+        id = group_id
+      end
     end
     group(version_group(id)).events(id)
   end
