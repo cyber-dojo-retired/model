@@ -69,7 +69,7 @@ class Group_v1
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def events(id)
+  def joined(id)
     result = {}
     indexes = katas_indexes(id)
     # read the events summary file for each avatar

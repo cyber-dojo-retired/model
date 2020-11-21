@@ -32,7 +32,7 @@ class Model
     group(version_group(id)).join(id, indexes)
   end
 
-  def group_events(id:)
+  def group_joined(id:)
     if kata_exists?(id:id)
       manifest = json_parse(kata_manifest(id:id))
       group_id = manifest["group_id"]
@@ -42,7 +42,11 @@ class Model
         id = group_id
       end
     end
-    group(version_group(id)).events(id)
+    group(version_group(id)).joined(id)
+  end
+
+  def group_events(id:)
+    group_joined(id:id)
   end
 
   #- - - - - - - - - - - - - - - - - -

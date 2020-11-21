@@ -60,8 +60,12 @@ class TestBase < Id58TestBase
     id === 'null' ? nil : unquoted(id)
   end
 
+  def group_joined(id)
+    JSON.parse(model.group_joined(id:id))
+  end
+
   def group_events(id)
-    JSON.parse(model.group_events(id:id))
+    group_joined(id)
   end
 
   # - - - - - - - - - - - - - - -

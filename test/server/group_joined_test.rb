@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative 'test_base'
 
-class GroupEventsTest < TestBase
+class GroupJoinedTest < TestBase
 
   def self.id58_prefix
     'QS4'
@@ -16,17 +16,17 @@ class GroupEventsTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   v_tests [0], 'JJ0', %w(
-  already existing group_events(id) {test-data copied into saver}
+  already existing group_joined(id) {test-data copied into saver}
   with id == group-id
   ) do
-    assert_equal expected[V0_GROUP_ID], group_events(V0_GROUP_ID)
+    assert_equal expected[V0_GROUP_ID], group_joined(V0_GROUP_ID)
   end
 
   v_tests [1], 'JJ1', %w(
-  already existing group_events(id) {test-data copied into saver}
+  already existing group_joined(id) {test-data copied into saver}
   with id == group-id
   ) do
-    assert_equal expected[V1_GROUP_ID], group_events(V1_GROUP_ID)
+    assert_equal expected[V1_GROUP_ID], group_joined(V1_GROUP_ID)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,13 +34,13 @@ class GroupEventsTest < TestBase
   v_tests [0], 'Sp8', %w(
   the id can be any joined kata's id
   ) do
-    assert_equal expected[V0_GROUP_ID], group_events(V0_KATA_ID)
+    assert_equal expected[V0_GROUP_ID], group_joined(V0_KATA_ID)
   end
 
   v_tests [1], 'Sp9', %w(
   the id can be any joined kata's id
   ) do
-    assert_equal expected[V1_GROUP_ID], group_events(V1_KATA_ID)
+    assert_equal expected[V1_GROUP_ID], group_joined(V1_KATA_ID)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,7 +52,7 @@ class GroupEventsTest < TestBase
     manifest = custom_start_points.manifest(display_name)
     manifest['version'] = version
     id = kata_create(manifest, default_options)
-    assert_equal({}, group_events(id))
+    assert_equal({}, group_joined(id))
   end
 
   private

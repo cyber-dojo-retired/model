@@ -56,7 +56,7 @@ class Group_v0
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def events(id)
+  def joined(id)
     results = {}
     indexes = katas_indexes(id)
     # read the events summary file for each avatar
