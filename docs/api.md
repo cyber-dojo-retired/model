@@ -87,9 +87,9 @@ $ curl \
   --header 'Content-type: application/json' \
   --silent \
   --request GET \
-    http://${IP_ADDRESS}:${PORT}/group_events | jq
+    http://${IP_ADDRESS}:${PORT}/group_joined | jq
 
-{"group_events": {
+{"group_joined": {
   "7": {
     "id": "a8gVRN",
     "events": [
