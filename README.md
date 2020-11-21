@@ -11,7 +11,7 @@
 * [POST group_create(manifests,options)](docs/api.md#post-group_createmanifestsoptions)
 * [ GET group_manifest(id)](docs/api.md#get-group_manifestid)
 * [POST group_join(id,indexes)](docs/api.md#post-group_joinidindexes)
-* [ GET group_events(id)](docs/api.md#get-group_eventsid)
+* [ GET group_joined(id)](docs/api.md#get-group_joinedid)
 - - - -
 * [ GET kata_exists?(id)](docs/api.md#get-kata_existsid)
 * [POST kata_create(manifest,options)](docs/api.md#post-kata_createmanifestoptions)

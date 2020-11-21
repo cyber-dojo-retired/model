@@ -72,9 +72,10 @@ $ curl \
 ```
 
 - - - -
-## GET group_events(id:)
-Returns the kata-id and kata-events keyed against the kata's group-index
-for the katas that have joined the group with the given `id`.
+## GET group_joined(id:)
+Returns the kata-id and kata-events keyed against the kata's avatar-index
+for the katas that have joined a group. The group can be specified with the group's `id`
+**or** with any of the `id` of any kata in the group.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
