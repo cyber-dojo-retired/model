@@ -72,13 +72,14 @@ $ curl \
 ```
 
 - - - -
-## GET group_avatars(id:)
-Returns an array of avatar indexes and kata-ids of the katas that have joined the
+## GET group_events(id:)
+Returns the kata-id and kata-events keyed against the kata's
+group-index for the kata that have joined the
 group with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
-  * an array of `[index,id]` elements.
+  * a **Hash**.
 - example
 ```bash
 $ curl \
@@ -86,9 +87,20 @@ $ curl \
   --header 'Content-type: application/json' \
   --silent \
   --request GET \
-    http://${IP_ADDRESS}:${PORT}/group_avatars
+    http://${IP_ADDRESS}:${PORT}/group_events | jq
 
-{"group_avatars":[[7,"a8gVRN"],[29,"gUNjUV"]]}
+{"group_events":{
+  "7": {
+    "id": "a8gVRN",
+    "events": [...]
+  },
+  "29": {
+    "id": "gUNjUV",
+    "events": [...]
+  },
+  ...
+ }
+}
 ```
 
 - - - -

@@ -69,18 +69,12 @@ class Group_v1
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def avatars(id)
-    json_plain(katas_indexes(id))
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
   def events(id)
     result = {}
     indexes = katas_indexes(id)
     # read the events summary file for each avatar
     read_events_files_commands = katas_ids(indexes).map do |kata_id|
-      # eg reads file /cyber-dojo/katas/k5/ZT/k0/events.json      
+      # eg reads file /cyber-dojo/katas/k5/ZT/k0/events.json
       @kata.send(:events_file_read_command, kata_id)
     end
     katas_events = saver.assert_all(read_events_files_commands)
@@ -188,7 +182,7 @@ class Group_v1
   def manifest_filename(id)
     group_id_path(id, 'manifest.json')
     # eg id == 'wAtCfj' ==> '/cyber-dojo/groups/wA/tC/fj/manifest.json'
-    # eg content ==> {"display_name":"Ruby, MiniTest",...}
+    # eg content ==> { "display_name": "Ruby, MiniTest", ... }
   end
 
   def katas_filename(id)

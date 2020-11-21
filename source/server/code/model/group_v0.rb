@@ -56,12 +56,6 @@ class Group_v0
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def avatars(id)
-    json_plain(katas_indexes(id))
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
   def events(id)
     results = {}
     indexes = katas_indexes(id)

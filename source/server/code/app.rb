@@ -18,7 +18,6 @@ class App < AppBase
    get_json(:group_exists?,  Model)
    get_json(:group_manifest, Model)
   post_json(:group_join,     Model)
-   get_json(:group_avatars,  Model) # deprecated
    get_json(:group_events,   Model)
 
   post_json(:kata_create,    Model)

@@ -32,10 +32,6 @@ class Model
     group(version_group(id)).join(id, indexes)
   end
 
-  def group_avatars(id:)
-    group(version_group(id)).avatars(id)
-  end
-
   def group_events(id:)
     group(version_group(id)).events(id)
   end

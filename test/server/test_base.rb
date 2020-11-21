@@ -60,10 +60,6 @@ class TestBase < Id58TestBase
     id === 'null' ? nil : unquoted(id)
   end
 
-  def group_avatars(id)
-    JSON.parse(model.group_avatars(id:id))
-  end
-
   def group_events(id)
     JSON.parse(model.group_events(id:id))
   end

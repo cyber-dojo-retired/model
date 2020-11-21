@@ -23,8 +23,7 @@ class JoinTest < TestBase
   ) do
     manifest = custom_manifest
     id = group_create(manifest, default_options)
-    avatars = group_avatars(id)
-    assert_equal [], avatars
+    assert_equal({}, joined(id))
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,8 +43,9 @@ class JoinTest < TestBase
     assert_equal 15, kata_1_manifest['group_index']
     assert_equal group_id, kata_1_manifest['group_id']
 
-    avatars_1 = group_avatars(group_id)
-    assert_equal [[15,kata_1_id]], avatars_1
+    expected = {}
+    expected["15"] = { "id" => kata_1_id }
+    assert_equal expected, joined(group_id)
 
     kata_2_id = group_join(group_id, indexes)
     assert kata_exists?(kata_2_id), kata_2_id
@@ -54,8 +54,8 @@ class JoinTest < TestBase
     assert_equal 4, kata_2_manifest['group_index']
     assert_equal group_id, kata_2_manifest['group_id']
 
-    avatars_2 = group_avatars(group_id)
-    assert_equal [[4,kata_2_id],[15,kata_1_id]], avatars_2
+    expected["4"] = { "id" => kata_2_id }
+    assert_equal expected, joined(group_id)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -63,26 +63,29 @@ class JoinTest < TestBase
   v_tests [0,1], '6A6', %w(
   you can join 64 times and then the group is full
   ) do
-    externals.instance_exec {
-      @saver = SaverFake.new(self)
-    }
+    externals.instance_exec { @saver = SaverFake.new(self) }
     manifest = custom_manifest
     group_id = group_create(manifest, default_options)
-    indexes = (0..63).to_a.shuffle
     expected_ids = []
     64.times do
-      kata_id = group_join(group_id, indexes)
+      kata_id = group_join(group_id)
       refute_nil kata_id, :not_full
       expected_ids << kata_id
     end
-    kata_id = group_join(group_id, indexes)
+    kata_id = group_join(group_id)
     assert_nil kata_id, :full
 
     expected_indexes = (0..63).to_a
-    avatars = group_avatars(group_id)
-    actual_indexes,actual_ids = *avatars.transpose
+    actual_indexes = joined(group_id).keys.map{|key| key.to_i}
+    actual_ids = joined(group_id).values.map{|value| value["id"]}
     assert_equal expected_indexes, actual_indexes.sort
     assert_equal expected_ids.sort, actual_ids.sort
+  end
+
+  private
+
+  def joined(id)
+    group_events(id).map{|group_index,v| [group_index,{"id"=>v["id"]}]}.to_h
   end
 
 end
