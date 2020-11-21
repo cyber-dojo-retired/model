@@ -9,25 +9,25 @@ class GroupEventsTest < TestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    v_tests [0], 'JJ0', %w(
-    already existing group_events(id) {test-data copied into saver}
-    with id == group-id
-    ) do
-      id = 'FxWwrr'
-      actual = group_events(id)
-      expected = {
-        "32" => { # mouse
-          "id" => "5rTJv5",
-          "events" => [
-            { "index" => 0, "time" => [2019,1,16,12,44,55,800239], "event" => "created" },
-            { "index" => 1, "time" => [2019,1,16,12,45,40,544806], "colour" => "red"  , "duration" => 1.46448,  "predicted" => "red" },
-            { "index" => 2, "time" => [2019,1,16,12,45,46,82887 ], "colour" => "amber", "duration" => 1.031421, "predicted" => "none" },
-            { "index" => 3, "time" => [2019,1,16,12,45,52,220587], "colour" => "green", "duration" => 1.042027, "predicted" => "none" }
-          ]
-        }
+  v_tests [0], 'JJ0', %w(
+  already existing group_events(id) {test-data copied into saver}
+  with id == group-id
+  ) do
+    id = 'FxWwrr'
+    actual = group_events(id)
+    expected = {
+      "32" => { # mouse
+        "id" => "5rTJv5",
+        "events" => [
+          { "index" => 0, "time" => [2019,1,16,12,44,55,800239], "event" => "created" },
+          { "index" => 1, "time" => [2019,1,16,12,45,40,544806], "colour" => "red"  , "duration" => 1.46448,  "predicted" => "red" },
+          { "index" => 2, "time" => [2019,1,16,12,45,46,82887 ], "colour" => "amber", "duration" => 1.031421, "predicted" => "none" },
+          { "index" => 3, "time" => [2019,1,16,12,45,52,220587], "colour" => "green", "duration" => 1.042027, "predicted" => "none" }
+        ]
       }
-      assert_equal expected, actual
-    end
+    }
+    assert_equal expected, actual
+  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
