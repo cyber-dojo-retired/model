@@ -45,10 +45,6 @@ class Model
     group(version_group(id)).joined(id)
   end
 
-  def group_events(id:)
-    group_joined(id:id)
-  end
-
   #- - - - - - - - - - - - - - - - - -
 
   def kata_create(manifest:, options:)
