@@ -18,7 +18,7 @@ class App < AppBase
    get_json(:group_exists?,  Model)
    get_json(:group_manifest, Model)
   post_json(:group_join,     Model)
-   get_json(:group_events,   Model)
+   get_json(:group_events,   Model) # TODO: rename to group_joined()
 
   post_json(:kata_create,    Model)
    get_json(:kata_exists?,   Model)

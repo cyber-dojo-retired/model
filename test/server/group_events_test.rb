@@ -13,9 +13,11 @@ class GroupEventsTest < TestBase
   already existing group_events(id) {test-data copied into saver}
   with id == group-id
   ) do
-    id = 'FxWwrr'
-    actual = group_events(id)
-    expected = {
+    assert_equal expected_FxWwrr, group_events('FxWwrr')
+  end
+
+  def expected_FxWwrr
+    {
       "32" => { # mouse
         "id" => "5rTJv5",
         "events" => [
@@ -26,7 +28,6 @@ class GroupEventsTest < TestBase
         ]
       }
     }
-    assert_equal expected, actual
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -35,9 +36,11 @@ class GroupEventsTest < TestBase
   already existing group_events(id) {test-data copied into saver}
   with id == group-id
   ) do
-    id = 'REf1t8'
-    actual = group_events(id)
-    expected = {
+    assert_equal expected_REf1t8, group_events('REf1t8')
+  end
+
+  def expected_REf1t8
+    {
       "44" => { # rhino
         "id" => "5U2J18",
         "events" => [
@@ -48,7 +51,6 @@ class GroupEventsTest < TestBase
         ]
       }
     }
-    assert_equal expected, actual
   end
 
 end

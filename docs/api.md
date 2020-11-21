@@ -203,7 +203,7 @@ Used as a Docker HEALTHCHECK probe.
 - - - -
 ## GET ready?
 Tests if the service is ready to handle requests.
-Used as a [Kubernetes](https://kubernetes.io/) readiness probe.
+Used as a [Kubernetes](https://kubernetes.io/) readyness probe.
 - parameters
   * none
 - returns [(JSON-out)](#json-out)
