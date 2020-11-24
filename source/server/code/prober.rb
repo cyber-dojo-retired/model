@@ -10,16 +10,18 @@ class Prober
     '"' + ENV['SHA'] + '"'
   end
 
-  def healthy?
-    ready?
-  end
-
   def alive?
     true
   end
 
   def ready?
-    @externals.saver.ready?
+    saver.ready?
+  end
+
+  private
+
+  def saver
+    @externals.saver
   end
 
 end

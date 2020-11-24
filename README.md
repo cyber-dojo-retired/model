@@ -20,9 +20,8 @@
 * [ GET kata_event(id,index)](docs/api.md#get-kata_eventidindex)
 * [POST kata_ran_tests(id,index,files,stdout,stderr,status,summary)](docs/api.md#post-kata_ran_testsidindexfilesstdoutstderrstatussummary)
 - - - -
-* [GET sha](docs/api.md#get-sha)
 * [GET alive?](docs/api.md#get-alive)  
-* [GET healthy?](docs/api.md#get-healthy)  
 * [GET ready?](docs/api.md#get-ready)
+* [GET sha](docs/api.md#get-sha)
 - - - -
 ![cyber-dojo.org home page](https://github.com/cyber-dojo/cyber-dojo/blob/master/shared/home_page_snapshot.png)

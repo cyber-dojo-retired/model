@@ -186,25 +186,9 @@ Used as a [Kubernetes](https://kubernetes.io/) liveness probe.
   ```
 
 - - - -
-## GET healthy?
-Tests if the service is ready to handle requests.
-Used as a Docker HEALTHCHECK probe.
-- parameters
-  * none
-- returns [(JSON-out)](#json-out)
-  * **true** if the service is healthy
-  * **false** if the service is not healthy
-- example
-  ```bash     
-  $ curl --silent --request GET http://${IP_ADDRESS}:${PORT}/healthy?
-
-  {"healthy?":false}
-  ```
-
-- - - -
 ## GET ready?
 Tests if the service is ready to handle requests.
-Used as a [Kubernetes](https://kubernetes.io/) readyness probe.
+Used as a Docker HEALTHCHECK probe, and a [Kubernetes](https://kubernetes.io/) readyness probe.
 - parameters
   * none
 - returns [(JSON-out)](#json-out)

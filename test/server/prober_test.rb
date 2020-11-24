@@ -22,18 +22,6 @@ class ProberTest < TestBase
     end
   end
 
-  test 'C15', %w(
-  |GET/healthy?
-  |has status 200
-  |returns true
-  |and nothing else
-  ) do
-    assert_get_200(path='healthy?') do |jr|
-      assert_equal [path], jr.keys, "keys:#{last_response.body}:"
-      assert true?(jr[path]), "true?:#{last_response.body}:"
-    end
-  end
-
   test 'D15', %w(
   |when all http-services are ready
   |GET/ready?

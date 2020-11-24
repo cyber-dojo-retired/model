@@ -10,10 +10,6 @@ class Prober
     model.sha
   end
 
-  def healthy?
-    ready?
-  end
-
   def alive?
     model.alive?
   end

@@ -15,12 +15,6 @@ class ProberTest < TestBase
 
   # - - - - - - - - - - - - - - - - -
 
-  test '15C', 'its healthy' do
-    assert true?(prober.healthy?)
-  end
-
-  # - - - - - - - - - - - - - - - - -
-
   test '15D', 'its ready' do
     assert true?(prober.ready?)
   end
