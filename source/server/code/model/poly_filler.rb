@@ -8,6 +8,16 @@ module PolyFiller
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
+  def polyfill_manifest_defaults(manifest)
+    manifest['exercise'] ||= ''
+    manifest['highlight_filenames'] ||= []
+    manifest['tab_size'] ||= 4
+    manifest['max_seconds'] ||= 10
+    manifest['progress_regexs'] ||= []
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def polyfill_event(event, events, index)
     event_summary = events[index]
     # event - read from /..ID../INDEX/event.json

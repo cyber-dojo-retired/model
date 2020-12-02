@@ -173,30 +173,22 @@ class TestBase < Id58TestBase
 
   # - - - - - - - - - - - - - - -
 
-  def assert_group_exists(id, display_name, exercise_name=nil)
+  def assert_group_exists(id, display_name, exercise_name='')
     refute_nil id, :id
     assert group_exists?(id), "!group_exists?(#{id})"
     manifest = group_manifest(id)
     assert_equal display_name, manifest['display_name'], manifest.keys.sort
-    if exercise_name.nil?
-      refute manifest.has_key?('exercise'), :exercise
-    else
-      assert_equal exercise_name, manifest['exercise'], :exercise
-    end
+    assert_equal exercise_name, manifest['exercise'], :exercise
   end
 
   # - - - - - - - - - - - - - - -
 
-  def assert_kata_exists(id, display_name, exercise_name=nil)
+  def assert_kata_exists(id, display_name, exercise_name='')
     refute_nil id, :id
     assert kata_exists?(id), "!kata_exists?(#{id})"
     manifest = kata_manifest(id)
     assert_equal display_name, manifest['display_name'], manifest.keys.sort
-    if exercise_name.nil?
-      refute manifest.has_key?('exercise'), :exercise
-    else
-      assert_equal exercise_name, manifest['exercise'], :exercise
-    end
+    assert_equal exercise_name, manifest['exercise'], :exercise
   end
 
   # - - - - - - - - - - - - - - -

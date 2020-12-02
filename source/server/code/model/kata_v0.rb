@@ -43,6 +43,7 @@ class Kata_v0
     manifest = json_parse(manifest_src)
     event0 = unlined(json_parse(event0_src))
     polyfill_manifest(manifest, event0)
+    polyfill_manifest_defaults(manifest)
     json_plain(manifest)
   end
 

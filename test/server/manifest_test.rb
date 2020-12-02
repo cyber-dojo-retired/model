@@ -68,6 +68,24 @@ class ManifestTest < TestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  v_tests [0,1], '5s2', %w(
+  optional entries are polyfilled ) do
+    m = custom_manifest
+    m.delete('tab_size')
+    m.delete('highlight_filenames')
+    assert_equal %w( display_name filename_extension image_name version visible_files ), m.keys.sort
+    id = kata_create(m, default_options)
+    manifest = kata_manifest(id)
+    assert_equal '', manifest['exercise']
+    assert_equal [], manifest['highlight_filenames']
+    assert_equal  4, manifest['tab_size']
+    assert_equal 10, manifest['max_seconds']
+    assert_equal [], manifest['progress_regexs']
+  end
+
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require_relative 'id_generator'
 require_relative 'id_pather'
+require_relative 'poly_filler'
 require_relative '../lib/json_adapter'
 
 # 1. Manifest now has explicit version (1)
@@ -67,7 +68,10 @@ class Kata_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def manifest(id)
-    saver.assert(manifest_file_read_command(id))
+    manifest_src = saver.assert(manifest_file_read_command(id))
+    manifest = json_parse(manifest_src)
+    polyfill_manifest_defaults(manifest)
+    json_plain(manifest)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -110,6 +114,7 @@ class Kata_v1
 
   include IdPather
   include JsonAdapter
+  include PolyFiller
 
   def planned_feature(_options)
   end

@@ -31,7 +31,9 @@ class Group_v0
   # - - - - - - - - - - - - - - - - - - -
 
   def manifest(id)
-    json_plain(json_manifest(id))
+    manifest = json_manifest(id)
+    polyfill_manifest_defaults(manifest)
+    json_plain(manifest)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
