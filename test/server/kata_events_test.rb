@@ -97,15 +97,24 @@ class KataEventsTest < TestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # kata_event(id, index=-1)
+  # kata_event(id, index < 0)
 
-  v_tests [0], '3dJ', %w(
+  v_tests [0], '2dJ', %w(
   kata_event(id, index=-1) retrieves the most recent event
   ) do
     id = '5rTJv5'
     actual = kata_event(id, -1)
     last = kata_event(id, 3)
     assert_equal last, actual
+  end
+
+  v_tests [0], '3dJ', %w(
+  kata_event(id, index=-2) retrieves the 2nd most recent event
+  ) do
+    id = '5rTJv5'
+    actual = kata_event(id, -2)
+    second_last = kata_event(id, 2)
+    assert_equal second_last, actual
   end
 
   v_tests [0], '4dJ', %w(
@@ -127,13 +136,22 @@ class KataEventsTest < TestBase
 
   # . . . . . . . . . . . .
 
-  v_tests [1], 'Hx8', %w(
+  v_tests [1], 'Hx7', %w(
   kata_event(id, index=-1) retrieves the most recent event
   ) do
     id = '5U2J18'
     actual = kata_event(id, -1)
     last = kata_event(id, 3)
     assert_equal last, actual
+  end
+
+  v_tests [1], 'Hx8', %w(
+  kata_event(id, index=-2) retrieves the second most recent event
+  ) do
+    id = '5U2J18'
+    actual = kata_event(id, -2)
+    second_last = kata_event(id, 2)
+    assert_equal second_last, actual
   end
 
   v_tests [1], 'Hx9', %w(

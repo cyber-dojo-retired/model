@@ -60,9 +60,9 @@ class Kata_v0
 
   def event(id, index)
     index = index.to_i
-    if index === -1
+    if index < 0
       all = json_parse(events(id))
-      index = all[-1]['index']
+      index = all[index]['index']
     end
     results = saver.assert_all([
       events_file_read_command(id),
