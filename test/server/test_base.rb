@@ -103,6 +103,14 @@ class TestBase < Id58TestBase
     )
   end
 
+  def kata_option_get(id, name)
+    model.kata_option_get(id:id, name:name)
+  end
+
+  def kata_option_set(id, name, value)
+    model.kata_option_set(id:id, name:name, value:value)
+  end
+
   # - - - - - - - - - - - - - - -
 
   def assert_get_200(path, &block)

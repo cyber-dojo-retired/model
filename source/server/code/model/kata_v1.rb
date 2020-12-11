@@ -110,11 +110,39 @@ class Kata_v1
     json_plain(result)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def option_get(id, name)
+    fail_unless_known_option(name)
+    filename = kata_id_path(id, name)
+    result = saver.run(saver.file_read_command(filename))
+    if result
+      result.lines.last
+    else
+      name === 'theme' ? 'light' : 'on'
+    end
+  end
+
+  def option_set(id, name, value)
+    fail_unless_known_option(name)
+    possibles = (name === 'theme') ? ['dark','light'] : ['on', 'off']
+    unless possibles.include?(value)
+      fail "Cannot set theme to #{value}, only to one of #{possibles}"
+    end
+    filename = kata_id_path(id, name)
+    saver.run_all([
+      saver.file_create_command(filename, "\n"+value),
+      saver.file_append_command(filename, "\n"+value)
+    ])
+  end
+
   private
 
   include IdPather
   include JsonAdapter
   include PolyFiller
+
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def planned_feature(_options)
   end
@@ -196,6 +224,14 @@ class Kata_v1
     #   "duration": 1.064011,
     #   "colour": "amber"
     # }
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def fail_unless_known_option(name)
+    unless %w( theme colour predict ).include?(name)
+      fail "Unknown option #{name}"
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

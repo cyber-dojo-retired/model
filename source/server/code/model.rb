@@ -72,6 +72,14 @@ class Model
     kata(version_kata(id)).ran_tests(id, index, files, stdout, stderr, status, summary)
   end
 
+  def kata_option_get(id:, name:)
+    kata(1).option_get(id, name)
+  end
+
+  def kata_option_set(id:, name:, value:)
+    kata(1).option_set(id, name, value)
+  end
+
   private
 
   AVATAR_INDEXES = (0..63).to_a
