@@ -77,8 +77,11 @@ class BadResponseTest < TestBase
       body,
       message
     )
-    error = assert_raises(HttpJsonHash::ServiceError) {
-      externals.model.group_create([custom_manifest], default_options)
+    error = nil
+    capture_stdout_stderr {
+      error = assert_raises(HttpJsonHash::ServiceError) {
+        externals.model.group_create([custom_manifest], default_options)
+      }
     }
     assert_equal expected, error
   end

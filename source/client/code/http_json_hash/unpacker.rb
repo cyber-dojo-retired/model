@@ -45,6 +45,7 @@ module HttpJsonHash
     # - - - - - - - - - - - - - - - - - - - - -
 
     def service_error(path, args, body, message)
+      p "body:#{body}"
       fail ::HttpJsonHash::ServiceError.new(path, args, @name, body, message)
     end
 

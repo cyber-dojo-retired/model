@@ -20,6 +20,6 @@ module HttpJsonHash
        body == other.body
      ].all?(true)
     end
-    
+
   end
 end

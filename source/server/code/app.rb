@@ -19,11 +19,13 @@ class App < AppBase
   post_json(:group_join,     Model)
    get_json(:group_joined,   Model)
 
-  post_json(:kata_create,    Model)
-   get_json(:kata_exists?,   Model)
-   get_json(:kata_manifest,  Model)
-   get_json(:kata_events,    Model)
-   get_json(:kata_event,     Model)
-  post_json(:kata_ran_tests, Model)
+  post_json(:kata_create,     Model)
+   get_json(:kata_exists?,    Model)
+   get_json(:kata_manifest,   Model)
+   get_json(:kata_events,     Model)
+   get_json(:kata_event,      Model)
+  post_json(:kata_ran_tests,  Model)
+   get_json(:kata_option_get, Model)
+  post_json(:kata_option_set, Model)
 
 end

@@ -34,6 +34,14 @@ class Model
     model.kata_manifest(id)
   end
 
+  def kata_option_get(id, name)
+    model.kata_option_get(id, name)
+  end
+
+  def kata_option_set(id, name, value)
+    model.kata_option_set(id, name, value)
+  end
+
   private
 
   def model

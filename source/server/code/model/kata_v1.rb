@@ -62,7 +62,7 @@ class Kata_v1
       events_file_create_command(id, json_plain(event_summary)),
       event_file_create_command(id, 0, json_plain(event0.merge(event_summary)))
     ])
-    '"' + id.to_s + '"'
+    quoted(id)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -117,9 +117,9 @@ class Kata_v1
     filename = kata_id_path(id, name)
     result = saver.run(saver.file_read_command(filename))
     if result
-      result.lines.last
+      quoted(result.lines.last)
     else
-      name === 'theme' ? 'light' : 'on'
+      quoted(name === 'theme' ? 'light' : 'on')
     end
   end
 
@@ -130,10 +130,11 @@ class Kata_v1
       fail "Cannot set theme to #{value}, only to one of #{possibles}"
     end
     filename = kata_id_path(id, name)
-    saver.run_all([
+    result = saver.run_all([
       saver.file_create_command(filename, "\n"+value),
       saver.file_append_command(filename, "\n"+value)
     ])
+    json_plain(result)    
   end
 
   private
@@ -235,6 +236,10 @@ class Kata_v1
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
+
+  def quoted(o)
+    '"' + o.to_s + '"'
+  end
 
   def saver
     @externals.saver
