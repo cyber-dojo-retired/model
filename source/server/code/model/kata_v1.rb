@@ -119,7 +119,12 @@ class Kata_v1
     if result
       quoted(result.lines.last)
     else
-      quoted(name === 'theme' ? 'light' : 'on')
+      default = case name
+      when 'theme'   then 'light'
+      when 'colour'  then 'on'
+      when 'predict' then 'off'
+      end
+      quoted(default)
     end
   end
 
@@ -134,7 +139,7 @@ class Kata_v1
       saver.file_create_command(filename, "\n"+value),
       saver.file_append_command(filename, "\n"+value)
     ])
-    json_plain(result)    
+    json_plain(result)
   end
 
   private

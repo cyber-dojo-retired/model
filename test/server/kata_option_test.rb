@@ -66,9 +66,9 @@ class KataOptionTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '660', %w(
-  |kata_option_get('predict') defaults to 'on'
+  |kata_option_get('predict') defaults to 'off'
   ) do
-    assert_equal quoted(:on), kata_option_get(id, 'predict')
+    assert_equal quoted(:off), kata_option_get(id, 'predict')
   end
 
   test '661', %w(
