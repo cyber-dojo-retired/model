@@ -90,12 +90,36 @@ class KataOptionTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '760', %w(
+  |kata_option_get('revert') defaults to 'off'
+  ) do
+    assert_equal quoted(:off), kata_option_get(id, 'revert')
+  end
+
+  test '761', %w(
+  |kata_option_set('revert', on|off) sets the revert option
+  |kata_option_get('revert') gets the revert option
+  ) do
+    kata_option_set(id, 'revert', 'on')
+    assert_equal quoted(:on), kata_option_get(id, 'revert')
+    kata_option_set(id, 'revert', 'off')
+    assert_equal quoted(:off), kata_option_get(id, 'revert')
+  end
+
+  test '762', %w(
+  kata_option_set('revert', not-on-not-off) raises
+  ) do
+    assert_raises { kata_option_set(id, 'revert', 'maybe') }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '860', %w(
   kata_option_get(unknown) raises
   ) do
     assert_raises { kata_option_get(id, 'salmon') }
   end
 
-  test '761', %w(
+  test '861', %w(
   kata_option_set(unknown) raises
   ) do
     assert_raises { kata_option_set(id, 'salmon', 'atlantic') }

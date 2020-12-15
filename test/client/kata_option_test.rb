@@ -96,6 +96,32 @@ class KataOptionTest < TestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '760', %w(
+  |kata_option_get('revert') defaults to 'off'
+  ) do
+    assert_equal 'off', kata_option_get('revert')
+  end
+
+  test '761', %w(
+  |kata_option_set('revert', on|off) sets the revert option
+  |kata_option_get('revert') gets the revert option
+  ) do
+    kata_option_set('revert', 'on')
+    assert_equal 'on', kata_option_get('revert')
+    kata_option_set('revert', 'off')
+    assert_equal 'off', kata_option_get('revert')
+  end
+
+  test '762', %w(
+  kata_option_set('revert', not-on-not-off) raises
+  ) do
+    capture_stdout_stderr {
+      assert_raises { kata_option_set('revert', 'maybe') }
+    }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test '860', %w(
   kata_option_get(unknown) raises
   ) do
     capture_stdout_stderr {
@@ -103,7 +129,7 @@ class KataOptionTest < TestBase
     }
   end
 
-  test '761', %w(
+  test '861', %w(
   kata_option_set(unknown) raises
   ) do
     capture_stdout_stderr {
