@@ -98,24 +98,42 @@ class KataOptionTest < TestBase
   test '760', %w(
   |kata_option_get('revert') defaults to 'off'
   ) do
-    assert_equal 'off', kata_option_get('revert')
+    assert_equal 'off', kata_option_get('revert_red')
+    assert_equal 'off', kata_option_get('revert_amber')
+    assert_equal 'off', kata_option_get('revert_green')
   end
 
   test '761', %w(
   |kata_option_set('revert', on|off) sets the revert option
   |kata_option_get('revert') gets the revert option
   ) do
-    kata_option_set('revert', 'on')
-    assert_equal 'on', kata_option_get('revert')
-    kata_option_set('revert', 'off')
-    assert_equal 'off', kata_option_get('revert')
+    kata_option_set('revert_red', 'on')
+    assert_equal 'on', kata_option_get('revert_red')
+    kata_option_set('revert_red', 'off')
+    assert_equal 'off', kata_option_get('revert_red')
+
+    kata_option_set('revert_amber', 'on')
+    assert_equal 'on', kata_option_get('revert_amber')
+    kata_option_set('revert_amber', 'off')
+    assert_equal 'off', kata_option_get('revert_amber')
+
+    kata_option_set('revert_green', 'on')
+    assert_equal 'on', kata_option_get('revert_green')
+    kata_option_set('revert_green', 'off')
+    assert_equal 'off', kata_option_get('revert_green')
   end
 
   test '762', %w(
   kata_option_set('revert', not-on-not-off) raises
   ) do
     capture_stdout_stderr {
-      assert_raises { kata_option_set('revert', 'maybe') }
+      assert_raises { kata_option_set('revert_red', 'maybe') }
+    }
+    capture_stdout_stderr {
+      assert_raises { kata_option_set('revert_amber', 'maybe') }
+    }
+    capture_stdout_stderr {
+      assert_raises { kata_option_set('revert_green', 'maybe') }
     }
   end
 
@@ -127,6 +145,9 @@ class KataOptionTest < TestBase
     capture_stdout_stderr {
       assert_raises { kata_option_get('salmon') }
     }
+    capture_stdout_stderr {
+      assert_raises { kata_option_get('revert_blue') }
+    }
   end
 
   test '861', %w(
@@ -134,6 +155,9 @@ class KataOptionTest < TestBase
   ) do
     capture_stdout_stderr {
       assert_raises { kata_option_set('salmon', 'atlantic') }
+    }
+    capture_stdout_stderr {
+      assert_raises { kata_option_set('revert_blue', 'off') }
     }
   end
 

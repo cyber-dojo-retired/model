@@ -120,10 +120,12 @@ class Kata_v1
       quoted(result.lines.last)
     else
       default = case name
-      when 'theme'   then 'light'
-      when 'colour'  then 'on'
-      when 'predict' then 'off'
-      when 'revert'  then 'off'
+      when 'theme'        then 'light'
+      when 'colour'       then 'on'
+      when 'predict'      then 'off'
+      when 'revert_red'   then 'off'
+      when 'revert_amber' then 'off'
+      when 'revert_green' then 'off'
       end
       quoted(default)
     end
@@ -236,7 +238,7 @@ class Kata_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def fail_unless_known_option(name)
-    unless %w( theme colour predict revert ).include?(name)
+    unless %w( theme colour predict revert_red revert_amber revert_green ).include?(name)
       fail "Unknown option #{name}"
     end
   end

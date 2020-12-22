@@ -92,23 +92,37 @@ class KataOptionTest < TestBase
   test '760', %w(
   |kata_option_get('revert') defaults to 'off'
   ) do
-    assert_equal quoted(:off), kata_option_get(id, 'revert')
+    assert_equal quoted(:off), kata_option_get(id, 'revert_red')
+    assert_equal quoted(:off), kata_option_get(id, 'revert_amber')
+    assert_equal quoted(:off), kata_option_get(id, 'revert_green')
   end
 
   test '761', %w(
   |kata_option_set('revert', on|off) sets the revert option
   |kata_option_get('revert') gets the revert option
   ) do
-    kata_option_set(id, 'revert', 'on')
-    assert_equal quoted(:on), kata_option_get(id, 'revert')
-    kata_option_set(id, 'revert', 'off')
-    assert_equal quoted(:off), kata_option_get(id, 'revert')
+    kata_option_set(id, 'revert_red', 'on')
+    assert_equal quoted(:on), kata_option_get(id, 'revert_red')
+    kata_option_set(id, 'revert_red', 'off')
+    assert_equal quoted(:off), kata_option_get(id, 'revert_red')
+
+    kata_option_set(id, 'revert_amber', 'on')
+    assert_equal quoted(:on), kata_option_get(id, 'revert_amber')
+    kata_option_set(id, 'revert_amber', 'off')
+    assert_equal quoted(:off), kata_option_get(id, 'revert_amber')
+
+    kata_option_set(id, 'revert_green', 'on')
+    assert_equal quoted(:on), kata_option_get(id, 'revert_green')
+    kata_option_set(id, 'revert_green', 'off')
+    assert_equal quoted(:off), kata_option_get(id, 'revert_green')
   end
 
   test '762', %w(
   kata_option_set('revert', not-on-not-off) raises
   ) do
-    assert_raises { kata_option_set(id, 'revert', 'maybe') }
+    assert_raises { kata_option_set(id, 'revert_red', 'maybe') }
+    assert_raises { kata_option_set(id, 'revert_amber', 'maybe') }
+    assert_raises { kata_option_set(id, 'revert_green', 'maybe') }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -117,12 +131,14 @@ class KataOptionTest < TestBase
   kata_option_get(unknown) raises
   ) do
     assert_raises { kata_option_get(id, 'salmon') }
+    assert_raises { kata_option_get(id, 'revert_blue') }
   end
 
   test '861', %w(
   kata_option_set(unknown) raises
   ) do
     assert_raises { kata_option_set(id, 'salmon', 'atlantic') }
+    assert_raises { kata_option_set(id, 'revert_blue', 'atlantic') }
   end
 
   private
