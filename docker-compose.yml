@@ -7,13 +7,12 @@ services:
     image: ${CYBER_DOJO_MODEL_CLIENT_IMAGE}:${CYBER_DOJO_MODEL_TAG}
     user: ${CYBER_DOJO_MODEL_CLIENT_USER}
     build:
-      args: [ COMMIT_SHA, CYBER_DOJO_MODEL_CLIENT_PORT ]
+      args: [ COMMIT_SHA ]
       context: source/client
     container_name: ${CYBER_DOJO_MODEL_CLIENT_CONTAINER_NAME}
     depends_on:
       - model-server
-    env_file:
-      - .env
+    env_file: [ .env ]
     ports: [ "${CYBER_DOJO_MODEL_CLIENT_PORT}:${CYBER_DOJO_MODEL_CLIENT_PORT}" ]
     read_only: true
     restart: "no"
@@ -24,14 +23,13 @@ services:
     image: ${CYBER_DOJO_MODEL_IMAGE}:${CYBER_DOJO_MODEL_TAG}
     user: ${CYBER_DOJO_MODEL_SERVER_USER}
     build:
-      args: [ COMMIT_SHA, CYBER_DOJO_MODEL_PORT ]
+      args: [ COMMIT_SHA ]
       context: source/server
     container_name: ${CYBER_DOJO_MODEL_SERVER_CONTAINER_NAME}
     depends_on:
       - custom-start-points
       - saver
-    env_file:
-      - .env
+    env_file: [ .env ]
     ports: [ "${CYBER_DOJO_MODEL_PORT}:${CYBER_DOJO_MODEL_PORT}" ]
     read_only: true
     restart: "no"
