@@ -77,6 +77,25 @@ class Kata_v0
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def ran_tests(id, index, files, stdout, stderr, status, summary)
+    universal_append(id, index, files, stdout, stderr, status, summary)
+  end
+
+  def reverted(id, index, files, stdout, stderr, status, summary)
+    universal_append(id, index, files, stdout, stderr, status, summary)
+  end
+
+  def checked_out(id, index, files, stdout, stderr, status, summary)
+    universal_append(id, index, files, stdout, stderr, status, summary)
+  end
+
+  private
+
+  include IdPather
+  include JsonAdapter
+  include Liner_v0
+  include PolyFiller
+
+  def universal_append(id, index, files, stdout, stderr, status, summary)
     summary['time'] = time.now
     event_n = {
       'files' => files,
@@ -94,12 +113,7 @@ class Kata_v0
     json_plain(result)
   end
 
-  private
-
-  include IdPather
-  include JsonAdapter
-  include Liner_v0
-  include PolyFiller
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def planned_feature(_options)
   end

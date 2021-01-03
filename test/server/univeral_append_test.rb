@@ -2,7 +2,7 @@
 require_relative 'test_base'
 require_relative 'time_stub'
 
-class RanTestsTest < TestBase
+class UniversalAppendTest < TestBase
 
   def self.id58_prefix
     'Sp4'
@@ -22,6 +22,30 @@ class RanTestsTest < TestBase
   v_tests [0,1], 'Dk8', %w(
   |kata_ran_tests gives same results in both versions
   ) do
+    universal_append { |id, index, files, stdout, stderr, status, summary|
+      kata_ran_tests(id, index, files, stdout, stderr, status, summary)
+    }
+  end
+
+  v_tests [0,1], 'Dk7', %w(
+  |reverted gives same results in both versions
+  ) do
+    universal_append { |id, index, files, stdout, stderr, status, summary|
+      kata_reverted(id, index, files, stdout, stderr, status, summary)
+    }
+  end
+
+  v_tests [0,1], 'Dk6', %w(
+  |checked_out gives same results in both versions
+  ) do
+    universal_append { |id, index, files, stdout, stderr, status, summary|
+      kata_checked_out(id, index, files, stdout, stderr, status, summary)
+    }
+  end
+
+  private
+
+  def universal_append
     t0 = [2020,11,1, 5,6,18,654318]
     t1 = [2020,11,1, 5,7,23,883467]
     externals.instance_exec { @time = TimeStub.new(t0,t1) }
@@ -60,7 +84,7 @@ class RanTestsTest < TestBase
       "duration" => (duration = 1.46448),
       "predicted" => (predicted = "none")
     }
-    kata_ran_tests(id, index, files, stdout, stderr, status, summary)
+    yield(id, index, files, stdout, stderr, status, summary)
     actual = kata_event(id, index)
     assert_equal files, actual["files"]
     assert_equal stdout, actual["stdout"]
@@ -72,6 +96,5 @@ class RanTestsTest < TestBase
     assert_equal index, actual['index']
     assert_equal t1, actual['time']
   end
-
 
 end

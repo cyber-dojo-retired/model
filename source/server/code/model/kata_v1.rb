@@ -94,20 +94,15 @@ class Kata_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def ran_tests(id, index, files, stdout, stderr, status, summary)
-    summary['index'] = index # See point 6 at top of file
-    summary['time'] = time.now
-    event_n = {
-       'files' => files,
-      'stdout' => stdout,
-      'stderr' => stderr,
-      'status' => status
-    }
-    result = saver.assert_all([
-      # A failing create_command() ensures the append_command() is not run.
-      event_file_create_command(id, index, json_plain(event_n.merge(summary))),
-      events_file_append_command(id, ",\n" + json_plain(summary))
-    ])
-    json_plain(result)
+    universal_append(id, index, files, stdout, stderr, status, summary)
+  end
+
+  def reverted(id, index, files, stdout, stderr, status, summary)
+    universal_append(id, index, files, stdout, stderr, status, summary)
+  end
+
+  def checked_out(id, index, files, stdout, stderr, status, summary)
+    universal_append(id, index, files, stdout, stderr, status, summary)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -150,6 +145,25 @@ class Kata_v1
   include IdPather
   include JsonAdapter
   include PolyFiller
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
+  def universal_append(id, index, files, stdout, stderr, status, summary)
+    summary['index'] = index # See point 6 at top of file
+    summary['time'] = time.now
+    event_n = {
+       'files' => files,
+      'stdout' => stdout,
+      'stderr' => stderr,
+      'status' => status
+    }
+    result = saver.assert_all([
+      # A failing create_command() ensures the append_command() is not run.
+      event_file_create_command(id, index, json_plain(event_n.merge(summary))),
+      events_file_append_command(id, ",\n" + json_plain(summary))
+    ])
+    json_plain(result)
+  end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 

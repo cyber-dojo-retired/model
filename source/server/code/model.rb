@@ -72,6 +72,14 @@ class Model
     kata(version_kata(id)).ran_tests(id, index, files, stdout, stderr, status, summary)
   end
 
+  def kata_reverted(id:, index:, files:, stdout:, stderr:, status:, summary:)
+    kata(version_kata(id)).reverted(id, index, files, stdout, stderr, status, summary)
+  end
+
+  def kata_checked_out(id:, index:, files:, stdout:, stderr:, status:, summary:)
+    kata(version_kata(id)).checked_out(id, index, files, stdout, stderr, status, summary)
+  end
+
   def kata_option_get(id:, name:)
     kata(1).option_get(id, name)
   end

@@ -103,6 +103,30 @@ class TestBase < Id58TestBase
     )
   end
 
+  def kata_reverted(id, index, files, stdout, stderr, status, summary)
+    model.kata_reverted(
+      id:id,
+      index:index,
+      files:files,
+      stdout:stdout,
+      stderr:stderr,
+      status:status,
+      summary:summary
+    )
+  end
+
+  def kata_checked_out(id, index, files, stdout, stderr, status, summary)
+    model.kata_checked_out(
+      id:id,
+      index:index,
+      files:files,
+      stdout:stdout,
+      stderr:stderr,
+      status:status,
+      summary:summary
+    )
+  end
+
   def kata_option_get(id, name)
     model.kata_option_get(id:id, name:name)
   end
