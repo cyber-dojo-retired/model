@@ -93,36 +93,40 @@ class TestBase < Id58TestBase
 
   def kata_ran_tests(id, index, files, stdout, stderr, status, summary)
     model.kata_ran_tests(
-      id:id,
-      index:index,
-      files:files,
-      stdout:stdout,
-      stderr:stderr,
-      status:status,
+      id:id, index:index,
+      files:files, stdout:stdout, stderr:stderr, status:status,
+      summary:summary
+    )
+  end
+
+  def kata_predicted_right(id, index, files, stdout, stderr, status, summary)
+    model.kata_predicted_right(
+      id:id, index:index,
+      files:files, stdout:stdout, stderr:stderr, status:status,
+      summary:summary
+    )
+  end
+
+  def kata_predicted_wrong(id, index, files, stdout, stderr, status, summary)
+    model.kata_predicted_wrong(
+      id:id, index:index,
+      files:files, stdout:stdout, stderr:stderr, status:status,
       summary:summary
     )
   end
 
   def kata_reverted(id, index, files, stdout, stderr, status, summary)
     model.kata_reverted(
-      id:id,
-      index:index,
-      files:files,
-      stdout:stdout,
-      stderr:stderr,
-      status:status,
+      id:id, index:index,
+      files:files, stdout:stdout, stderr:stderr, status:status,
       summary:summary
     )
   end
 
   def kata_checked_out(id, index, files, stdout, stderr, status, summary)
     model.kata_checked_out(
-      id:id,
-      index:index,
-      files:files,
-      stdout:stdout,
-      stderr:stderr,
-      status:status,
+      id:id, index:index,
+      files:files, stdout:stdout, stderr:stderr, status:status,
       summary:summary
     )
   end

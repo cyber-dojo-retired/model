@@ -72,6 +72,14 @@ class Model
     kata(version_kata(id)).ran_tests(id, index, files, stdout, stderr, status, summary)
   end
 
+  def kata_predicted_right(id:, index:, files:, stdout:, stderr:, status:, summary:)
+    kata(version_kata(id)).predicted_right(id, index, files, stdout, stderr, status, summary)
+  end
+
+  def kata_predicted_wrong(id:, index:, files:, stdout:, stderr:, status:, summary:)
+    kata(version_kata(id)).predicted_wrong(id, index, files, stdout, stderr, status, summary)
+  end
+
   def kata_reverted(id:, index:, files:, stdout:, stderr:, status:, summary:)
     kata(version_kata(id)).reverted(id, index, files, stdout, stderr, status, summary)
   end

@@ -24,9 +24,14 @@ class App < AppBase
    get_json(:kata_manifest,    Model)
    get_json(:kata_events,      Model)
    get_json(:kata_event,       Model)
-  post_json(:kata_ran_tests,   Model)
+
+  post_json(:kata_ran_tests,       Model)
+  post_json(:kata_predicted_right, Model)
+  post_json(:kata_predicted_wrong, Model)
+
   post_json(:kata_reverted,    Model)
   post_json(:kata_checked_out, Model)
+  
    get_json(:kata_option_get,  Model)
   post_json(:kata_option_set,  Model)
 

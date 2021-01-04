@@ -19,11 +19,27 @@ class UniversalAppendTest < TestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  v_tests [0,1], 'Dk8', %w(
+  v_tests [0,1], 'Dk1', %w(
   |kata_ran_tests gives same results in both versions
   ) do
     universal_append { |id, index, files, stdout, stderr, status, summary|
       kata_ran_tests(id, index, files, stdout, stderr, status, summary)
+    }
+  end
+
+  v_tests [0,1], 'Dk2', %w(
+  |kata_predicted_right gives same results in both versions
+  ) do
+    universal_append { |id, index, files, stdout, stderr, status, summary|
+      kata_predicted_right(id, index, files, stdout, stderr, status, summary)
+    }
+  end
+
+  v_tests [0,1], 'Dk3', %w(
+  |kata_predicted_wrong gives same results in both versions
+  ) do
+    universal_append { |id, index, files, stdout, stderr, status, summary|
+      kata_predicted_wrong(id, index, files, stdout, stderr, status, summary)
     }
   end
 

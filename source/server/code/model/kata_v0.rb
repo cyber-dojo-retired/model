@@ -80,6 +80,14 @@ class Kata_v0
     universal_append(id, index, files, stdout, stderr, status, summary)
   end
 
+  def predicted_right(id, index, files, stdout, stderr, status, summary)
+    universal_append(id, index, files, stdout, stderr, status, summary)
+  end
+
+  def predicted_wrong(id, index, files, stdout, stderr, status, summary)
+    universal_append(id, index, files, stdout, stderr, status, summary)
+  end
+
   def reverted(id, index, files, stdout, stderr, status, summary)
     universal_append(id, index, files, stdout, stderr, status, summary)
   end
