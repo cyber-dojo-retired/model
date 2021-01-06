@@ -3,8 +3,7 @@
 # cyberdojo/model
 
 - The source for the [cyberdojo/model](https://hub.docker.com/r/cyberdojo/model/tags) Docker image.
-- A docker-containerized stateless micro-service for [https://cyber-dojo.org](http://cyber-dojo.org).
-- An http service, on port 4528.
+- A docker-containerized stateless http micro-service for [https://cyber-dojo.org](http://cyber-dojo.org).
 
 - - - -
 * [ GET group_exists?(id)](docs/api.md#get-group_existsid)
