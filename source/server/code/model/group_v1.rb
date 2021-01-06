@@ -65,7 +65,7 @@ class Group_v1
     else
       index = indexes[result_index]
       manifest['group_index'] = index
-      kata_id = @kata.create(manifest, default_options)
+      kata_id = @kata.create(manifest, {})
       saver.assert(katas_append_command(id, "#{unquoted(kata_id)} #{index}\n"))
       kata_id # already quoted
     end
@@ -102,12 +102,13 @@ class Group_v1
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  def default_options
-    { "line_numbers":true,
-      "syntax_highlight":false,
-      "predict_colour":false
-    }
-  end
+  #def default_options
+  #  { "theme": "dark",
+  #    "colour": true,
+  #    "fork": "on",
+  #    "predict": "on",
+  #  }
+  #end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
