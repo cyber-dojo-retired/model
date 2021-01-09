@@ -65,7 +65,7 @@ Creates a new kata in the group with the given `id` and returns the kata's id.
     --data '{"id:"dFg8Us"}' \
     --header 'Content-type: application/json' \
     --silent \
-    --request GET \
+    --request POST \
       http://${IP_ADDRESS}:${PORT}/group_join
 
   {"group_join":"a8gVRN"}
@@ -232,6 +232,13 @@ Gets the details for the kata exercise event with the given `id` and `index`
   * the event with the given `id` and `index`.
 - example
   ```bash
+  $ curl \
+    --data '{"id:"4ScKVJ","index":2}' \
+    --header 'Content-type: application/json' \
+    --silent \
+    --request GET \
+      http://${IP_ADDRESS}:${PORT}/kata_events | jq
+  
   {
      "kata_event":{
      "files": {
