@@ -39,7 +39,10 @@ class GroupCreateTest < TestBase
   |with version 1
   |and a matching display_name
   ) do
-    { "fork_button" => ["on","off"]
+    { "fork_button" => ["on","off"],
+      "theme" => ["dark","light"],
+      "colour" => ["on","off"],
+      "predict" => ["on","off"]
     }.each do |key,values|
       values.each do |value|
         options = { key => value }
@@ -47,9 +50,7 @@ class GroupCreateTest < TestBase
         assert_equal value, manifest[key]
       end
     end
-    # "line_numbers":true,
-    # "syntax_highlight":false,
-    # "predict_colour":false
+    # "starting_info_dialog": [ "on","off" ]
   end
 
   # - - - - - - - - - - - - - - - - - - -
