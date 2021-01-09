@@ -28,7 +28,7 @@ Determines if a group exercise with the given `id` exists.
     --request GET \
       http://${IP_ADDRESS}:${PORT}/group_exists?
 
-  {"group_exists?":false}
+  {"group_exists?":true}
   ```
 
 - - - -
@@ -45,9 +45,32 @@ Gets the manifest used to create the group exercise with the given `id`.
     --header 'Content-type: application/json' \
     --silent \
     --request GET \
-      http://${IP_ADDRESS}:${PORT}/group_manifest
+      http://${IP_ADDRESS}:${PORT}/group_manifest | jq
 
-  {"group_manifest":...}
+  {
+    "group_manifest": {
+      "display_name": "Bash, bats",
+      "image_name": "cyberdojofoundation/bash_bats:53d0c9c",
+      "filename_extension": [
+        ".sh"
+      ],
+      "tab_size": 4,
+      "visible_files": {
+        "test_hiker.sh": { "content": "..." },
+        "bats_help.txt": { "content": "..." },
+        "hiker.sh": { "content": "..." },
+        "cyber-dojo.sh": { "content": "..." },
+        "readme.txt": { "content": "..." }
+      },
+      "exercise": "LCD Digits",
+      "version": 1,
+      "created": [2020,10,19,12,51,32,991192],
+      "id": "REf1t8",
+      "highlight_filenames": [],
+      "max_seconds": 10,
+      "progress_regexs": []
+    }
+  }  
   ```
 
 - - - -
@@ -58,7 +81,7 @@ Creates a new kata in the group with the given `id` and returns the kata's id.
   * **indexes:Array[int]**
   Currently unused (and defaulted). For a planned feature.  
 - returns [(JSON-out)](#json-out)
-  * the `id` of the created kata, or `nil` if the group is already full.
+  * the `id` of the created kata, or `null` if the group is already full.
 - example
   ```bash
   $ curl \
