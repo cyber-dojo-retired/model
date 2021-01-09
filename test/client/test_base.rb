@@ -29,10 +29,7 @@ class TestBase < Id58TestBase
   # - - - - - - - - - - - - -
 
   def default_options
-    { "line_numbers":true,
-      "syntax_highlight":false,
-      "predict_colour":false
-    }
+    {}
   end
 
   # - - - - - - - - - - - - -
