@@ -39,8 +39,14 @@ class GroupCreateTest < TestBase
   |with version 1
   |and a matching display_name
   ) do
-    manifest = assert_group_create_200({"fork_button": "off"})
-    assert_equal "off", manifest["fork_button"]
+    { "fork_button" => ["on","off"]
+    }.each do |key,values|
+      values.each do |value|
+        options = { key => value }
+        manifest = assert_group_create_200(options)
+        assert_equal value, manifest[key]
+      end
+    end
     # "line_numbers":true,
     # "syntax_highlight":false,
     # "predict_colour":false
