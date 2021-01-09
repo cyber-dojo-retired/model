@@ -60,16 +60,16 @@ Creates a new kata in the group with the given `id` and returns the kata's id.
 - returns [(JSON-out)](#json-out)
   * the `id` of the created kata, or `nil` if the group is already full.
 - example
-```bash
-$ curl \
-  --data '{"id:"dFg8Us"}' \
-  --header 'Content-type: application/json' \
-  --silent \
-  --request GET \
-    http://${IP_ADDRESS}:${PORT}/group_join
+  ```bash
+  $ curl \
+    --data '{"id:"dFg8Us"}' \
+    --header 'Content-type: application/json' \
+    --silent \
+    --request GET \
+      http://${IP_ADDRESS}:${PORT}/group_join
 
-{"group_join":"a8gVRN"}
-```
+  {"group_join":"a8gVRN"}
+  ```
 
 - - - -
 ## GET group_joined(id:)
@@ -81,31 +81,28 @@ for the katas that have joined a group. The group can be specified with the grou
 - returns [(JSON-out)](#json-out)
   * a **Hash**.
 - example
-```bash
-$ curl \
-  --data '{"id:"dFg8Us"}' \
-  --header 'Content-type: application/json' \
-  --silent \
-  --request GET \
-    http://${IP_ADDRESS}:${PORT}/group_joined | jq
+  ```bash
+  $ curl \
+    --data '{"id:"dFg8Us"}' \
+    --header 'Content-type: application/json' \
+    --silent \
+    --request GET \
+      http://${IP_ADDRESS}:${PORT}/group_joined | jq
 
-{"group_joined": {
-  "7": {
-    "id": "a8gVRN",
-    "events": [
+  {
+    "group_joined": {
+      "7": {
+        "id": "a8gVRN",
+        "events": [...]
+      },
+      "29": {
+        "id": "gUNjUV",
+        "events": [...]
+      },
       ...
-    ]
-  },
-  "29": {
-    "id": "gUNjUV",
-    "events": [
-      ...
-    ]
-  },
-  ...
- }
-}
-```
+     }
+  }
+  ```
 
 - - - -
 ## POST kata_create(manifest:,options:)
@@ -151,17 +148,116 @@ Gets the manifest used to create the kata exercise with the given `id`.
     --header 'Content-type: application/json' \
     --silent \
     --request GET \
-      http://${IP_ADDRESS}:${PORT}/kata_manifest
+      http://${IP_ADDRESS}:${PORT}/kata_manifest | jq
 
-  {"kata_manifest":...}
+  {
+    "kata_manifest": {
+      "display_name": "Bash, bats",
+      "image_name": "cyberdojofoundation/bash_bats:53d0c9c",
+      "filename_extension": [ ".sh" ],
+      "tab_size": 4,
+      "visible_files": {
+        "test_hiker.sh": { "content": "..." },
+        "bats_help.txt": { "content": "..." },
+        "hiker.sh": { "content": "..." },
+        "cyber-dojo.sh": { "content": "..." },
+        "readme.txt": { "content": "..." }
+      },
+      "exercise": "LCD Digits",
+      "version": 1,
+      "created": [2020,10,19,12,52,46,396907],
+      "group_id": "REf1t8",
+      "group_index": 44,
+      "id": "5U2J18",
+      "highlight_filenames": [],
+      "max_seconds": 10,
+      "progress_regexs": []
+    }
+  }  
   ```
 
 
 - - - -
 ## GET kata_events(id:)
+Gets the events summary for the kata exercise with the given `id`.
+- parameters [(JSON-in)](#json-in)
+  * **id:String**.
+- returns [(JSON-out)](#json-out)
+  * the events summary of the kata with the given `id`.
+- example
+  ```bash
+  $ curl \
+    --data '{"id:"4ScKVJ"}' \
+    --header 'Content-type: application/json' \
+    --silent \
+    --request GET \
+      http://${IP_ADDRESS}:${PORT}/kata_events | jq
+
+  { 
+    "kata_events": [
+      { "index": 0,
+         "time": [2020,10,19,12,52,46,396907],
+         "event": "created"
+      },
+      { "time": [2020,10,19,12,52,54,772809],
+        "duration": 0.491393,
+        "colour": "red",
+        "predicted": "none",
+        "index": 1
+      },
+      { "time": [2020,10,19,12,52,58,547002],
+        "duration": 0.426736,
+        "colour": "amber",
+        "predicted": "none",
+        "index": 2
+      },
+      { "time": [2020,10,19,12,53,3,256202],
+        "duration": 0.438522,
+        "colour": "green",
+        "predicted": "none",
+        "index": 3
+      }
+    ]
+  }
+  ```
+
 
 - - - -
-## GET kata_event(id:, index:)
+## GET kata_event(id:,index:)
+Gets the details for the kata exercise event with the given `id` and `index`
+- parameters [(JSON-in)](#json-in)
+  * **id:String**.
+  * **index:int**.
+- returns [(JSON-out)](#json-out)
+  * the event with the given `id` and `index`.
+- example
+  ```bash
+  {
+     "kata_event":{
+     "files": {
+       "test_hiker.sh": { "content": "..." },
+       "bats_help.txt": { "content": "..." },
+       "hiker.sh": { "content": "..." },
+       "cyber-dojo.sh": { "content": "..." },
+       "readme.txt": { "content": "..." }
+     },
+     "stdout": {
+       "content": "...",
+       "truncated": false
+     },
+     "stderr": {
+       "content": "...",
+       "truncated": false
+     },
+     "status": "1",
+     "time": [2020,10,19,12,52,58,547002],
+     "duration": 0.426736,
+     "colour": "amber",
+     "predicted": "none",
+     "index": 2
+   }
+   ```
+  
 
 - - - -
 ## POST kata_ran_tests(id:,index:,files:,stdout:,stderr:,status:,summary:)
