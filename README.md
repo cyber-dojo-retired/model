@@ -18,6 +18,12 @@
 * [ GET kata_events(id)](docs/api.md#get-kata_eventsid)
 * [ GET kata_event(id,index)](docs/api.md#get-kata_eventidindex)
 * [POST kata_ran_tests(id,index,files,stdout,stderr,status,summary)](docs/api.md#post-kata_ran_testsidindexfilesstdoutstderrstatussummary)
+* [POST kata_predicted_right(id,index,files,stdout,stderr,status,summary)](docs/api.md#post-kata_predicted_rightidindexfilesstdoutstderrstatussummary)
+* [POST kata_predicted_wrong(id,index,files,stdout,stderr,status,summary)](docs/api.md#post-kata_predicted_wrongidindexfilesstdoutstderrstatussummary)
+* [POST kata_reverted(id,index,files,stdout,stderr,status,summary)](docs/api.md#post-kata_revertedidindexfilesstdoutstderrstatussummary)
+* [POST kata_checked_out(id,index,files,stdout,stderr,status,summary)](docs/api.md#post-kata_checked_outidindexfilesstdoutstderrstatussummary)
+* [ GET kata_option_get(id,name)](docs/api.md#get-kata_option_getidname)
+* [POST kata_option_set(id,name,value)](docs/api.md#post-kata_option_setidnamevalue)
 - - - -
 * [GET alive?](docs/api.md#get-alive)  
 * [GET ready?](docs/api.md#get-ready)

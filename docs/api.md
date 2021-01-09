@@ -7,7 +7,7 @@ Creates a new group exercise from `manifests[0]`, and returns its id.
   At present only `manifests[0]` is used.
   The array is for a planned feature.
   For example, a [custom-start-points](https://github.com/cyber-dojo/custom-start-points) manifest.  
-  * **options:Hash[**.
+  * **options:Hash**.
   Currently unused (and defaulted). For a planned feature.
 - returns [(JSON-out)](#json-out)
   * the `id` of the created group.
@@ -155,6 +155,35 @@ Gets the manifest used to create the kata exercise with the given `id`.
 
   {"kata_manifest":...}
   ```
+
+
+- - - -
+## GET kata_events(id:)
+
+- - - -
+## GET kata_event(id:, index:)
+
+- - - -
+## POST kata_ran_tests(id:,index:,files:,stdout:,stderr:,status:,summary:)
+
+- - - -
+## POST kata_predicted_right(id:,index:,files:,stdout:,stderr:,status:,summary:)
+
+- - - -
+## POST kata_predicted_wrong(id:,index:,files:,stdout:,stderr:,status:,summary:)
+
+- - - -
+## POST kata_reverted(id:,index:,files:,stdout:,stderr:,status:,summary:)
+
+- - - -
+## POST kata_checked_out(id:,index:,files:,stdout:,stderr:,status:,summary:)
+
+- - - -
+## GET kata_option_get(id:,name:)
+
+- - - -
+## POST kata_option_set(id:,name:,value:)
+
 
 - - - -
 ## GET sha
