@@ -39,7 +39,11 @@ class GroupCreateTest < TestBase
   |with version 1
   |and a matching display_name
   ) do
-    assert_group_create_200({"fork_button": "off"})
+    manifest = assert_group_create_200({"fork_button": "off"})
+    assert_equal "off", manifest["fork_button"]
+    # "line_numbers":true,
+    # "syntax_highlight":false,
+    # "predict_colour":false
   end
 
   # - - - - - - - - - - - - - - - - - - -
@@ -86,8 +90,10 @@ class GroupCreateTest < TestBase
       assert_equal [path], response.keys.sort, :keys
       id = response[path]
       assert_group_exists(id, display_name)
-      assert_equal version, group_manifest(id)['version']
+      @manifest = group_manifest(id)
+      assert_equal version, @manifest['version']
     end
+    @manifest
   end
 
   def assert_group_create_500_exception(options, message)

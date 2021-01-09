@@ -22,7 +22,7 @@ class Group_v1
 
   def create(manifest, options)
     fail_unless_known_options(options)
-
+    manifest.merge!(options)
     manifest['version'] = 1
     manifest['created'] = time.now
     id = manifest['id'] = IdGenerator.new(@externals).group_id

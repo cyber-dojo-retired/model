@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative 'test_base'
 
-class JoinTest < TestBase
+class GroupJoinTest < TestBase
 
   def self.id58_prefix
     'Gw4'

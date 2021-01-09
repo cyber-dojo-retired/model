@@ -28,10 +28,7 @@ class TestBase < Id58TestBase
   end
 
   def default_options
-    { "line_numbers":true,
-      "syntax_highlight":false,
-      "predict_colour":false
-    }
+    {}
   end
 
   def externals
