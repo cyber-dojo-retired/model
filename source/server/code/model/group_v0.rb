@@ -3,6 +3,7 @@ require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'kata_v0'
 require_relative 'liner_v0'
+require_relative 'options_checker'
 require_relative 'poly_filler'
 require_relative '../lib/json_adapter'
 
@@ -19,7 +20,6 @@ class Group_v0
     # Groups created in cyber-dojo are now always version 1.
     # The ability to create version 0 groups is retained for testing.
     manifest = manifest.clone
-    planned_feature(options)
     manifest['version'] = 0
     manifest['created'] = time.now
     id = manifest['id'] = IdGenerator.new(@externals).group_id
@@ -82,9 +82,6 @@ class Group_v0
   include JsonAdapter
   include Liner_v0
   include PolyFiller
-
-  def planned_feature(_options)
-  end
 
   # - - - - - - - - - - - - - - - - - - -
 

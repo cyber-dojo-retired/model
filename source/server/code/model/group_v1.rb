@@ -2,6 +2,7 @@
 require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'kata_v1'
+require_relative 'options_checker'
 require_relative 'poly_filler'
 require_relative '../lib/json_adapter'
 
@@ -20,7 +21,8 @@ class Group_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def create(manifest, options)
-    planned_feature(options)
+    fail_unless_known_options(options)
+
     manifest['version'] = 1
     manifest['created'] = time.now
     id = manifest['id'] = IdGenerator.new(@externals).group_id
@@ -95,20 +97,8 @@ class Group_v1
 
   include IdPather
   include JsonAdapter
+  include OptionsChecker
   include PolyFiller
-
-  def planned_feature(_options)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  #def default_options
-  #  { "theme": "dark",
-  #    "colour": true,
-  #    "fork": "on",
-  #    "predict": "on",
-  #  }
-  #end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
