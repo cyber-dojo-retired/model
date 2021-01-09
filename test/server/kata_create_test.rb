@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative 'test_base'
 
-class CreateTest < TestBase
+class KataCreateTest < TestBase
 
   def self.id58_prefix
     'f26'
@@ -15,31 +15,6 @@ class CreateTest < TestBase
   end
 
   attr_reader :display_name, :custom_manifest
-
-  # - - - - - - - - - - - - - - - - -
-
-  v_tests [0,1], 'q31', %w(
-  |POST /group_create(manifest)
-  |has status 200
-  |returns the id: of a new group
-  |that exists in saver
-  |with version 1
-  |and a matching display_name
-  ) do
-    assert_json_post_200(
-      path = 'group_create', {
-        manifests:[custom_manifest],
-        options:default_options
-      }.to_json
-    ) do |response|
-      assert_equal [path], response.keys.sort, :keys
-      id = response[path]
-      assert_group_exists(id, display_name)
-      assert_equal version, group_manifest(id)['version']
-    end
-  end
-
-  # - - - - - - - - - - - - - - - - -
 
   v_tests [0,1], 'q32', %w(
   |POST /kata_create(manifest)
