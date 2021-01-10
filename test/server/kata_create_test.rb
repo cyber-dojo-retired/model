@@ -18,22 +18,101 @@ class KataCreateTest < TestBase
 
   v_tests [0,1], 'q32', %w(
   |POST /kata_create(manifest)
+  |with empty options
   |has status 200
   |returns the id: of a new kata
   |that exists in saver
   |with version 1
   |and a matching display_name
   ) do
+    assert_kata_create_200({})
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - -
+
+  v_tests [1], 'q33', %w(
+  |POST /kata_create(manifest)
+  |with good options
+  |has status 200
+  |returns the id: of a new kata
+  |that exists in saver
+  |with version 1
+  |and a matching display_name
+  ) do
+    { "fork_button" => ["on","off"],
+      "theme" => ["dark","light"],
+      "colour" => ["on","off"],
+      "predict" => ["on","off"]
+    }.each do |key,values|
+      values.each do |value|
+        options = { key => value }
+        manifest = assert_kata_create_200(options)
+        assert_equal value, manifest[key]
+      end
+    end
+    # "starting_info_dialog": [ "on","off" ]
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  v_tests [1], 'x32', %w(
+  |POST /kata_create(manifest,options)
+  |with options not a Hash
+  |has status 500
+  ) do
+    [nil, 42, false, []].each do |bad|
+      assert_kata_create_500_exception(bad, "options is not a Hash")
+    end
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  v_tests [1], 'x33', %w(
+  |POST /kata_create(manifest,options)
+  |with unknown option key
+  |has status 500
+  ) do
+    assert_kata_create_500_exception({"wibble":42}, 'options:{"wibble": 42} unknown key: "wibble"')
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  v_tests [1], 'x34', %w(
+  |POST /kata_create(manifest,options)
+  |with unknown option value
+  |has status 500
+  ) do
+    assert_kata_create_500_exception({"fork_button":42}, 'options:{"fork_button": 42} unknown value: 42')
+  end
+
+  private
+
+  def assert_kata_create_200(options)
     assert_json_post_200(
       path = 'kata_create', {
-        manifest:custom_manifest,
-        options:default_options
+        manifest: custom_manifest,
+        options: options
       }.to_json
     ) do |response|
       assert_equal [path], response.keys.sort, :keys
       id = response[path]
       assert_kata_exists(id, display_name)
-      assert_equal version, kata_manifest(id)['version']
+      @manifest = kata_manifest(id)
+      assert_equal version, @manifest['version']
+    end
+    @manifest
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def assert_kata_create_500_exception(options, message)
+    assert_json_post_500(
+      path='kata_create', {
+       manifest: custom_manifest,
+       options: options
+      }.to_json
+    ) do |response|
+      assert_equal message, response["exception"]["message"]
     end
   end
 

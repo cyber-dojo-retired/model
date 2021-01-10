@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require_relative 'id_generator'
 require_relative 'id_pather'
+require_relative 'options_checker'
 require_relative 'poly_filler'
 require_relative '../lib/json_adapter'
 
@@ -45,7 +46,8 @@ class Kata_v1
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def create(manifest, options)
-    planned_feature(options)
+    fail_unless_known_options(options)
+    manifest.merge!(options)
     manifest['version'] = 1
     manifest['created'] = time.now
     id = manifest['id'] = IdGenerator.new(@externals).kata_id
@@ -152,6 +154,7 @@ class Kata_v1
 
   include IdPather
   include JsonAdapter
+  include OptionsChecker
   include PolyFiller
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -171,11 +174,6 @@ class Kata_v1
       events_file_append_command(id, ",\n" + json_plain(summary))
     ])
     json_plain(result)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  def planned_feature(_options)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

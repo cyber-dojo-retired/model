@@ -2,6 +2,7 @@
 require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'liner_v0'
+require_relative 'options_checker'
 require_relative 'poly_filler'
 require_relative '../lib/json_adapter'
 
@@ -15,7 +16,8 @@ class Kata_v0
 
   def create(manifest, options)
     manifest = manifest.clone
-    planned_feature(options)
+    fail_unless_known_options(options)
+    manifest.merge!(options)
     manifest['version'] = 0
     manifest['created'] = time.now
     id = manifest['id'] = IdGenerator.new(@externals).kata_id
@@ -101,6 +103,7 @@ class Kata_v0
   include IdPather
   include JsonAdapter
   include Liner_v0
+  include OptionsChecker
   include PolyFiller
 
   def universal_append(id, index, files, stdout, stderr, status, summary)
@@ -119,11 +122,6 @@ class Kata_v0
       events_file_append_command(id, json_plain(summary) + "\n")
     ])
     json_plain(result)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  def planned_feature(_options)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
