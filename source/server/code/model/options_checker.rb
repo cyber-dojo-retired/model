@@ -17,26 +17,25 @@ module OptionsChecker
   end
 
   def known_option_key?(key)
-    known_options = [
-      "fork_button",
-      "theme",
-      "colour",
-      "predict",
-      "starting_info_dialog"
-    ]
-    key.is_a?(String) && known_options.include?(key)
+    key.is_a?(String) && KNOWN_KEYS.include?(key)
   end
 
   def known_option_value?(key, value)
-    on_off = [ "on", "off" ]
-    case key
-    when "colour"      then return on_off.include?(value)
-    when "fork_button" then return on_off.include?(value)
-    when "predict"     then return on_off.include?(value)
-    when "starting_info_dialog" then return on_off.include?(value)
-    when "theme"       then return ["dark","light"].include?(value)
+    if key === "theme"
+      ["dark","light"].include?(value)
+    elsif KNOWN_KEYS.include?(key)
+      ["on","off"].include?(value)
+    else
+      false
     end
-    false
   end
+
+  KNOWN_KEYS = [
+    "theme",
+    "fork_button",
+    "colour",
+    "predict",
+    "starting_info_dialog"
+  ]
 
 end
