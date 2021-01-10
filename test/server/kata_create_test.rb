@@ -39,10 +39,12 @@ class KataCreateTest < TestBase
   |with version 1
   |and a matching display_name
   ) do
-    { "fork_button" => ["on","off"],
-      "theme" => ["dark","light"],
-      "colour" => ["on","off"],
-      "predict" => ["on","off"]
+    on_off = [ "on", "off" ]
+    { "colour" => on_off,
+      "fork_button" => on_off,
+      "predict" => on_off,
+      "starting_info_dialog" => on_off,
+      "theme" => ["dark","light"]
     }.each do |key,values|
       values.each do |value|
         options = { key => value }
@@ -50,7 +52,6 @@ class KataCreateTest < TestBase
         assert_equal value, manifest[key]
       end
     end
-    # "starting_info_dialog": [ "on","off" ]
   end
 
   # - - - - - - - - - - - - - - - - - - -

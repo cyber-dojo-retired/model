@@ -5,6 +5,7 @@ require_relative 'kata_v0'
 require_relative 'liner_v0'
 require_relative 'options_checker'
 require_relative 'poly_filler'
+require_relative 'quoter'
 require_relative '../lib/json_adapter'
 
 class Group_v0
@@ -50,7 +51,7 @@ class Group_v0
     else
       index = indexes[result_index]
       manifest['group_index'] = index
-      kata_id = @kata.create(manifest, default_options)
+      kata_id = @kata.create(manifest, {})
       saver.assert(saver.file_create_command(kata_id_filename(id, index), unquoted(kata_id)))
       kata_id # already quoted
     end
@@ -82,25 +83,7 @@ class Group_v0
   include JsonAdapter
   include Liner_v0
   include PolyFiller
-
-  # - - - - - - - - - - - - - - - - - - -
-
-  def default_options
-    { "line_numbers":true,
-      "syntax_highlight":false,
-      "predict_colour":false
-    }
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
-  def quoted(s)
-    '"' + s + '"'
-  end
-
-  def unquoted(s)
-    s[1..-2]
-  end
+  include Quoter
 
   # - - - - - - - - - - - - - - - - - - -
 

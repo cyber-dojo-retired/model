@@ -4,6 +4,7 @@ require_relative 'id_pather'
 require_relative 'kata_v1'
 require_relative 'options_checker'
 require_relative 'poly_filler'
+require_relative 'quoter'
 require_relative '../lib/json_adapter'
 
 # 1. Manifest now has explicit version (1)
@@ -99,16 +100,7 @@ class Group_v1
   include JsonAdapter
   include OptionsChecker
   include PolyFiller
-
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  def quoted(s)
-    '"' + s + '"'
-  end
-
-  def unquoted(s)
-    s[1..-2]
-  end
+  include Quoter
 
   # - - - - - - - - - - - - - - - - - - - - - -
 

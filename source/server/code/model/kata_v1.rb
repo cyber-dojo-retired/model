@@ -3,6 +3,7 @@ require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'options_checker'
 require_relative 'poly_filler'
+require_relative 'quoter'
 require_relative '../lib/json_adapter'
 
 # 1. Manifest now has explicit version (1)
@@ -156,6 +157,7 @@ class Kata_v1
   include JsonAdapter
   include OptionsChecker
   include PolyFiller
+  include Quoter
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
@@ -264,10 +266,6 @@ class Kata_v1
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
-
-  def quoted(o)
-    '"' + o.to_s + '"'
-  end
 
   def saver
     @externals.saver
