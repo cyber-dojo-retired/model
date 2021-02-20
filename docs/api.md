@@ -191,7 +191,7 @@ Gets the manifest used to create the kata exercise with the given `id`.
       "created": [2020,10,19,12,52,46,396907],
       "group_id": "REf1t8",
       "group_index": 44,
-      "id": "5U2J18",
+      "id": "4ScKVJ",
       "highlight_filenames": [],
       "max_seconds": 10,
       "progress_regexs": []
@@ -216,7 +216,7 @@ Gets the events summary for the kata exercise with the given `id`.
     --request GET \
       http://${IP_ADDRESS}:${PORT}/kata_events | jq
 
-  { 
+  {
     "kata_events": [
       { "index": 0,
          "time": [2020,10,19,12,52,46,396907],
@@ -261,7 +261,7 @@ Gets the details for the kata exercise event with the given `id` and `index`
     --silent \
     --request GET \
       http://${IP_ADDRESS}:${PORT}/kata_events | jq
-  
+
   {
      "kata_event":{
      "files": {
@@ -287,7 +287,7 @@ Gets the details for the kata exercise event with the given `id` and `index`
      "index": 2
    }
    ```
-  
+
 
 - - - -
 ## POST kata_ran_tests(id:,index:,files:,stdout:,stderr:,status:,summary:)
