@@ -21,8 +21,6 @@ class KatasEventsTest < TestBase
     assert_equal expected, actual
   end
 
-=begin
-
   test '1P3', %w( v1 example ) do
     actual = katas_events([V1_KATA_ID,V1_KATA_ID], [1,2])
     expected = {
@@ -33,8 +31,6 @@ class KatasEventsTest < TestBase
     }
     assert_equal expected, actual
   end
-
-=end
 
   private
 

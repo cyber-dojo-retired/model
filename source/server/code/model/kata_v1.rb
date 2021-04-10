@@ -96,6 +96,30 @@ class Kata_v1
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
+  def event_batch(ids, indexes)
+    json = {}
+
+    commands = []
+    (0...ids.size).each do |i|
+      id = ids[i]
+      index = indexes[i]
+      commands << event_file_read_command(id, index)
+    end
+    results = saver.assert_all(commands)
+
+    (0...ids.size).each do |i|
+      j = json_parse(results[i])
+      id = ids[i]
+      index = indexes[i]
+      json[id] ||= {}
+      json[id][index.to_s] = j
+    end
+
+    json_plain(json)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def ran_tests(id, index, files, stdout, stderr, status, summary)
     universal_append(id, index, files, stdout, stderr, status, summary)
   end
