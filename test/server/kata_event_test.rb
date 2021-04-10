@@ -9,53 +9,36 @@ class KataEventTest < TestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test '1P3', %w( v0 example ) do
-    V0_KATA_ID = 'rUqcey'
+  test '2R6', %w( v0 example ) do
     actual = kata_event(V0_KATA_ID, 2)
-    expected = kata_events_rUqcey_2
+    expected = kata_event_k5ZTk0_2
     assert_equal expected, actual
   end
 
-  test '1P4', %w( v0 example next event) do
-    V0_KATA_ID = 'rUqcey'
-    actual = kata_event(V0_KATA_ID, 1)
-    expected = kata_events_rUqcey_1
+  test '2R7', %w( v0 example next event ) do
+    actual = kata_event(V0_KATA_ID, 3)
+    expected = kata_event_k5ZTk0_3
+    assert_equal expected, actual
+  end
+
+  test '1P3', %w( v1 example ) do
+    actual = kata_event(V1_KATA_ID, 1)
+    expected = kata_event_rUqcey_1
+    assert_equal expected, actual
+  end
+
+  test '1P4', %w( v1 example next event) do
+    actual = kata_event(V1_KATA_ID, 2)
+    expected = kata_event_rUqcey_2
     assert_equal expected, actual
   end
 
   private
 
-  def print_cmp(expected, actual)
-    actual.each do |key,value|
-      if expected[key] == actual[key]
-        p("key #{key}: SAME")
-      else
-        p("key #{key}: NOT SAME")
-      end
-    end
-    expected["files"].each do |key,e_value|
-      a_value = actual["files"][key]
-      if e_value == a_value
-        p("key ['files'][#{key}] : SAME")
-      else
-        p("key ['files'][#{key}] : NOT SAME")
-        expected["files"][key].each do |key2,e_value|
-          a_value = actual['files'][key][key2]
-          if e_value == a_value
-            p(" ['files'][#{key}][#{key2}] : SAME")
-          else
-            p(" ['files'][#{key}][#{key2}] : NOT SAME")
-            p('expected')
-            p(e_value)
-            p('actual')
-            p(a_value)
-          end
-        end
-      end
-    end
-  end
+  V0_KATA_ID = 'k5ZTk0'
+  V1_KATA_ID = 'rUqcey'
 
-  def kata_events_rUqcey_1
+  def kata_event_rUqcey_1
     return {
       "files" => {
         "test_hiker.py" => {
@@ -96,7 +79,7 @@ class KataEventTest < TestBase
     }
   end
 
-  def kata_events_rUqcey_2
+  def kata_event_rUqcey_2
     return {
       "files" => {
         "test_hiker.py" => {
@@ -135,5 +118,103 @@ class KataEventTest < TestBase
       "time" => [2020,11,30, 14,6,53, 941739]
     }
   end
+
+  def kata_event_k5ZTk0_2
+    return {
+      "files" => {
+        "test_hiker.rb" => {
+          "content" => "require_relative 'coverage'\nrequire_relative 'hiker'\nrequire 'minitest/autorun'\n\nclass TestHiker < MiniTest::Test\n\n  def test_life_the_universe_and_everything\n    assert_equal 42, answer\n  end\n\nend\n"}, "hiker.rb"=>{"content"=>"\ndef answer\n  6 * 999dfdf\nend\n"
+        },
+        "cyber-dojo.sh" => {
+          "content" => "for test_file in *test*.rb\ndo\n  ruby $test_file\ndone\n"
+        },
+        "coverage.rb" => {
+          "content" => "require 'simplecov'\nrequire 'simplecov-console'\nSimpleCov.formatter = SimpleCov::Formatter::Console\nSimpleCov.start\n"
+        },
+        "readme.txt" => {
+          "content" => "There are four types of common coins in US currency:\n  quarters (25 cents)\n  dimes (10 cents)\n  nickels (5 cents) \n  pennies (1 cent)\n  \nThere are 6 ways to make change for 15 cents:\n  A dime and a nickel;\n  A dime and 5 pennies;\n  3 nickels;\n  2 nickels and 5 pennies;\n  A nickel and 10 pennies;\n  15 pennies.\n  \nHow many ways are there to make change for a dollar\nusing these common coins? (1 dollar = 100 cents).\n\n[Source http://rosettacode.org]"
+        }
+      },
+      "stdout" => {
+        "content" => "\nCOVERAGE: 100.00% -- 0/0 lines in 1 files\n",
+        "truncated" => false
+      },
+      "stderr" => {
+        "content" => "SimpleCov failed to recognize the test framework and/or suite used. Please specify manually using SimpleCov.command_name 'Unit Tests'.\ntest_hiker.rb:2:in `require_relative': /sandbox/hiker.rb:3: syntax error, unexpected tIDENTIFIER, expecting keyword_end (SyntaxError)\n  6 * 999dfdf\n         ^~~~\n\tfrom test_hiker.rb:2:in `<main>'\n",
+        "truncated" => false
+      },
+      "status" => "1",
+      "colour" => "amber",
+      "duration" => 1.1275,
+      "predicted" => "none",
+      "index" => 2,
+      "time" => [2019,1,19, 12,45,26, 76791]
+    }
+  end
+
+  def kata_event_k5ZTk0_3
+    return {
+      "files" => {
+        "test_hiker.rb" => {
+          "content" => "require_relative 'coverage'\nrequire_relative 'hiker'\nrequire 'minitest/autorun'\n\nclass TestHiker < MiniTest::Test\n\n  def test_life_the_universe_and_everything\n    assert_equal 42, answer\n  end\n\nend\n"
+        },
+        "hiker.rb" => {
+          "content" => "\ndef answer\n  6 * 7\nend\n"
+        },
+        "cyber-dojo.sh" => {
+          "content" => "for test_file in *test*.rb\ndo\n  ruby $test_file\ndone\n"
+        },
+        "coverage.rb" => {
+          "content" => "require 'simplecov'\nrequire 'simplecov-console'\nSimpleCov.formatter = SimpleCov::Formatter::Console\nSimpleCov.start\n"}, "readme.txt"=>{"content"=>"There are four types of common coins in US currency:\n  quarters (25 cents)\n  dimes (10 cents)\n  nickels (5 cents) \n  pennies (1 cent)\n  \nThere are 6 ways to make change for 15 cents:\n  A dime and a nickel;\n  A dime and 5 pennies;\n  3 nickels;\n  2 nickels and 5 pennies;\n  A nickel and 10 pennies;\n  15 pennies.\n  \nHow many ways are there to make change for a dollar\nusing these common coins? (1 dollar = 100 cents).\n\n[Source http://rosettacode.org]"
+        }
+      },
+      "stdout" => {
+        "content" => "Run options: --seed 49500\n\n# Running:\n\n.\n\nFinished in 0.001027s, 974.0986 runs/s, 974.0986 assertions/s.\n\n1 runs, 1 assertions, 0 failures, 0 errors, 0 skips\n\nCOVERAGE: 100.00% -- 2/2 lines in 1 files\n",
+        "truncated" => false
+      },
+      "stderr" => {
+        "content" => "",
+        "truncated" => false
+      },
+      "status" => "0",
+      "colour" => "green",
+      "duration" => 1.072198,
+      "predicted" => "none",
+      "index" => 3,
+      "time" => [2019,1,19, 12,45,30, 656924]
+    }
+  end
+
+=begin
+  def print_cmp(expected, actual)
+    actual.each do |key,value|
+      if expected[key] == actual[key]
+        p("key #{key}: SAME")
+      else
+        p("key #{key}: NOT SAME")
+      end
+    end
+    expected["files"].each do |key,e_value|
+      a_value = actual["files"][key]
+      if e_value == a_value
+        p("key ['files'][#{key}] : SAME")
+      else
+        p("key ['files'][#{key}] : NOT SAME")
+        expected["files"][key].each do |key2,e_value|
+          a_value = actual['files'][key][key2]
+          if e_value == a_value
+            p(" ['files'][#{key}][#{key2}] : SAME")
+          else
+            p(" ['files'][#{key}][#{key2}] : NOT SAME")
+            p('expected')
+            p(e_value)
+            p('actual')
+            p(a_value)
+          end
+        end
+      end
+    end
+  end
+=end
 
 end
