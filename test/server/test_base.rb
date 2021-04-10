@@ -80,6 +80,10 @@ class TestBase < Id58TestBase
     JSON.parse(model.kata_manifest(id:id))
   end
 
+  def katas_events(ids, indexes)
+    JSON.parse(model.katas_events(ids:ids, indexes:indexes))
+  end
+
   def kata_events(id)
     JSON.parse(model.kata_events(id:id))
   end

@@ -79,6 +79,20 @@ class Kata_v0
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
+  def event_batch(ids, indexes)
+    json = {}
+    (0...ids.size).each do |n|
+      id = ids[n]
+      index = indexes[n]
+      j = json_parse(event(id, index))
+      json[id] ||= {}
+      json[id][index.to_s] = j
+    end
+    json_plain(json)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def ran_tests(id, index, files, stdout, stderr, status, summary)
     universal_append(id, index, files, stdout, stderr, status, summary)
   end
@@ -142,10 +156,7 @@ class Kata_v0
   # Extracts the visible_files from the manifest and
   # stores them as event-zero files. This allows a diff of the
   # first traffic-light but means manifest() has to recombine two
-  # files. In theory the manifest could store only the display_name
-  # and exercise_name and be recreated, on-demand, from the relevant
-  # start-point services. In practice, it doesn't work because the
-  # start-point services can change over time.
+  # files.
 
   def manifest_file_create_command(id, manifest_src)
     saver.file_create_command(manifest_filename(id), manifest_src)
@@ -161,7 +172,7 @@ class Kata_v0
   # A cache of colours/time-stamps for all [test] events.
   # Helps optimize dashboard traffic-lights views.
   # Each event is stored as a single "\n" terminated line.
-  # This is an optimization for ran_tests() which need only
+  # This is an optimization for universal_append() which need only
   # append to the end of the file.
 
   def events_file_create_command(id, event0_src)

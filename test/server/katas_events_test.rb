@@ -4,8 +4,6 @@ require_relative 'kata_test_data'
 
 class KatasEventsTest < TestBase
 
-=begin
-
   def self.id58_prefix
     'LS5'
   end
@@ -36,23 +34,10 @@ class KatasEventsTest < TestBase
     assert_equal expected, actual
   end
 
-  test 'H9a', %w( mixed v0 v1 example ) do
-    actual = katas_events([V0_KATA_ID,V1_KATA_ID], [3,2])
-    expected = {
-      V0_KATA_ID => {
-        "3" => kata_event_k5ZTk0_3,
-      },
-      V1_KATA_ID => {
-        "2" => kata_event_rUqcey_2,
-      }
-    }
-    assert_equal expected, actual
-  end
-
 =end
 
   private
 
-  #include KataTestData
+  include KataTestData
 
 end
