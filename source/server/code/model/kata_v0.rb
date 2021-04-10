@@ -81,13 +81,31 @@ class Kata_v0
 
   def event_batch(ids, indexes)
     json = {}
+
+    commands = []
     (0...ids.size).each do |n|
       id = ids[n]
       index = indexes[n]
-      j = json_parse(event(id, index))
+      commands << events_file_read_command(id)
+      commands << event_file_read_command(id, index)
+    end
+
+    results = saver.assert_all(commands)
+
+    (0...ids.size).each do |i|
+      id = ids[i]
+      index = indexes[i]
+
+      events = json_parse('[' + results[i*2].lines.join(',') + ']')
+      j = unlined(json_parse(results[i*2+1]))
+      polyfill_event(j, events, index)
+
+      id = ids[i]
+      index = indexes[i]
       json[id] ||= {}
       json[id][index.to_s] = j
     end
+
     json_plain(json)
   end
 
