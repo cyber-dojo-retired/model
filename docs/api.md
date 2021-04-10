@@ -260,7 +260,7 @@ Gets the details for the kata exercise event with the given `id` and `index`
     --header 'Content-type: application/json' \
     --silent \
     --request GET \
-      http://${IP_ADDRESS}:${PORT}/kata_events | jq
+      http://${IP_ADDRESS}:${PORT}/kata_event | jq
 
   {
      "kata_event":{
@@ -285,6 +285,40 @@ Gets the details for the kata exercise event with the given `id` and `index`
      "colour": "amber",
      "predicted": "none",
      "index": 2
+   }
+   ```
+
+- - - -
+## GET katas_events(ids:,indexes:)
+Gets the details for the kata exercise events with the given `ids` and `indexes`.
+A Batch-Method for kata_event(id,index).
+- parameters [(JSON-in)](#json-in)
+  * **ids:Array[String]**.
+  * **index:Array[int]**.
+- returns [(JSON-out)](#json-out)
+  * the events with the given `ids` and `indexes`.
+- example
+  ```bash
+  $ curl \
+    --data '{"ids:["4ScKVJ","De87Aa"],"indexes":[23,45]}' \
+    --header 'Content-type: application/json' \
+    --silent \
+    --request GET \
+      http://${IP_ADDRESS}:${PORT}/katas_events | jq
+
+  {
+     "katas_events": {
+       "4ScKVJ": {
+         "23": {
+           ...
+         }
+       },
+       "De87Aa": {
+         "45": {
+           ...
+         }
+       }
+     }
    }
    ```
 
