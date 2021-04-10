@@ -34,6 +34,10 @@ class Model
     model.kata_manifest(id)
   end
 
+  def katas_events(ids, indexes)
+    model.katas_events(ids, indexes)
+  end
+
   def kata_option_get(id, name)
     model.kata_option_get(id, name)
   end

@@ -57,6 +57,10 @@ class ExternalModel
     @http.get(__method__, { id:id })
   end
 
+  def katas_events(ids, indexes)
+    @http.get(__method__, { ids:ids, indexes:indexes })
+  end
+
   def kata_option_get(id, name)
     @http.get(__method__, { id:id, name:name })
   end

@@ -5,10 +5,8 @@ require_relative '../data/kata_test_data'
 class KatasEventsTest < TestBase
 
   def self.id58_prefix
-    'LS5'
+    'j8S'
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test '2R6', %w( v0 example ) do
     actual = katas_events([V0_KATA_ID,V0_KATA_ID], [2,3])
@@ -32,8 +30,13 @@ class KatasEventsTest < TestBase
     assert_equal expected, actual
   end
 
+
   private
 
   include KataTestData
+
+  def katas_events(ids, indexes)
+    model.katas_events(ids, indexes)
+  end
 
 end

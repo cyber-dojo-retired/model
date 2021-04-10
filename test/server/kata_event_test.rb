@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require_relative 'test_base'
-require_relative 'kata_test_data'
+require_relative '../data/kata_test_data'
 
 class KataEventTest < TestBase
 
