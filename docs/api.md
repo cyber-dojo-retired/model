@@ -202,11 +202,11 @@ Gets the manifest used to create the kata exercise with the given `id`.
 
 - - - -
 ## GET kata_events(id:)
-Gets the events summary for the kata exercise with the given `id`.
+Gets the summary of all current events for the kata with the given `id`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
 - returns [(JSON-out)](#json-out)
-  * the events summary of the kata with the given `id`.
+  * an Array holding the events summary of the kata with the given `id`.
 - example
   ```bash
   $ curl \
@@ -247,7 +247,7 @@ Gets the events summary for the kata exercise with the given `id`.
 
 - - - -
 ## GET kata_event(id:,index:)
-Gets the details for the kata exercise event with the given `id` and `index`
+Gets the full details for the kata-event whose kata has the given `id` whose event has the given `index`.
 - parameters [(JSON-in)](#json-in)
   * **id:String**.
   * **index:int**.
@@ -263,28 +263,29 @@ Gets the details for the kata exercise event with the given `id` and `index`
       http://${IP_ADDRESS}:${PORT}/kata_event | jq
 
   {
-     "kata_event":{
-     "files": {
-       "test_hiker.sh": { "content": "..." },
-       "bats_help.txt": { "content": "..." },
-       "hiker.sh": { "content": "..." },
-       "cyber-dojo.sh": { "content": "..." },
-       "readme.txt": { "content": "..." }
-     },
-     "stdout": {
-       "content": "...",
-       "truncated": false
-     },
-     "stderr": {
-       "content": "...",
-       "truncated": false
-     },
-     "status": "1",
-     "time": [2020,10,19,12,52,58,547002],
-     "duration": 0.426736,
-     "colour": "amber",
-     "predicted": "none",
-     "index": 2
+     "kata_event": {
+       "files": {
+         "test_hiker.sh": { "content": "..." },
+         "bats_help.txt": { "content": "..." },
+         "hiker.sh": { "content": "..." },
+         "cyber-dojo.sh": { "content": "..." },
+         "readme.txt": { "content": "..." }
+       },
+       "stdout": {
+         "content": "...",
+         "truncated": false
+       },
+       "stderr": {
+         "content": "...",
+         "truncated": false
+       },
+       "status": "1",
+       "time": [2020,10,19,12,52,58,547002],
+       "duration": 0.426736,
+       "colour": "amber",
+       "predicted": "none",
+       "index": 2
+     }
    }
    ```
 
@@ -310,11 +311,15 @@ A Batch-Method for kata_event(id,index).
      "katas_events": {
        "4ScKVJ": {
          "23": {
+           "files": { ... },
+           "stdout": { ... }  
            ...
          }
        },
        "De87Aa": {
          "45": {
+           "files": { ... },
+           "stdout": { ... }  
            ...
          }
        }
