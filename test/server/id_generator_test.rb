@@ -74,34 +74,6 @@ class IdGeneratorTest < TestBase
 
   # - - - - - - - - - - - - - - - - - - -
 
-  test '066', %w(
-  no kata-id duplicates in 5000 repeats
-  ) do
-    id_generator = IdGenerator.new(externals)
-    ids = {}
-    repeats = 5000
-    repeats.times do
-      ids[id_generator.kata_id] = true
-    end
-    assert_equal repeats, ids.keys.size
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
-  test '067', %w(
-  no group-id duplicates in 5000 repeats
-  ) do
-    id_generator = IdGenerator.new(externals)
-    ids = {}
-    repeats = 5000
-    repeats.times do
-      ids[id_generator.group_id] = true
-    end
-    assert_equal repeats, ids.keys.size
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
   test '13b', %w(
   group-id does not exist before generation, does after
   ) do
@@ -110,18 +82,6 @@ class IdGeneratorTest < TestBase
     id_generator = stubbed_id_generator(id)
     assert_equal id, id_generator.group_id
     assert group_exists?(id), "!group_exists?(#{id}) !!"
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
-  test '13c', %w(
-  kata-id does not exist before generation, does after
-  ) do
-    id =  '7w3RPx'
-    refute kata_exists?(id), "kata_exists?(#{id}) !!"
-    id_generator = stubbed_id_generator(id)
-    assert_equal id, id_generator.kata_id
-    assert kata_exists?(id), "!kata_exists?(#{id}) !!"
   end
 
   # - - - - - - - - - - - - - - - - - - -

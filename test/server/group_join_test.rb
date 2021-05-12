@@ -63,12 +63,11 @@ class GroupJoinTest < TestBase
   v_tests [0,1], '6A6', %w(
   you can join 64 times and then the group is full
   ) do
-    externals.instance_exec { @saver = SaverFake.new(self) }
     manifest = custom_manifest
     group_id = group_create(manifest, default_options)
     expected_ids = []
-    64.times do
-      kata_id = group_join(group_id)
+    64.times do |index|
+      kata_id = group_join(group_id, [index])
       refute_nil kata_id, :not_full
       expected_ids << kata_id
     end

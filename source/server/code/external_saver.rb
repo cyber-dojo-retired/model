@@ -15,6 +15,15 @@ class ExternalSaver
 
   # - - - - - - - - - - - - - - - - - - -
 
+
+  # - - - - - - - - - - - - - - - - - - -
+
+  def kata_exists?(id)
+    @http.get(__method__, { id:id })
+  end
+
+  # - - - - - - - - - - - - - - - - - - -
+
   def dir_make_command(dirname)
     ['dir_make',dirname]
   end

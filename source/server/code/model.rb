@@ -53,7 +53,7 @@ class Model
   end
 
   def kata_exists?(id:)
-    kata(CURRENT_VERSION).exists?(id)
+    saver.kata_exists?(id)
   end
 
   def kata_manifest(id:)
