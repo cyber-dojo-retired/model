@@ -7,7 +7,7 @@ class Prober
   end
 
   def sha
-    '"' + ENV['SHA'] + '"'
+    ENV['SHA']
   end
 
   def alive?

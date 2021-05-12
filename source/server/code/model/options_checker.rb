@@ -16,6 +16,10 @@ module OptionsChecker
     end
   end
 
+  def quoted(s)
+    '"' + s + '"'
+  end
+
   def known_option_key?(key)
     key.is_a?(String) && KNOWN_KEYS.include?(key)
   end

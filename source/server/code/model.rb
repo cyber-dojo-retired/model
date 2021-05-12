@@ -34,10 +34,10 @@ class Model
 
   def group_joined(id:)
     if kata_exists?(id:id)
-      manifest = json_parse(kata_manifest(id:id))
+      manifest = kata_manifest(id:id)
       group_id = manifest["group_id"]
       if group_id.nil?
-        return '{}'
+        return {}
       else
         id = group_id
       end
@@ -94,11 +94,11 @@ class Model
   end
 
   def kata_option_get(id:, name:)
-    kata(1).option_get(id, name)
+    kata(CURRENT_VERSION).option_get(id, name)
   end
 
   def kata_option_set(id:, name:, value:)
-    kata(1).option_set(id, name, value)
+    kata(CURRENT_VERSION).option_set(id, name, value)
   end
 
   private

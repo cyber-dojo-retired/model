@@ -4,7 +4,6 @@ require_relative 'id_pather'
 require_relative 'liner_v0'
 require_relative 'options_checker'
 require_relative 'poly_filler'
-require_relative 'quoter'
 require_relative '../lib/json_adapter'
 
 class Kata_v0
@@ -33,7 +32,7 @@ class Kata_v0
       event_file_create_command(id, 0, json_plain(lined({ 'files' => files }))),
       events_file_create_command(id, json_plain(event0) + "\n")
     ])
-    '"' + id + '"'
+    id
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -47,7 +46,7 @@ class Kata_v0
     event0 = unlined(json_parse(event0_src))
     polyfill_manifest(manifest, event0)
     polyfill_manifest_defaults(manifest)
-    json_plain(manifest)
+    manifest
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -56,7 +55,7 @@ class Kata_v0
     result = saver.assert(events_file_read_command(id))
     json = json_parse('[' + result.lines.join(',') + ']')
     polyfill_events(json)
-    json_plain(json)
+    json
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -64,7 +63,7 @@ class Kata_v0
   def event(id, index)
     index = index.to_i
     if index < 0
-      all = json_parse(events(id))
+      all = events(id)
       index = all[index]['index']
     end
     results = saver.assert_all([
@@ -74,7 +73,7 @@ class Kata_v0
     events = json_parse('[' + results[0].lines.join(',') + ']')
     json = unlined(json_parse(results[1]))
     polyfill_event(json, events, index)
-    json_plain(json)
+    json
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -101,7 +100,7 @@ class Kata_v0
       json[id][index.to_s] = j
     end
 
-    json_plain(json)
+    json
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -133,7 +132,6 @@ class Kata_v0
   include Liner_v0
   include OptionsChecker
   include PolyFiller
-  include Quoter
 
   def universal_append(id, index, files, stdout, stderr, status, summary)
     summary['time'] = time.now
@@ -150,7 +148,7 @@ class Kata_v0
       event_file_create_command(id, index, json_plain(lined(event_n))),
       events_file_append_command(id, json_plain(summary) + "\n")
     ])
-    json_plain(result)
+    result
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

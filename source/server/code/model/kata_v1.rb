@@ -3,7 +3,6 @@ require_relative 'id_generator'
 require_relative 'id_pather'
 require_relative 'options_checker'
 require_relative 'poly_filler'
-require_relative 'quoter'
 require_relative '../lib/json_adapter'
 
 # 1. Manifest now has explicit version (1)
@@ -65,7 +64,7 @@ class Kata_v1
       events_file_create_command(id, json_plain(event_summary)),
       event_file_create_command(id, 0, json_plain(event0.merge(event_summary)))
     ])
-    quoted(id)
+    id
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -74,13 +73,13 @@ class Kata_v1
     manifest_src = saver.assert(manifest_file_read_command(id))
     manifest = json_parse(manifest_src)
     polyfill_manifest_defaults(manifest)
-    json_plain(manifest)
+    manifest
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def events(id)
-    '[' + saver.assert(events_file_read_command(id)) + ']'
+    json_parse('[' + saver.assert(events_file_read_command(id)) + ']')
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -88,10 +87,10 @@ class Kata_v1
   def event(id, index)
     index = index.to_i
     if index < 0
-      all = json_parse(events(id))
+      all = events(id)
       index = all[index]['index']
     end
-    saver.assert(event_file_read_command(id, index))
+    json_parse(saver.assert(event_file_read_command(id, index)))
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -115,7 +114,7 @@ class Kata_v1
       json[id][index.to_s] = j
     end
 
-    json_plain(json)
+    json
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -147,7 +146,7 @@ class Kata_v1
     filename = kata_id_path(id, name)
     result = saver.run(saver.file_read_command(filename))
     if result
-      quoted(result.lines.last)
+      result.lines.last
     else
       default = case name
       when 'theme'        then 'light'
@@ -157,7 +156,7 @@ class Kata_v1
       when 'revert_amber' then 'off'
       when 'revert_green' then 'off'
       end
-      quoted(default)
+      default
     end
   end
 
@@ -172,7 +171,7 @@ class Kata_v1
       saver.file_create_command(filename, "\n"+value),
       saver.file_append_command(filename, "\n"+value)
     ])
-    json_plain(result)
+    result
   end
 
   private
@@ -181,7 +180,6 @@ class Kata_v1
   include JsonAdapter
   include OptionsChecker
   include PolyFiller
-  include Quoter
 
   # - - - - - - - - - - - - - - - - - - - - - -
 

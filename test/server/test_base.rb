@@ -38,8 +38,7 @@ class TestBase < Id58TestBase
   # - - - - - - - - - - - - - - -
 
   def group_create(manifest, options)
-    id = model.group_create(manifests:[manifest], options:options)
-    unquoted(id)
+    model.group_create(manifests:[manifest], options:options)
   end
 
   def group_exists?(id)
@@ -47,18 +46,17 @@ class TestBase < Id58TestBase
   end
 
   def group_manifest(id)
-    JSON.parse(model.group_manifest(id:id))
+    model.group_manifest(id:id)
   end
 
   AVATAR_INDEXES = (0..63).to_a
 
-  def group_join(id, indexes=AVATAR_INDEXES.shuffle)
-    id = model.group_join(id:id, indexes:indexes)
-    id === 'null' ? nil : unquoted(id)
+  def group_join(id, indexes = AVATAR_INDEXES.shuffle)
+    model.group_join(id:id, indexes:indexes)
   end
 
   def group_joined(id)
-    JSON.parse(model.group_joined(id:id))
+    model.group_joined(id:id)
   end
 
   def group_events(id)
@@ -68,8 +66,7 @@ class TestBase < Id58TestBase
   # - - - - - - - - - - - - - - -
 
   def kata_create(manifest, options)
-    id = model.kata_create(manifest:manifest, options:options)
-    unquoted(id)
+    model.kata_create(manifest:manifest, options:options)
   end
 
   def kata_exists?(id)
@@ -77,19 +74,19 @@ class TestBase < Id58TestBase
   end
 
   def kata_manifest(id)
-    JSON.parse(model.kata_manifest(id:id))
+    model.kata_manifest(id:id)
   end
 
   def katas_events(ids, indexes)
-    JSON.parse(model.katas_events(ids:ids, indexes:indexes))
+    model.katas_events(ids:ids, indexes:indexes)
   end
 
   def kata_events(id)
-    JSON.parse(model.kata_events(id:id))
+    model.kata_events(id:id)
   end
 
   def kata_event(id, index)
-    JSON.parse(model.kata_event(id:id, index:index))
+    model.kata_event(id:id, index:index)
   end
 
   def kata_ran_tests(id, index, files, stdout, stderr, status, summary)
@@ -250,12 +247,6 @@ class TestBase < Id58TestBase
 
   def v_test?(n)
     name58.start_with?("<version=#{n}>")
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
-  def unquoted(id)
-    id[1..-2]
   end
 
 end

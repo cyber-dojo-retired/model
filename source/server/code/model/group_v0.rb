@@ -5,7 +5,6 @@ require_relative 'kata_v0'
 require_relative 'liner_v0'
 require_relative 'options_checker'
 require_relative 'poly_filler'
-require_relative 'quoter'
 require_relative '../lib/json_adapter'
 
 class Group_v0
@@ -26,7 +25,7 @@ class Group_v0
     id = manifest['id'] = IdGenerator.new(@externals).group_id
     manifest['visible_files'] = lined_files(manifest['visible_files'])
     saver.assert(manifest_create_command(id, json_plain(manifest)))
-    quoted(id)
+    id
   end
 
   # - - - - - - - - - - - - - - - - - - -
@@ -34,26 +33,26 @@ class Group_v0
   def manifest(id)
     manifest = json_manifest(id)
     polyfill_manifest_defaults(manifest)
-    json_plain(manifest)
+    manifest
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
   def join(id, indexes)
-    manifest = self.json_manifest(id)
+    manifest = json_manifest(id)
     manifest.delete('id')
     manifest['group_id'] = id
     commands = indexes.map{ |index| dir_make_command(id, index) }
     results = saver.run_until_true(commands)
     result_index = results.find_index(true)
     if result_index.nil?
-      'null' # full
+      nil # full
     else
       index = indexes[result_index]
       manifest['group_index'] = index
       kata_id = @kata.create(manifest, {})
-      saver.assert(saver.file_create_command(kata_id_filename(id, index), unquoted(kata_id)))
-      kata_id # already quoted
+      saver.assert(saver.file_create_command(kata_id_filename(id, index), kata_id))
+      kata_id
     end
   end
 
@@ -69,12 +68,12 @@ class Group_v0
     end
     katas_events = saver.assert_all(read_events_files_commands)
     indexes.each.with_index(0) do |(group_index,kata_id),index|
-      results[group_index] = {
+      results[group_index.to_s] = {
         'id' => kata_id,
         'events' => polyfill_events(events_parse(katas_events[index]))
       }
     end
-    json_plain(results) # TODO: build json directly?
+    results
   end
 
   private
@@ -83,7 +82,6 @@ class Group_v0
   include JsonAdapter
   include Liner_v0
   include PolyFiller
-  include Quoter
 
   # - - - - - - - - - - - - - - - - - - -
 

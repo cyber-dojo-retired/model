@@ -25,7 +25,7 @@ class AppBase < Sinatra::Base
           target = klass.new(@externals)
           result = target.public_send(name, **named_args)
           content_type(:json)
-          "{\"#{name}\":#{result}}"
+          { name.to_s => result }.to_json
         }
       end
     end
@@ -40,7 +40,7 @@ class AppBase < Sinatra::Base
           target = klass.new(@externals)
           result = target.public_send(name, **named_args)
           content_type(:json)
-          "{\"#{name}\":#{result}}"
+          { name.to_s => result }.to_json
         }
       end
     end
@@ -58,6 +58,8 @@ class AppBase < Sinatra::Base
     end
     Hash[args.map{ |key,value| [key.to_sym, value] }]
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def json_hash_parse(body)
     if body === ''
@@ -108,11 +110,15 @@ class AppBase < Sinatra::Base
     body(diagnostic)
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   def request_body
     body = request.body.read
     request.body.rewind # For idempotence
     body
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - -
 
   def utf8_clean(s)
     # If encoding is already utf-8 then encoding to utf-8 is a
