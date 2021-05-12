@@ -127,9 +127,7 @@ class Model
   def version_path(path)
     manifest_src = saver.assert(saver.file_read_command(path))
     manifest = json_parse(manifest_src)
-    # if manifest['version'].nil?
-    # then nil.to_i ==> 0 which is what we want
-    manifest['version'].to_i
+    manifest['version'].to_i # nil.to_i ==> 0
   end
 
   def saver

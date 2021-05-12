@@ -65,6 +65,7 @@ class Id58TestBase < MiniTest::Test
       puts "%3.4f - %-72s" % [secs,name]
       break if index === size
     }
+    puts
   })
   # :nocov:
 

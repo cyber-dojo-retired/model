@@ -28,7 +28,7 @@ class BadResponseTest < TestBase
     ) do |response|
       ex = response['exception']
       assert_equal '/group_create', ex['request']['path'], response
-      assert_equal '', ex['request']['body'], response
+      refute_equal '', ex['request']['body'], response
       refute_nil ex['backtrace'], response
       http_service = ex['http_service']
       assert_equal 'body is not JSON', http_service['message'], response
