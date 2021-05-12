@@ -74,18 +74,6 @@ class IdGeneratorTest < TestBase
 
   # - - - - - - - - - - - - - - - - - - -
 
-  test '13b', %w(
-  group-id does not exist before generation, does after
-  ) do
-    id =  'sD92wM'
-    refute group_exists?(id), "group_exists?(#{id}) !!"
-    id_generator = stubbed_id_generator(id)
-    assert_equal id, id_generator.group_id
-    assert group_exists?(id), "!group_exists?(#{id}) !!"
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
   test '13d', %w(
   id 999999 is reserved for a kata id when saver is offline
   ) do

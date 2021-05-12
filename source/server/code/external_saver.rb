@@ -15,11 +15,42 @@ class ExternalSaver
 
   # - - - - - - - - - - - - - - - - - - -
 
+  def group_exists?(id)
+    @http.get(__method__, { id:id })
+  end
+
+  def group_manifest(id)
+    @http.get(__method__, { id:id })
+  end
+
+  def group_joined(id)
+    @http.get(__method__, { id:id })
+  end
 
   # - - - - - - - - - - - - - - - - - - -
 
+  def kata_create(manifest, options) # Not used yet
+    @http.post(__method__, { manifest:manifest, options:options })
+  end
+
   def kata_exists?(id)
     @http.get(__method__, { id:id })
+  end
+
+  def kata_manifest(id)
+    @http.get(__method__, { id:id })
+  end
+
+  def kata_events(id)
+    @http.get(__method__, { id:id })
+  end
+
+  def kata_event(id, index)
+    @http.get(__method__, { id:id, index:index })
+  end
+
+  def katas_events(ids, indexes)
+    @http.get(__method__, { ids:ids, indexes:indexes })
   end
 
   # - - - - - - - - - - - - - - - - - - -

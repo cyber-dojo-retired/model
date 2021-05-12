@@ -21,11 +21,11 @@ class Model
   end
 
   def group_exists?(id:)
-    group(CURRENT_VERSION).exists?(id)
+    saver.group_exists?(id)
   end
 
   def group_manifest(id:)
-    group(version_group(id)).manifest(id)
+    saver.group_manifest(id)
   end
 
   def group_join(id:, indexes:AVATAR_INDEXES.shuffle)
@@ -33,16 +33,7 @@ class Model
   end
 
   def group_joined(id:)
-    if kata_exists?(id:id)
-      manifest = kata_manifest(id:id)
-      group_id = manifest["group_id"]
-      if group_id.nil?
-        return {}
-      else
-        id = group_id
-      end
-    end
-    group(version_group(id)).joined(id)
+    saver.group_joined(id)
   end
 
   #- - - - - - - - - - - - - - - - - -
@@ -57,20 +48,19 @@ class Model
   end
 
   def kata_manifest(id:)
-    kata(version_kata(id)).manifest(id)
+    saver.kata_manifest(id)
   end
 
   def kata_events(id:)
-    kata(version_kata(id)).events(id)
+    saver.kata_events(id)
   end
 
   def kata_event(id:, index:)
-    kata(version_kata(id)).event(id, index)
+    saver.kata_event(id, index)
   end
 
   def katas_events(ids:, indexes:)
-    id = ids[0]
-    kata(version_kata(id)).event_batch(ids, indexes)
+    saver.katas_events(ids, indexes)
   end
 
   def kata_ran_tests(id:, index:, files:, stdout:, stderr:, status:, summary:)
