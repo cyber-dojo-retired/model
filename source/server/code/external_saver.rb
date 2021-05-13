@@ -73,6 +73,14 @@ class ExternalSaver
     @http.post(__method__, args(id, index, files, stdout, stderr, status, summary))
   end
 
+  def kata_option_get(id, name)
+    @http.get(__method__, { id:id, name:name })
+  end
+
+  def kata_option_set(id, name, value)
+    @http.post(__method__, { id:id, name:name, value:value })
+  end
+
   # - - - - - - - - - - - - - - - - - - -
 
   def args(id, index, files, stdout, stderr, status, summary)

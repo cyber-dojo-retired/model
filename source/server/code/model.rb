@@ -84,11 +84,11 @@ class Model
   end
 
   def kata_option_get(id:, name:)
-    kata(CURRENT_VERSION).option_get(id, name)
+    saver.kata_option_get(id, name)
   end
 
   def kata_option_set(id:, name:, value:)
-    kata(CURRENT_VERSION).option_set(id, name, value)
+    saver.kata_option_set(id, name, value)
   end
 
   private
