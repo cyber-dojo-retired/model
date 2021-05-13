@@ -3,8 +3,6 @@ require_relative 'lib/json_adapter'
 require_relative 'model/id_pather'
 require_relative 'model/group_v0'
 require_relative 'model/group_v1'
-require_relative 'model/kata_v0'
-require_relative 'model/kata_v1'
 
 class Model
 
@@ -28,6 +26,7 @@ class Model
 
   def group_join(id:, indexes:AVATAR_INDEXES.shuffle)
     group(version_group(id)).join(id, indexes)
+    #saver.join(id, indexes)
   end
 
   def group_joined(id:)
@@ -92,6 +91,10 @@ class Model
 
   AVATAR_INDEXES = (0..63).to_a
 
+  def saver
+    @externals.saver
+  end
+
   include IdPather
   include JsonAdapter
 
@@ -99,16 +102,8 @@ class Model
     GROUPS[version].new(@externals)
   end
 
-  def kata(version)
-    KATAS[version].new(@externals)
-  end
-
   def version_group(id)
     version_path(group_id_path(id, 'manifest.json'))
-  end
-
-  def version_kata(id)
-    version_path(kata_id_path(id, 'manifest.json'))
   end
 
   def version_path(path)
@@ -117,12 +112,6 @@ class Model
     manifest['version'].to_i # nil.to_i ==> 0
   end
 
-  def saver
-    @externals.saver
-  end
-
-  CURRENT_VERSION = 1
   GROUPS = [ Group_v0, Group_v1 ]
-  KATAS = [ Kata_v0, Kata_v1 ]
 
 end

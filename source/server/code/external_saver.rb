@@ -27,6 +27,10 @@ class ExternalSaver
     @http.get(__method__, { id:id })
   end
 
+  def join(id, indexes)
+    @http.post(__method__, { id:id, indexes:indexes })
+  end
+
   def group_joined(id)
     @http.get(__method__, { id:id })
   end
