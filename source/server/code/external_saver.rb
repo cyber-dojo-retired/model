@@ -15,6 +15,10 @@ class ExternalSaver
 
   # - - - - - - - - - - - - - - - - - - -
 
+  def group_create(manifests, options)
+    @http.post(__method__, { manifests:manifests, options:options })
+  end
+
   def group_exists?(id)
     @http.get(__method__, { id:id })
   end

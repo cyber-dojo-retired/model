@@ -15,9 +15,7 @@ class Model
   #- - - - - - - - - - - - - - - - - -
 
   def group_create(manifests:, options:)
-    manifest = manifests[0]
-    version = (manifest['version'] || CURRENT_VERSION).to_i
-    group(version).create(manifest, options)
+    saver.group_create(manifests, options)
   end
 
   def group_exists?(id:)

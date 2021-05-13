@@ -34,7 +34,7 @@ class BadResponseTest < TestBase
       assert_equal 'body is not JSON', http_service['message'], response
       assert_equal not_json, http_service['body'], response
       assert_equal 'ExternalSaver', http_service['name'], response
-      assert_equal 'run', http_service['path'], response
+      assert_equal 'group_create', http_service['path'], response
     end
   end
 
@@ -48,11 +48,11 @@ class BadResponseTest < TestBase
     def initialize(body)
       @body = body
     end
-    def post(_uri)
-      OpenStruct.new
-    end
     def start(_hostname, _port, _req)
       self
+    end
+    def post(_uri)
+      OpenStruct.new
     end
     attr_reader :body
   end
