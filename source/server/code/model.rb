@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 require_relative 'lib/json_adapter'
-require_relative 'model/id_pather'
-require_relative 'model/group_v0'
-require_relative 'model/group_v1'
 
 class Model
 
@@ -25,8 +22,7 @@ class Model
   end
 
   def group_join(id:, indexes:AVATAR_INDEXES.shuffle)
-    group(version_group(id)).join(id, indexes)
-    #saver.join(id, indexes)
+    saver.group_join(id, indexes)
   end
 
   def group_joined(id:)
@@ -94,24 +90,5 @@ class Model
   def saver
     @externals.saver
   end
-
-  include IdPather
-  include JsonAdapter
-
-  def group(version)
-    GROUPS[version].new(@externals)
-  end
-
-  def version_group(id)
-    version_path(group_id_path(id, 'manifest.json'))
-  end
-
-  def version_path(path)
-    manifest_src = saver.assert(saver.file_read_command(path))
-    manifest = json_parse(manifest_src)
-    manifest['version'].to_i # nil.to_i ==> 0
-  end
-
-  GROUPS = [ Group_v0, Group_v1 ]
 
 end

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 require_relative 'external_http'
-require_relative 'external_random'
 require_relative 'external_saver'
-require_relative 'external_time'
 
 class Externals
 
@@ -11,16 +9,6 @@ class Externals
   end
   def saver_http
     @saver_http ||= ExternalHttp.new
-  end
-
-  # - - - - - - - - - - - - - - - - - - -
-
-  def random
-    @random ||= ExternalRandom.new
-  end
-
-  def time
-    @time ||= ExternalTime.new
   end
 
 end
