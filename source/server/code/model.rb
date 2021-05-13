@@ -39,8 +39,7 @@ class Model
   #- - - - - - - - - - - - - - - - - -
 
   def kata_create(manifest:, options:)
-    version = (manifest['version'] || CURRENT_VERSION).to_i
-    kata(version).create(manifest, options)
+    saver.kata_create(manifest, options)
   end
 
   def kata_exists?(id:)

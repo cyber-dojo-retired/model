@@ -29,7 +29,7 @@ class ExternalSaver
 
   # - - - - - - - - - - - - - - - - - - -
 
-  def kata_create(manifest, options) # Not used yet
+  def kata_create(manifest, options)
     @http.post(__method__, { manifest:manifest, options:options })
   end
 

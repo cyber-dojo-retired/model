@@ -113,7 +113,9 @@ class KataCreateTest < TestBase
        options: options
       }.to_json
     ) do |response|
-      assert_equal message, response["exception"]["message"]
+      inner = response["exception"]["http_service"]["body"]
+      json = JSON.parse(inner)
+      assert_equal message, json["exception"]["message"], JSON.pretty_generate(json)
     end
   end
 
