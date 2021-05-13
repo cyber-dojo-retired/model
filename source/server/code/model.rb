@@ -64,23 +64,23 @@ class Model
   end
 
   def kata_ran_tests(id:, index:, files:, stdout:, stderr:, status:, summary:)
-    kata(version_kata(id)).ran_tests(id, index, files, stdout, stderr, status, summary)
+    saver.kata_ran_tests(id, index, files, stdout, stderr, status, summary)
   end
 
   def kata_predicted_right(id:, index:, files:, stdout:, stderr:, status:, summary:)
-    kata(version_kata(id)).predicted_right(id, index, files, stdout, stderr, status, summary)
+    saver.kata_predicted_right(id, index, files, stdout, stderr, status, summary)
   end
 
   def kata_predicted_wrong(id:, index:, files:, stdout:, stderr:, status:, summary:)
-    kata(version_kata(id)).predicted_wrong(id, index, files, stdout, stderr, status, summary)
+    saver.kata_predicted_wrong(id, index, files, stdout, stderr, status, summary)
   end
 
   def kata_reverted(id:, index:, files:, stdout:, stderr:, status:, summary:)
-    kata(version_kata(id)).reverted(id, index, files, stdout, stderr, status, summary)
+    saver.kata_reverted(id, index, files, stdout, stderr, status, summary)
   end
 
   def kata_checked_out(id:, index:, files:, stdout:, stderr:, status:, summary:)
-    kata(version_kata(id)).checked_out(id, index, files, stdout, stderr, status, summary)
+    saver.kata_checked_out(id, index, files, stdout, stderr, status, summary)
   end
 
   def kata_option_get(id:, name:)

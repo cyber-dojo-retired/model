@@ -62,9 +62,6 @@ class UniversalAppendTest < TestBase
   private
 
   def universal_append
-    t0 = [2020,11,1, 5,6,18,654318]
-    t1 = [2020,11,1, 5,7,23,883467]
-    externals.instance_exec { @time = TimeStub.new(t0,t1) }
     manifest = custom_manifest
     manifest['version'] = version
     id = kata_create(manifest, default_options)
@@ -110,7 +107,6 @@ class UniversalAppendTest < TestBase
     assert_equal duration, actual['duration']
     assert_equal predicted, actual['predicted']
     assert_equal index, actual['index']
-    assert_equal t1, actual['time']
   end
 
 end

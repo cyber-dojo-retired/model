@@ -53,7 +53,39 @@ class ExternalSaver
     @http.get(__method__, { ids:ids, indexes:indexes })
   end
 
+  def kata_ran_tests(id, index, files, stdout, stderr, status, summary)
+    @http.post(__method__, args(id, index, files, stdout, stderr, status, summary))
+  end
+
+  def kata_predicted_right(id, index, files, stdout, stderr, status, summary)
+    @http.post(__method__, args(id, index, files, stdout, stderr, status, summary))
+  end
+
+  def kata_predicted_wrong(id, index, files, stdout, stderr, status, summary)
+    @http.post(__method__, args(id, index, files, stdout, stderr, status, summary))
+  end
+
+  def kata_reverted(id, index, files, stdout, stderr, status, summary)
+    @http.post(__method__, args(id, index, files, stdout, stderr, status, summary))
+  end
+
+  def kata_checked_out(id, index, files, stdout, stderr, status, summary)
+    @http.post(__method__, args(id, index, files, stdout, stderr, status, summary))
+  end
+
   # - - - - - - - - - - - - - - - - - - -
+
+  def args(id, index, files, stdout, stderr, status, summary)
+    {
+      id:id,
+      index:index,
+      files:files,
+      stdout:stdout,
+      stderr:stderr,
+      status:status,
+      summary:summary
+    }
+  end
 
   def dir_make_command(dirname)
     ['dir_make',dirname]
